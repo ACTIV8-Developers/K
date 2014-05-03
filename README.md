@@ -1,4 +1,4 @@
 K
 =
+Simplistic solution for full featured MVC framework 
 
-Yet another simple PHP framework
