@@ -4,4 +4,4 @@
 | Application Routes
 |--------------------------------------------------------------------------
 */
-Route::get('',['ExampleController', 'index']);
+Route::get('',['Main', 'index']);

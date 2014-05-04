@@ -59,7 +59,7 @@ return [
 | General settings
 */
 'host'      => 'localhost',
-'database'  => 'k_db',
+'database'  => 'codejam_db',
 'username'  => 'root',
 'password'  => '',
 /*
