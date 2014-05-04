@@ -1,5 +1,6 @@
 <?php 
 namespace Core\Core;
+
 /**
 * Core class of Core. This class is a container for all objects
 * of application, it is implemented as singleton, also main run method
@@ -15,7 +16,7 @@ class Core extends \Core\Util\Container
     * Core version.
     * @const string
     */
-    const VERSION = '0.9';
+    const VERSION = '0.92';
 
     /**
     * Singleton instance of Core.
@@ -33,7 +34,6 @@ class Core extends \Core\Util\Container
         parent::__construct();
 
         // Load configuration
-        $this['dbConfig'] = require 'App/Config/Database.php';
         $this['config'] = require 'App/Config/Config.php';
 
         // Create request
@@ -58,7 +58,7 @@ class Core extends \Core\Util\Container
 
         // Create database class.
         $this['database'] = function ($c) {
-            return new \Core\Database\Database($this['dbConfig']);
+            return new \Core\Database\Database(require 'App/Config/Database.php');
         };  
 
         // Create session class.
@@ -81,7 +81,7 @@ class Core extends \Core\Util\Container
     {
         // Start session if enabled in configuration
         if($this['config']['session']) {
-            $this['session']->start_session('_aK', false);
+            $this['session']->start_session('_K', false);
         }
 
         // Collect routes list from file.
