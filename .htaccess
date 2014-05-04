@@ -67,4 +67,4 @@ FileETag None
 # ------------------------------------------------------------------------------
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /CodeJam/index.php [QSA,L]
+RewriteRule ^(.*)$ /K/index.php [QSA,L]

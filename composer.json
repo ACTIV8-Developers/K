@@ -1,14 +1,10 @@
 {
-    "name": "Codejammer/Codejam",
-    "description": "Freelance portfolio website",
+    "name": "Kajna/K",
+    "description": "Simplistic solution for full featured MVC framework",
     "authors": [
         {
         "name": "Milos Kajnaco",
         "email": "miloskajnaco@gmail.com"
-        },
-        {
-        "name": "Vedran Milakovic",
-        "email": "milakovic.vedran@gmail.com"
         }
     ],
     "require":{
