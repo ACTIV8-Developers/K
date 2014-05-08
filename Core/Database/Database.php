@@ -2,7 +2,7 @@
 namespace Core\Database;
 
 /**
-* Active record class.
+* Basic database class.
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Database extends Connection 

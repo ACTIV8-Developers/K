@@ -8,9 +8,14 @@ namespace Core\Database;
 class Connection
 {
 	/**
-	* @var resource Connection variable.
+	* @var resource
 	*/
 	protected $connection = null;
+
+	/**
+	* @var \PDO::ATTR_DEFAULT_FETCH_MODE
+	*/
+	protected $fetchMode = null;
 
 	/**
 	 * Class constructor.
@@ -65,5 +70,13 @@ class Connection
     public function getConnection()
     {
     	return $this->connection;
+    }
+
+    /**
+    * @param \PDO::ATTR_DEFAULT_FETCH_MODE
+    */
+    public function setFetchMode($fetchMode)
+    {
+    	$this->connection->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, $fetchMode);
     }
 }
