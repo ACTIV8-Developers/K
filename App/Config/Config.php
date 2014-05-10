@@ -7,35 +7,21 @@
 return [
 /*
 |--------------------------------------------------------------------------
-| Session
+| Session and cookies
 |--------------------------------------------------------------------------
+| All parameters are optional and default ones 
+| will be used if none is passed
 */
-'session' => [
+'sessionAndCookies' => [
     'start' => true,
-    'handler' => 'file',
+    'name' => 'KKK',
+    'handler' => 'file',// or database
+    'table_name' => 'sessions', // Needed only if handler is database
     'expiration' => 7200,
     'expire_on_close' => false,
-    'table_name' => 'sessions',
     'match_ip' => false,
     'match_useragent' => false,
     'time_to_update' => 300
-],
-/*
-|--------------------------------------------------------------------------
-| Cookies
-|--------------------------------------------------------------------------
-| 'cookie_prefix' = Set a prefix if you need to avoid collisions
-| 'cookie_domain' = Set to .your-domain.com for site-wide cookies
-| 'cookie_path' = Typically will be a forward slash
-| 'cookie_secure' = Cookies will only be set if a secure HTTPS connection exists.
-| 'cookie_httponly' = Cookie will only be accessible via HTTP(S) (no javascript)
-*/
-'cookies' => [
-    'cookie_prefix'	=> '',
-    'cookie_domain' => '',
-    'cookie_path' => '/',
-    'cookie_secure' => false,
-    'cookie_httponly' => false
 ],
 /*
 |--------------------------------------------------------------------------

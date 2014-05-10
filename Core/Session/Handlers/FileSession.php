@@ -3,6 +3,12 @@ namespace Core\Session\Handlers;
 
 /**
 * Session handler using file interface.
+* The encryption is built using mcrypt extension
+* and the randomness is managed by openssl
+* The default encryption algorithm is AES (Rijndael-128)
+* and we use CBC+HMAC (Encrypt-then-mac) with SHA-256
+*
+* @author Enrico Zimuel (enrico@zimuel.it)
 */
 class FileSession implements \SessionHandlerInterface
 {
@@ -48,6 +54,13 @@ class FileSession implements \SessionHandlerInterface
      */
     protected $_keyName;
 
+
+    /**
+    * Cookie parameters
+    * @var array
+    */
+    private $cookie_param;
+
     public function __construct()
     {
         // change the default session folder in a temporary dir
@@ -86,14 +99,16 @@ class FileSession implements \SessionHandlerInterface
     {
         $this->_path    = $save_path.'/';
         $this->_name    = $session_name;
-        $this->_keyName = "KEY_$session_name";
+        $this->_keyName = 'KEY_'.$session_name;
         $this->_ivSize  = mcrypt_get_iv_size($this->_algo, MCRYPT_MODE_CBC);
 
         if (empty($_COOKIE[$this->_keyName]) || strpos($_COOKIE[$this->_keyName],':')===false) {
             $keyLength    = mcrypt_get_key_size($this->_algo, MCRYPT_MODE_CBC);
             $this->_key   = self::_randomKey($keyLength);
             $this->_auth  = self::_randomKey(32);
+
             $cookie_param = session_get_cookie_params();
+            
             setcookie(
                 $this->_keyName,
                 base64_encode($this->_key) . ':' . base64_encode($this->_auth),

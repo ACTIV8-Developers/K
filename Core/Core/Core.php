@@ -63,7 +63,7 @@ class Core extends \Core\Util\Container
 
         // Create session class.
         $this['session'] = function ($c) {
-            return new \Core\Session\Session();
+            return new \Core\Session\Session($c['config']['sessionAndCookies']);
         }; 
 
         // Load modules if enabled in configuration
@@ -80,7 +80,7 @@ class Core extends \Core\Util\Container
     public function run()
     {
         // Load and start session if enabled in configuration
-        if($this['config']['session']['start']) {
+        if($this['config']['sessionAndCookies']['start']) {
             $this['session'];
         }
 
