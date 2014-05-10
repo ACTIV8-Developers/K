@@ -11,7 +11,7 @@ return [
 |--------------------------------------------------------------------------
 |
 | By default, database results will be returned as associative array 
-| however, it can be retrived in other formats.
+| however, it can be retrieved in other formats.
 |
 |	PDO::FETCH_ASSOC: Returns an array.
 |	PDO::FETCH_BOTH: Returns an array, indexed by both column-name, 
@@ -38,7 +38,7 @@ return [
 | Default Database Connection
 |--------------------------------------------------------------------------
 |
-| Defauly database used, it can be specified to use multitiple database
+| Default database used, it can be specified to use multitiple database
 | types through database class.
 | Supported types: mysql, pgsql, sqlsrv
 */

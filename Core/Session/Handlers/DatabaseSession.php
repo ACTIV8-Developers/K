@@ -16,7 +16,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
 	}
 
 	/**
-	* @param string
+	* @param int
 	* @return bool
 	*/
 	public function destroy($session_id)
@@ -25,6 +25,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
 	}
 
 	/**
+    * @param int
 	* @return bool
 	*/
 	public function gc($maxlifetime)
@@ -43,6 +44,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
 	}
 
 	/**
+    * @param string
 	* @return string
 	*/
 	public function read($session_id)
@@ -55,7 +57,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
 	* @param string
 	* @return bool
 	*/
-	public function write ($session_id, $session_data )
+	public function write($session_id, $session_data )
 	{
 
 	}

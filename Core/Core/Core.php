@@ -79,9 +79,9 @@ class Core extends \Core\Util\Container
     */        
     public function run()
     {
-        // Start session if enabled in configuration
+        // Load and start session if enabled in configuration
         if($this['config']['session']) {
-            $this['session']->start_session('_K', false);
+            $this['session'];
         }
 
         // Collect routes list from file.
