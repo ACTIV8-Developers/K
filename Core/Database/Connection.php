@@ -73,6 +73,7 @@ class Connection
     }
 
     /**
+    * Set PDO fetch mode
     * @param \PDO::ATTR_DEFAULT_FETCH_MODE
     */
     public function setFetchMode($fetchMode)

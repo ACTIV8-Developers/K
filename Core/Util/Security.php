@@ -40,7 +40,6 @@ class Security
 	{
 		/*
 		 * Is the string an array?
-		 *
 		 */
 		if (is_array($str))
 		{
@@ -238,7 +237,7 @@ class Security
 		}
 		
 		return $str;
-	}//xssClean
+	}
 
 	/**
 	 * Remove Invisible Characters
@@ -271,7 +270,7 @@ class Security
 		}
 		while ($count);
 		return $str;
-	}//remove_invisible_characters
+	}
 
 	/**
 	 * Validate URL entities
@@ -308,7 +307,7 @@ class Security
 		 */
 		$str = str_replace($xss_hash, '&', $str);
 		return $str;
-	}//validate_entities
+	}
 
 	/**
 	 * Do Never Allowed
@@ -351,7 +350,7 @@ class Security
 			$str = preg_replace('#'.$regex.'#is', '[removed]', $str);
 		}
 		return $str;
-	}//do_never_allowed
+	}
 
 	/*
 	 * Remove Evil HTML Attributes (like evenhandlers and style)
@@ -402,7 +401,7 @@ class Security
 			}
 		} while ($count);
 		return $str;
-	}//remove_evil_attributes
+	}
 
 	/**
 	 * HTML Entities Decode
@@ -429,7 +428,7 @@ class Security
 		$str = html_entity_decode($str, ENT_COMPAT, $charset);
 		$str = preg_replace_callback('~&#x(0*[0-9a-f]{2,5})~i', create_function('$matches', 'return chr(hexdec($matches[1]));'), $str);
 		return preg_replace_callback('~&#([0-9]{2,4})~', create_function('$matches', 'return chr($matches[1]);'), $str);
-	}//entity_decode
+	}
 
 	/**
 	 * Filter Attributes
@@ -450,5 +449,74 @@ class Security
 			}
 		}
 		return $out;
-	}//filter_attributes
+	}
+
+
+    /**
+	* Generate a random key using openssl
+	* fallback to mcrypt_create_iv
+	*
+	* @param integer
+	* @return string
+	*/
+    public static function randomKey($length = 32) {
+        if(function_exists('openssl_random_pseudo_bytes')) {
+            $rnd = openssl_random_pseudo_bytes($length, $strong);
+            if ($strong === true) {
+                return $rnd;
+            }
+        }
+        if (defined('MCRYPT_DEV_URANDOM')) {
+            return mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
+        } else {
+            throw new Exception("I cannot generate a secure pseudo-random key. Please install OpenSSL or Mcrypt extension");
+        }	
+    }
+
+	/**
+	* Generate random token id and put it into session.
+	* (CSRF)
+	*/
+	public static function getTokenId()
+	{
+        if(isset($_SESSION['tk_dd'])) { 
+            return $_SESSION['tk_dd'];
+        } else {
+            $tokenId = $this->random(10);
+            $_SESSION['tk_dd'] = $tokenId;
+            return $tokenId;
+        }
+	}
+
+	/**
+	* Generate random token value and put it into session.
+	* (CSRF)
+	*/
+	public static function getTokenValue()
+	{
+        if(isset($_SESSION['tk_vl'])) { 
+            return $_SESSION['tk_vl'];
+        } else {
+            $token = self::randomKey(16);
+            $_SESSION['tk_vl'] = $token;
+            return $token;
+        }
+	}
+
+	/**
+	* Check generated token.
+	*/
+	public static function checkValid($method) {
+        if($method == 'post' || $method == 'get') {
+            $post = $_POST;
+            $get = $_GET;
+            if(isset(${$method}[$this->getTokenId()]) && (${$method}[$this->getTokenId()] == $this->getTokenValue())) {
+                return true;
+            } else {
+                return false;   
+            }
+        } else {
+            return false;   
+        }
+	}
 }

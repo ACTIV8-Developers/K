@@ -9,7 +9,7 @@ return [
 	'Route'		=>'Core\Core\Router',
 	'Controller'=>'Core\Core\BaseController',
 	'Model'		=>'Core\Core\BaseModel',
-	'Session'	=>'Core\Core\Session',
+	'Security'	=>'Core\Util\Security',
 	'Util'		=>'Core\Util\Util',
 	'Error'		=>'Core\Core\Error'
 ];

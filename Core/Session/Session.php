@@ -1,5 +1,5 @@
 <?php 
-namespace Core\Core;
+namespace Core\Session;
 
 /**
 * Session class.
@@ -7,6 +7,18 @@ namespace Core\Core;
 */
 class Session
 {
+
+	/**
+	* Class construct
+	* Register handler and start session here.
+	*/
+	public function __construct()
+	{
+		$handler = new Core\Session\Handlers\FileSession();
+		session_set_save_handler($handler, true);
+		session_start();
+	}
+
 	public function start_session($session_name, $secure) 
 	{
 	   // Make sure the session cookie is not accessable via javascript.
@@ -37,33 +49,5 @@ class Session
 	   session_start();
 	   // This line regenerates the session and delete the old one. 
 	   session_regenerate_id();    
-	}
-
-	/**
-	 * Get variable from session.
-	 * @var string
-	 * @return mixed
-	 */
-	public function get($param)
-	{
-
-	}
-
-	/**
-	 * Write variable to session.
-	 * @var mixed
-	 */
-	public function set($param)
-	{
-
-	}
-
-	/**
-	 * Destroy session.
-	 */
-	public function destroy()
-	{
-		session_unset();
-		session_destroy();
 	}
 }

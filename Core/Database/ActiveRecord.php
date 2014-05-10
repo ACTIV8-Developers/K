@@ -13,9 +13,14 @@ class ActiveRecord extends Connection
 	private $select = '*';
 
 	/**
-	* @var string
+	* @var string|array
 	*/
-	private $where = null;
+	private $where = '';
+
+	/**
+	* @var array
+	*/
+	private $data = null;
 
 	/**
 	* Set select condition
@@ -28,11 +33,27 @@ class ActiveRecord extends Connection
 
 	/**
 	* Set where condition
-	* @param string
+	* @param array
 	*/
 	public function where($where)
 	{
-		$this->where = $where;
+		if(is_array($where)) {
+			$this->data = $where;
+			foreach ($where as $key => $value) {
+					$this->where .= ','.$key.'=:'.$key;	
+				}
+		}
+	}
+
+	public function like($member, $param, $type = 'both')
+	{
+		if($type==='before') {
+			$this->where .= 
+		} elseif($type==='after') {
+			$this->where .= ','.$key.'=:'.$key;	
+		} else {
+
+		}
 	}
 
 	/**
@@ -46,14 +67,8 @@ class ActiveRecord extends Connection
 		// Build basic query
 		$query = 'SELECT '.$this->select.' FROM '.$table;
 
-		// Add where condition if passed
-		if($this->where) {
-			$where = '';
-			foreach ($this->where as $key => $value) {
-				$where .= ','.$key.'=:'.$key;	
-			}
-			$query .= ' '.substr($where, 1);
-		}
+		// Add where condition
+		$query .= ' '.substr($this->where, 1);;
 
 		// Add limit if needed
 		if($this->limit) {
@@ -64,8 +79,8 @@ class ActiveRecord extends Connection
 	  	$stmt = $this->connection->prepare($query);
 	  	
 	  	// Execute query
-	  	if($this->where) {
-	  		$stmt->execute($this->where);
+	  	if($this->data) {
+	  		$stmt->execute($this->data);
 	  	} else {
 	  		$stmt->execute();
 	  	}

@@ -63,7 +63,7 @@ class Core extends \Core\Util\Container
 
         // Create session class.
         $this['session'] = function ($c) {
-            return new Session();
+            return new \Core\Session\Session();
         }; 
 
         // Load modules if enabled in configuration
