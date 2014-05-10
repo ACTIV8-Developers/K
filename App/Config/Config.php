@@ -11,16 +11,14 @@ return [
 |--------------------------------------------------------------------------
 */
 'session' => [
-    'auto_start' => true,
-    'sess_driver' => 'cookie',
-    'sess_expiration' => 7200,
-    'sess_expire_on_close' => false,
-    'sess_encrypt_cookie' => false,
-    'sess_use_database' => false,
-    'sess_table_name' => 'sessions',
-    'sess_match_ip' => false,
-    'sess_match_useragent' => false,
-    'sess_time_to_update' => 300
+    'start' => true,
+    'handler' => 'file',
+    'expiration' => 7200,
+    'expire_on_close' => false,
+    'table_name' => 'sessions',
+    'match_ip' => false,
+    'match_useragent' => false,
+    'time_to_update' => 300
 ],
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +41,7 @@ return [
 |--------------------------------------------------------------------------
 | Encryption Key
 |--------------------------------------------------------------------------
-| Encryption key is needed for use in some security classes. 
+| Encryption key is needed for use in some security classes.
 */
 'encryption_key' => 'abc',
 /*
@@ -79,7 +77,7 @@ return [
 | (can be set to false if not needed)
 */
 'languages' => [
-	'default'=>'latin',
-	'languages'=>['en']
-	],
+    'default'=>'latin',
+    'languages'=>['en']
+]
 ];

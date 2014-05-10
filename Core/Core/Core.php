@@ -80,7 +80,7 @@ class Core extends \Core\Util\Container
     public function run()
     {
         // Load and start session if enabled in configuration
-        if($this['config']['session']) {
+        if($this['config']['session']['start']) {
             $this['session'];
         }
 
