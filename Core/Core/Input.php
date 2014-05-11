@@ -21,6 +21,7 @@ class Input
     /**
 	* Get an item or array from PUT data.
 	* @param string
+    * @param bool
 	* @return array|mixed|null
 	*/
     public function put($index = null, $xssClean = false)
@@ -34,7 +35,8 @@ class Input
 
     /**
 	* Get an item or array from PATCH data.
-	* @param string 
+	* @param string
+    * @param bool
 	* @return array|mixed|null
 	*/
     public function patch($index = null, $xssClean = false)

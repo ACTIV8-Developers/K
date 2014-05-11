@@ -7,58 +7,69 @@ namespace Core\Libraries\Upload;
 class Upload 
 {
     /**
-    * @var array alowed file types
+    * Allowed file types
+    * @var array
     */
     private $allowedTypes = ['png', 'jpg', 'jpeg', 'bmp'];
 
     /**
-    * @var string path of upload dir
+    * Path of upload dir
+    * @var string
     */
     private $uploadPath = PUBLIC_PATH;
 
     /**
-    * @var int maximum alowed size
+    * Maximum allowed upload size
+    * @var int
     */
     private $maxSize = 1024;
 
     /**
-    * @var int maximum alowed width 
+    * Maximum allowed image width
+    * @var int
     */
     private $maxWidth = 0;
 
     /**
-    * @var int maximum alowed height
+    *  Maximum allowed image height
+    * @var int
     */
     private $maxHeight = 0;
 
     /**
-    * @var string error message
+    * Error message
+    * @var string
     */
     private $error = '';
 
     /**
-    * @var string file extension
+    *  File extension
+    * @var string
     */
     private $fileExt = '';
 
     /**
-    * @var string file name override
+    * File name override
+    * @var string
     */
     private $fileOverride = '';
 
     /**
-    * @var bool remove spaces from name
+    * Remove spaces from name
+    * @var bool
     */
     private $removeSpaces = true;
     
-    /*
-    * @var string default field name
+    /**
+    * Default field name
+    * @var string
     */
     private $field = 'file';
 
     /**
      * Class constructor
      * @param array
+     * @throws \InvalidArgumentException
      */
     public function __construct($params = []) 
     {
@@ -136,7 +147,7 @@ class Upload
     }
 
     /**
-    * Verify that the filetype is allowed
+    * Verify that the file type is allowed
     * @return bool
     */
     public function isAllowedFiletype()

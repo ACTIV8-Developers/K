@@ -4,12 +4,11 @@ namespace Core\Util;
 /**
 * Additional class autoloader for prettier class names.
 *
-* @author Laravel (took class from Laravel Core)
+* @see https://github.com/laravel/framework/blob/master/src/Illuminate/Foundation/AliasLoader.php
 * @see laravel.com
 */
 class AliasLoader 
 {
-
 	/**
 	 * The array of class aliases.
 	 *

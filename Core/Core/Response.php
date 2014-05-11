@@ -72,6 +72,9 @@ class Response
 
     /**
     * Buffer output or return it as string.
+    * @param string
+    * @param array
+    * @param bool
     * @return string | null
     */
     public function render($view, $data = [], $show = true)

@@ -120,9 +120,12 @@ class Transliterate
 	*/
 	public function convert($input)
 	{
-		$input = html_entity_decode($input); // Turm HTML entities to normal characters
-		$input = $this->mb_str_split($input); // Turn input into array
-		$len = count($input); // Get input lenght
+        // Turn HTML entities to normal characters
+		$input = html_entity_decode($input);
+        // Turn input into array
+		$input = $this->mb_str_split($input);
+        // Get input length
+		$len = count($input);
 
 		for($i = 0; $i<$len; ++$i) { // Iterate over input array
 
@@ -162,7 +165,7 @@ class Transliterate
 				}
 			}
 
-			// Translitarete or just append tag char (depends on status)
+			// Transliterate or just append tag char (depends on status)
 			if($this->textStatus == self::ON) {
 				// Some character are written as two letters, check for them
 				if(($input[$i]=='l' || $input[$i]=='L') && ($input[$i+1]=='J' || $input[$i+1]=='j')) {
@@ -198,13 +201,12 @@ class Transliterate
 	}
 
 	/**
-	* Unicode safe function to split string into array
+	* UTF-8 function to split string into array
 	* @param string
 	* @return array
 	*/
 	private function mb_str_split( $string ) { 
-	    # Split at all position not after the start: ^ 
-	    # and not before the end: $ 
+	    // Split at all position not after the start: ^ and not before the end: $
 	    return preg_split('/(?<!^)(?!$)/u', $string); 
 	} 
 }

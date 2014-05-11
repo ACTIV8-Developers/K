@@ -90,6 +90,7 @@ class Database extends Connection
 	* @param $options (additional options for table like engine, UTF etc)
 	* Fields array example ['id'=>'INT AUTO_INCREMENT PRIMARY KEY NOT NULL',
 	*						'value'=>'varchar(10)']
+    * @return int
 	*/
 	public function createTable($name, $fields, $options = null)
 	{
@@ -102,10 +103,11 @@ class Database extends Connection
       		}
     	}
     	$sql = rtrim($sql,',') . ' PRIMARY KEY ('.$pk.')';
-    	if($options==null)
+    	if($options==null) {
     		$sql .= ") CHARACTER SET utf8 COLLATE utf8_general_ci";
-		else
+        } else {
 			$sql .= $options;
+        }
 
 		// execute query	
 	  	$stmt = $this->connection->prepare($sql);

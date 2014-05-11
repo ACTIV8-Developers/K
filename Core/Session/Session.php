@@ -110,7 +110,7 @@ class Session
       	session_set_cookie_params($this->expiration, $this->path, $this->domain, $this->secure, $this->httponly);
 
 		// Select session handler
-		if($this->handler==='file') {
+		if ($this->handler==='file') {
 			$handler = new \Core\Session\Handlers\FileSession();
 		} elseif($this->handler==='database') {
 			$handler = new \Core\Session\Handlers\DatabaseSession();
@@ -123,13 +123,13 @@ class Session
 		session_start();
 
 		// Validate session, if session is new or irregular clear data and start new session.
-		if(!$this->validate()) {
+		if (!$this->validate()) {
 			// Clear old session data
 			$_SESSION = [];
 			// Set session start time
             $_SESSION['s3ss10nCr3at3d'] = time();
 			// Set new session token
-			if($this->matchUseragent) {
+			if ($this->matchUseragent) {
 				$_SESSION['n3k0t'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
 			} else {
 				$_SESSION['n3k0t'] = hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
@@ -137,7 +137,7 @@ class Session
 		}
 
 		// Regenerate session ID cycle
-		if(mt_rand(1, 100)<$this->updateChance) {
+		if (mt_rand(1, 100)<$this->updateChance) {
 			// Regenerate session
 			session_regenerate_id(true);
 		}
@@ -150,23 +150,21 @@ class Session
 	private function validate()
 	{
 		// Are needed session variables set ?
-		if(empty($_SESSION['s3ss10nCr3at3d']) || empty($_SESSION['n3k0t'])) {
+		if (empty($_SESSION['s3ss10nCr3at3d']) || empty($_SESSION['n3k0t'])) {
 			return false;
 		}
 
 		// Check if session token match ?
-		if($this->matchUseragent) {
-			if($_SESSION['n3k0t']!=hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY)) {
+		if ($this->matchUseragent) {
+			if ($_SESSION['n3k0t'] != hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY)) {
 				return false;
 			}
-		} else {
-			if($_SESSION['n3k0t']!=hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY)) {
+		} elseif ($_SESSION['n3k0t'] != hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY)) {
 				return false;
-			}
-		}
+        }
 
 		// Is session expired ?
-		if((strtotime("now") - $_SESSION['s3ss10nCr3at3d'])>$this->expiration) {
+		if ((time() > ($_SESSION['s3ss10nCr3at3d'])+$this->expiration)) {
 			return false;
 		}
 
@@ -185,10 +183,10 @@ class Session
 		// Set session start time
         $_SESSION['s3ss10nCr3at3d'] = time();
 		// Set new session token
-		if($this->matchUseragent) {
-			$_SESSION['n3k0t'] = $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'];
+		if ($this->matchUseragent) {
+            $_SESSION['n3k0t'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
 		} else {
-			$_SESSION['n3k0t'] = $_SESSION['s3ss10nCr3at3d'];
+            $_SESSION['n3k0t'] = hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
 		}
         // Regenerate session
         session_regenerate_id(true);

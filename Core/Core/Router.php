@@ -3,8 +3,8 @@ namespace Core\Core;
 
 /**
 * Router class, it contains list of application routes,
-* also here are methods to adding things to list and
-* finaly here is defined run method for routing requests.
+* also here are methods for adding things to list and
+* finally here is defined run method for routing requests.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -50,10 +50,9 @@ class Router
 	{
         // Require controller
         require APP.'Controllers/'.$controller.'.php';
-        // Exctract exact controller name
-        //$controller = end(preg_split('/\//', $this->callable[0]));
+        // Extract exact controller name
         $controller = end(explode('/', $controller));
-        // Create controller
+        // Create controller and call selected method
         call_user_func_array([new $controller(), $method], $params);
 	}
 
@@ -117,7 +116,7 @@ class Router
     */
     private function show404()
     {
-    	// TO DO make betetr page display
+    	// TO DO make better page display
     	echo '404 for request:';
     }
 }

@@ -72,7 +72,7 @@ class Auth
 		// Hash password
 		$password = $this->hasher->HashPassword($password);
 		// Insert into database
-		$stmt = $this->conn->prepare("INSERT INTO $this->table (user_name, user_pass) VALUES (:name, :pass)");
+		$stmt = $this->conn->prepare("INSERT INTO $this->table (user_name, user_pass, user_date) VALUES (:name, :pass, now())");
 		$stmt->execute([':name'=>$username,':pass'=>$password]);
 		// Return sucess status
 		if($stmt->rowCount()==1)
@@ -89,18 +89,19 @@ class Auth
 	public function changePassword($username, $newPass)
 	{
         $stmt = $this->conn->prepare("UPDATE $this->table SET user_pass=:newPass WHERE user_name=:username");
-        $result = $stmt->execute([':newPass'=>$newPass, ':username'=>$username]);
-        return $result;
+        return $stmt->execute([':newPass'=>$newPass, ':username'=>$username]);
 	}
 
 	/**
 	 * Delete user.
 	 * @var string
-	 * @return bool 
+	 * @return int
 	 */
 	public function deleteUser($username)
 	{
-
+        $stmt = $this->conn->prepare("DELETE * FROM $this->table WHERE user_name = :name");
+        $stmt->execute([':name'=>$username]);
+        return $stmt->rowCount();
 	}
 
 	/**

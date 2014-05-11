@@ -13,10 +13,13 @@ class Error
 	 */
 	private static $log = [];
 
-	/**
-	* Display error page with message.
-	*/
-	public static function log($message, $type, $line)
+    /**
+     * Add message to log.
+     * @param string
+     * @param string
+     * @param string
+     */
+    public static function log($message, $type, $line)
 	{
 		self::$log[] = [$message, $type, $line];
 	}
@@ -26,9 +29,12 @@ class Error
 	*/
 	public static function writeLog()
 	{
-		file_put_contents('Errors.txt', $log, FILE_APPEND | LOCK_EX);
+		file_put_contents('Errors.txt', self::$log, FILE_APPEND | LOCK_EX);
 	}
 
+    /**
+     * Display error page with message.
+    */
 	public static function displayLog()
 	{
 		foreach (self::$log as $value) {

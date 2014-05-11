@@ -1,5 +1,8 @@
 <?php 
 namespace Core\Core;
+use \Core\Database\Database as Database;
+use \Core\Util\Container as Container;
+use \Core\Session\Session as Session;
 
 /**
 * Core class of Core. This class is a container for all objects
@@ -10,7 +13,7 @@ namespace Core\Core;
 * @see Dependecy Injection Container
 * @see Singleton
 */
-class Core extends \Core\Util\Container
+class Core extends Container
 {
     /**
     * Core version.
@@ -30,24 +33,24 @@ class Core extends \Core\Util\Container
 	**/
    	public function __construct()
     {
-        // Call Container parent consctructor
+        // Call container parent constructor
         parent::__construct();
 
         // Load configuration
-        $this['config'] = require 'App/Config/Config.php';
+        $this['config'] = require APP.'Config/Config.php';
 
         // Create request
-        $this['request'] = function ($c) {
+        $this['request'] = function () {
             return new Request();
         };
 
         // Create input class.
-        $this['input'] = function ($c) {
+        $this['input'] = function () {
             return new Input();
         };
 
         // Create response class.
-        $this['response'] = function ($c) {
+        $this['response'] = function () {
             return new Response();
         }; 
 
@@ -57,13 +60,13 @@ class Core extends \Core\Util\Container
         };	
 
         // Create database class.
-        $this['database'] = function ($c) {
-            return new \Core\Database\Database(require 'App/Config/Database.php');
+        $this['database'] = function() {
+            return new Database(require 'App/Config/Database.php');
         };  
 
         // Create session class.
         $this['session'] = function ($c) {
-            return new \Core\Session\Session($c['config']['sessionAndCookies']);
+            return new Session($c['config']['sessionAndCookies']);
         }; 
 
         // Load modules if enabled in configuration
@@ -73,7 +76,7 @@ class Core extends \Core\Util\Container
     }
     
     /**
-    * Main executive function of Core
+    * Main executive function of Core class.
     * Function will start session, connect to database, apply hooks,
     * route requests, execute controllers and display response.
     */        
@@ -99,12 +102,12 @@ class Core extends \Core\Util\Container
 
         // Write log if enabled in config
         if($this['config']['logWrite']) {
-            \Error::writeLog();
+            Error::writeLog();
         }
 
         // Append log to display if enabled
         if($this['config']['logDisplay']) {
-            $this['response']->appendBody(\Error::displayLog());
+            $this['response']->appendBody(Error::displayLog());
         }
 
         // Display final response
@@ -130,7 +133,6 @@ class Core extends \Core\Util\Container
 
     /**
     * Load modules into application container.
-    * @throws InvalidArgumentException if there is no config files
     */
     private function loadModules()
     {

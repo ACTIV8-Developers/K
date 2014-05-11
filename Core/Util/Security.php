@@ -482,7 +482,7 @@ class Security
         if(isset($_SESSION['tk_dd'])) { 
             return $_SESSION['tk_dd'];
         } else {
-            $tokenId = $this->random(10);
+            $tokenId = self::random(10);
             $_SESSION['tk_dd'] = $tokenId;
             return $tokenId;
         }
@@ -510,7 +510,7 @@ class Security
         if($method == 'post' || $method == 'get') {
             $post = $_POST;
             $get = $_GET;
-            if(isset(${$method}[$this->getTokenId()]) && (${$method}[$this->getTokenId()] == $this->getTokenValue())) {
+            if(isset(${$method}[self::getTokenId()]) && (${$method}[self::getTokenId()] == self::getTokenValue())) {
                 return true;
             } else {
                 return false;   

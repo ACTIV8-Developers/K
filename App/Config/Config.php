@@ -14,14 +14,13 @@ return [
 */
 'sessionAndCookies' => [
     'start' => true,
-    'name' => 'KKK',
+    'name' => 'K',
     'handler' => 'file',// or database
     'tableName' => 'sessions', // Needed only if handler is database
     'expiration' => 7200,
-    'expireOnClose' => false,
-    'matchUseragent' => true,
-    'updateTime' => 300
-],
+    'updateChance' => 30,
+    'matchUseragent' => true
+    ],
 /*
 |--------------------------------------------------------------------------
 | Encryption Key
@@ -64,5 +63,5 @@ return [
 'languages' => [
     'default'=>'latin',
     'languages'=>['en']
-]
+    ]
 ];

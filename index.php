@@ -26,7 +26,7 @@
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 * @link http://kframework.info/
-* @version 0.9
+* @version 0.97
 */
 /*
 |--------------------------------------------------------------------------
@@ -96,12 +96,12 @@ PHP_Timer::start();
 |--------------------------------------------------------------------------
 | Additional auto loader for prettier class names.
 */
-\Core\Util\AliasLoader::getInstance(require('App/Config/Aliases.php'))->register();
+\Core\Util\AliasLoader::getInstance(require(APP.'Config/Aliases.php'))->register();
 /*
 |--------------------------------------------------------------------------
 | Create main Core class and load configuration. 
 |--------------------------------------------------------------------------
-| Load core class and load all dependecies.
+| Load core class and load all dependencies.
 */
 $app = Core\Core\Core::getInstance();
 /*

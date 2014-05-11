@@ -3,7 +3,7 @@ namespace Core\Core;
 
 /**
 * Route class represents single route and contains method
-* for dispacthing self if paramaters are matched.
+* for self dispatching if passed parameters are matched.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -46,7 +46,7 @@ class Route
 	* Class constructor.
 	* @param string
     * @param mixed
-	* @param array 
+	* @param string
 	*/
 	public function __construct($url, $callable, $requestMethod = 'ANY')
 	{

@@ -2,7 +2,7 @@
 namespace Core\Core;
 
 /**
-* Request class.
+* HTTP request class.
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Request
@@ -26,7 +26,7 @@ class Request
 	private $ipAddress;
 
 	/**
-	 * Web broswer being used by the current user.
+	 * Web browser being used by the current user.
 	 * @var string
 	 */
 	private $userAgent;
@@ -114,14 +114,14 @@ class Request
     */
     public function isAjax()
     {
-    	if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+    	if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
     		return true;
 		}
 		return false;
     }
 
     /**
-	* Get user agent (browser).
+	* Get user agent.
 	* @return string
 	*/
 	public function getUserAgent()
@@ -129,7 +129,6 @@ class Request
 		if (isset($this->userAgent)) {
 			return $this->userAgent;
 		}
-
 		$this->userAgent = (!isset($_SERVER['HTTP_USER_AGENT'])) ? false : $_SERVER['HTTP_USER_AGENT'];
 
 		return $this->userAgent;
@@ -144,9 +143,7 @@ class Request
 		if (isset($this->ipAddress)) {
 			return $this->ipAddress;
 		}
-
 		$this->ipAddress = $_SERVER['REMOTE_ADDR'];
-		
 		return $this->ipAddress;
 	}
 }

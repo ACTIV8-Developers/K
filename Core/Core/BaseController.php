@@ -4,14 +4,15 @@ namespace Core\Core;
 /**
 * Base controller class.
 * Used with alias "Controller".
-* Extend to get access to app main container. 
-*
+* Extend to get access to app main container.
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class BaseController
 {
     /**
 	* Load library.
+    * @param string
+    * @param array
     * @return object
     */
     protected function library($library, $params = [])
@@ -22,6 +23,7 @@ class BaseController
 
     /**
     * Load model.
+    * @param string
     * @return object
     */
     protected function model($model)
@@ -79,6 +81,7 @@ class BaseController
 
     /**
     * Get any object from app main container.
+    * @param string
     * @return object|mixed
     */
     protected function get($name)
