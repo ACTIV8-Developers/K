@@ -16,12 +16,11 @@ return [
     'start' => true,
     'name' => 'KKK',
     'handler' => 'file',// or database
-    'table_name' => 'sessions', // Needed only if handler is database
+    'tableName' => 'sessions', // Needed only if handler is database
     'expiration' => 7200,
-    'expire_on_close' => false,
-    'match_ip' => false,
-    'match_useragent' => false,
-    'time_to_update' => 300
+    'expireOnClose' => false,
+    'matchUseragent' => true,
+    'updateTime' => 300
 ],
 /*
 |--------------------------------------------------------------------------

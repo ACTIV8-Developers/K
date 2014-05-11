@@ -2,16 +2,16 @@
 namespace Core\Session;
 
 /**
-* Session class.
+* Session manager class.
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Session
 {
 	/**
-	* Lifetime of the session cookie, defined in seconds.
+	* Lifetime of the session cookie and session duration, defined in seconds.
 	* @var int
 	*/
-	private $lifetime = 7200;
+	private $expiration = 7200;
 
 	/**
 	* Used to restrict where the browser sends the cookie (Use a single slash ('/') for all paths on the domain. )
@@ -20,17 +20,18 @@ class Session
 	private $path = '/';
 
 	/**
-	* If true the browser only sends the cookie over https
-	* @var bool|null
-	*/
-	private $secure = null;// Let class decide
-	
-	/**
 	* Cookie domain, for example 'www.php.net'. 
 	* To make cookies visible on all subdomains then the domain must be prefixed with a dot like '.php.net'. 
 	* @var string|null
 	*/
 	private $domain = "";
+
+	/**
+	* If true the browser only sends the cookie over https.
+	* Null denotes class will decide.
+	* @var bool|null
+	*/
+	private $secure = null;
 
 	/**
 	* Marks the cookie as accessible only through the HTTP protocol. 
@@ -40,27 +41,22 @@ class Session
 	private $httponly = true;
 
 	/**
-	* @var bool
-	*/
-	private $matchIp = true;
-
-	/**
-	* Match user agent across session requests
-	* @var bool
-	*/
-	private $matchUseragent = true;
-
-	/**
 	* Session name
 	* @var string
 	*/
-	private $name = 'K';
+	private $name = 'dAlkW';
 
 	/**
 	* Session storage system
 	* @var string
 	*/
 	private $handler = 'file';
+
+	/**
+	* Match user agent across session requests
+	* @var bool
+	*/
+	private $matchUseragent = true;
 
 	/**
 	* Table name if storage system is database
@@ -72,7 +68,7 @@ class Session
 	* Period of refreshing session ID (0 is never)
 	* @var int
 	*/
-	private $updateTime = 3;
+	private $updateTime = 300;
 
 	/**
 	* Class construct
@@ -88,13 +84,16 @@ class Session
         }
 
 		// Set session cookie name
-		session_name($this->name.'_Session');
+		session_name($this->name.'z1c4z');
 
       	// Set the default secure value to whether the site is being accessed with SSL
       	$this->secure = $this->secure!==null ? $this->secure : isset($_SERVER['HTTPS']);
 
+      	// Set the domain to default or to the current domain.
+      	$this->domain = isset($this->domain) ? $this->domain : isset($_SERVER['SERVER_NAME']);
+
 	    // Set the cookie settings
-      	session_set_cookie_params($this->lifetime, $this->path, $this->domain, $this->secure, $this->httponly);
+      	session_set_cookie_params($this->expiration, $this->path, $this->domain, $this->secure, $this->httponly);
 
 		// Select session handler
 		if($this->handler==='file') {
@@ -114,21 +113,19 @@ class Session
 			// Clear old session data
 			$_SESSION = [];
 			// Set session start time
-            $_SESSION['time'] = strtotime("now");
-			// Set new ip match if enabled
-			if($this->matchIp) {
-				$_SESSION['IPaddress'] = $_SERVER['REMOTE_ADDR'];
-			}
+            $_SESSION['s3ss10nCr3at3d'] = time();
+            // Set last ID refresh timer
+            $_SESSION['r3fr3sh'] = time();
 			// Set new user agent match if enabled
 			if($this->matchUseragent) {
-				$_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
+				$_SESSION['userAgent'] = md5($_SERVER['HTTP_USER_AGENT'].$this->name);
 			}
 		}
 
-		// Regenerate session ID if enough time is passed
-		if($this->updateTime!==0 && ((strtotime("now")-$_SESSION['time'])>$this->updateTime)) {
-			// Reset timer
-			$_SESSION['time'] = strtotime("now");
+		// Regenerate session ID cycle
+		if((time() - $_SESSION['r3fr3sh'])>$this->updateTime) {
+			// Reset regenerate timer
+			$_SESSION['r3fr3sh'] = time();
 			// Regenerate session
 			session_regenerate_id(true);
 		}
@@ -140,17 +137,22 @@ class Session
 	*/
 	private function validate()
 	{
-		if($this->matchIp && (!isset($_SESSION['IPaddress']) || $_SESSION['IPaddress'] != $_SERVER['REMOTE_ADDR']))
+		// Check if user agent match ?
+		if($this->matchUseragent && (isset($_SESSION['userAgent']) && $_SESSION['userAgent']!=md5($_SERVER['HTTP_USER_AGENT'].$this->name))) {
 			return false;
+		}
 
-		if($this->matchUseragent && $_SESSION['userAgent']!=$_SERVER['HTTP_USER_AGENT']
-			&& !(strpos($_SESSION['userAgent'], ÔTridentÕ) !== false
-			&& strpos($_SERVER['HTTP_USER_AGENT'], ÔTridentÕ) !== false))
+		// Are needed session variables set ?
+		if(empty($_SESSION['s3ss10nCr3at3d']) || empty($_SESSION['r3fr3sh'])) {
 			return false;
+		}
 
-		if(empty($_SESSION['time']))
+		// Is session expired ?
+		if((strtotime("now") - $_SESSION['s3ss10nCr3at3d'])>$this->expiration) {
 			return false;
+		}
 
+		// Everything is fine return true
 		return true;
-	} 
+	}
 }
