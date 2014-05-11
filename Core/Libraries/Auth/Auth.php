@@ -118,12 +118,13 @@ class Auth
 			return false;
 		}
 
-		if($this->hasher->CheckPassword($password, $result['user_pass'])) {	
+		if($this->hasher->CheckPassword($password, $result['user_pass'])) {
 			// Clear previous session
             \Core\Core\Core::getInstance()['session']->regenerate();
 			// Write new data to session
             $_SESSION['user']['id'] = $result['user_id'];
-			$_SESSION['user']['logged_'.$this->table] = true;
+			$_SESSION['user']['logged_'.$this->table]
+                = md5(\Core\Core\Core::getInstance()['config']['encryption_key'].$_SESSION['user']['id']);
 			return true;
 		}
 		return false;
@@ -169,7 +170,8 @@ class Auth
 	public function isLogged()
 	{
         if(isset($_SESSION['user']['logged_'.$this->table])
-            && $_SESSION['user']['logged_'.$this->table]===true) {
+            && $_SESSION['user']['logged_'.$this->table]
+            ===md5(\Core\Core\Core::getInstance()['config']['encryption_key'].$_SESSION['user']['id'])) {
                 return $_SESSION['user']['id'];
         }
         return false;
