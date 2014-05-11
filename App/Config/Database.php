@@ -59,7 +59,7 @@ return [
 | General settings
 */
 'host'      => 'localhost',
-'database'  => 'k_db',
+'database'  => 'akbg_db',
 'username'  => 'root',
 'password'  => '',
 /*

@@ -38,14 +38,10 @@ class Auth
         foreach ($params as $key => $val) {
             $this->$key = $val;
         }
-
 		// Create database connection if not passed.
 		$this->conn = $this->conn===null?\Core\Core\Core::getInstance()['database']->getConnection():$this->conn;
 		// Create hasher tool
 		$this->hasher = new PasswordHash(8, FALSE);
-		if (session_status() == PHP_SESSION_NONE) {
-			session_start();
-		}
 	}
 
 	/**
@@ -92,9 +88,9 @@ class Auth
 	 */
 	public function changePassword($username, $newPass)
 	{
-            $stmt = $this->conn->prepare("UPDATE $this->table SET user_pass=:newPass WHERE user_name=:username");
-            $result = $stmt->execute([':newPass'=>$newPass, ':username'=>$username]);
-            return $result;
+        $stmt = $this->conn->prepare("UPDATE $this->table SET user_pass=:newPass WHERE user_name=:username");
+        $result = $stmt->execute([':newPass'=>$newPass, ':username'=>$username]);
+        return $result;
 	}
 
 	/**
@@ -113,7 +109,7 @@ class Auth
 	 * @var string
 	 * @return bool 
 	 */
-	public function login($username,$password)
+	public function login($username, $password)
 	{
 		$stmt = $this->conn->prepare("SELECT user_id, user_name, user_pass FROM $this->table WHERE user_name = :name LIMIT 1");
 		$stmt->execute([':name'=>$username]);
@@ -124,11 +120,10 @@ class Auth
 
 		if($this->hasher->CheckPassword($password, $result['user_pass'])) {	
 			// Clear previous session
-			session_unset();
-			session_regenerate_id(true);
+            \Core\Core\Core::getInstance()['session']->regenerate();
 			// Write new data to session
+            $_SESSION['user']['id'] = $result['user_id'];
 			$_SESSION['user']['logged_'.$this->table] = true;
-			$_SESSION['user']['id'] = $result['user_id'];
 			return true;
 		}
 		return false;
@@ -173,10 +168,11 @@ class Auth
 	 */
 	public function isLogged()
 	{
-            if(isset($_SESSION['user']['logged_'.$this->table])) {
-                    return $_SESSION['user']['id'];
-            }
-            return false;
+        if(isset($_SESSION['user']['logged_'.$this->table])
+            && $_SESSION['user']['logged_'.$this->table]===true) {
+                return $_SESSION['user']['id'];
+        }
+        return false;
 	}
 
 	/**

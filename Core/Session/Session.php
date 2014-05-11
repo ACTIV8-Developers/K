@@ -7,6 +7,12 @@ namespace Core\Session;
 */
 class Session
 {
+    /**
+     * Encryption key
+     * @var string
+     */
+    const SUPER_KEY = 'dad4rwsdfsd';
+
 	/**
 	* Lifetime of the session cookie and session duration, defined in seconds.
 	* @var int
@@ -82,6 +88,14 @@ class Session
                 $this->$key = $val;
             }
         }
+        // Hash algorithm to use for the session_id. (use hash_algos() to get a list of available hashes.)
+        $session_hash = 'sha256';
+
+        // Check if hash is available
+        if (in_array($session_hash, hash_algos())) {
+            // Set the has function.
+            ini_set('session.hash_function', $session_hash);
+        }
 
 		// Set session cookie name
 		session_name($this->name.'z1c4z');
@@ -118,7 +132,7 @@ class Session
             $_SESSION['r3fr3sh'] = time();
 			// Set new user agent match if enabled
 			if($this->matchUseragent) {
-				$_SESSION['userAgent'] = md5($_SERVER['HTTP_USER_AGENT'].$this->name);
+				$_SESSION['userAgent'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
 			}
 		}
 
@@ -138,7 +152,8 @@ class Session
 	private function validate()
 	{
 		// Check if user agent match ?
-		if($this->matchUseragent && (isset($_SESSION['userAgent']) && $_SESSION['userAgent']!=md5($_SERVER['HTTP_USER_AGENT'].$this->name))) {
+		if($this->matchUseragent && (isset($_SESSION['userAgent'])
+        && $_SESSION['userAgent']!=hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY))) {
 			return false;
 		}
 
@@ -155,4 +170,26 @@ class Session
 		// Everything is fine return true
 		return true;
 	}
+
+    /**
+     * Completely regenerate session.
+     * Usualy called on logins or security level changes.
+     */
+    public function regenerate()
+    {
+        // Clear old session data
+        $_SESSION = [];
+        // Set session start time
+        $_SESSION['s3ss10nCr3at3d'] = time();
+        // Set last ID refresh timer
+        $_SESSION['r3fr3sh'] = time();
+        // Set new user agent match if enabled
+        if($this->matchUseragent) {
+            $_SESSION['userAgent'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
+        }
+        // Reset regenerate timer
+        $_SESSION['r3fr3sh'] = time();
+        // Regenerate session
+        session_regenerate_id(true);
+    }
 }
