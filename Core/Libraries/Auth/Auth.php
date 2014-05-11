@@ -123,8 +123,7 @@ class Auth
             \Core\Core\Core::getInstance()['session']->regenerate();
 			// Write new data to session
             $_SESSION['user']['id'] = $result['user_id'];
-			$_SESSION['user']['logged_'.$this->table]
-                = md5(\Core\Core\Core::getInstance()['config']['encryption_key'].$_SESSION['user']['id']);
+			$_SESSION['user']['logged_'.$this->table] = md5(\Core\Core\Core::getInstance()['config']['encryption_key']);
 			return true;
 		}
 		return false;
@@ -149,18 +148,19 @@ class Auth
 			) DEFAULT CHARSET=utf8");
 		return $stmt->execute();
 	}
-        /**
-         * Get id of current logged user, return false if no user logged.
-         * @return int | bool
-         */
-        public function getUserId()
-        {
-            if($this->isLogged()) {
-                return $_SESSION['user']['id'];
-            } else {
-                return false;
-            }
+
+    /**
+     * Get id of current logged user, return false if no user logged.
+     * @return int | bool
+     */
+    public function getUserId()
+    {
+        if($this->isLogged()) {
+            return $_SESSION['user']['id'];
+        } else {
+            return false;
         }
+    }
         
 	/**
 	 * Check if there is logged user,
@@ -170,8 +170,7 @@ class Auth
 	public function isLogged()
 	{
         if(isset($_SESSION['user']['logged_'.$this->table])
-            && $_SESSION['user']['logged_'.$this->table]
-            ===md5(\Core\Core\Core::getInstance()['config']['encryption_key'].$_SESSION['user']['id'])) {
+            && $_SESSION['user']['logged_'.$this->table]===md5(\Core\Core\Core::getInstance()['config']['encryption_key'])) {
                 return $_SESSION['user']['id'];
         }
         return false;

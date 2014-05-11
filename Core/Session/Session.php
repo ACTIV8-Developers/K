@@ -11,7 +11,7 @@ class Session
      * Encryption key
      * @var string
      */
-    const SUPER_KEY = 'dad4rwsdfsd';
+    const SUPER_KEY = 'wer23wasf23';
 
 	/**
 	* Lifetime of the session cookie and session duration, defined in seconds.
@@ -71,10 +71,10 @@ class Session
 	private $tableName = 'sessions';
 
 	/**
-	* Period of refreshing session ID (0 is never)
+	* Period of refreshing session ID
 	* @var int
 	*/
-	private $updateTime = 300;
+	private $updateChance = 30;
 
 	/**
 	* Class construct
@@ -128,18 +128,16 @@ class Session
 			$_SESSION = [];
 			// Set session start time
             $_SESSION['s3ss10nCr3at3d'] = time();
-            // Set last ID refresh timer
-            $_SESSION['r3fr3sh'] = time();
-			// Set new user agent match if enabled
+			// Set new session token
 			if($this->matchUseragent) {
-				$_SESSION['userAgent'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
+				$_SESSION['n3k0t'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
+			} else {
+				$_SESSION['n3k0t'] = hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
 			}
 		}
 
 		// Regenerate session ID cycle
-		if((time() - $_SESSION['r3fr3sh'])>$this->updateTime) {
-			// Reset regenerate timer
-			$_SESSION['r3fr3sh'] = time();
+		if(mt_rand(1, 100)<$this->updateChance) {
 			// Regenerate session
 			session_regenerate_id(true);
 		}
@@ -151,15 +149,20 @@ class Session
 	*/
 	private function validate()
 	{
-		// Check if user agent hash match ?
-		if($this->matchUseragent && (isset($_SESSION['userAgent'])
-        && $_SESSION['userAgent']!=hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY))) {
+		// Are needed session variables set ?
+		if(empty($_SESSION['s3ss10nCr3at3d']) || empty($_SESSION['n3k0t'])) {
 			return false;
 		}
 
-		// Are needed session variables set ?
-		if(empty($_SESSION['s3ss10nCr3at3d']) || empty($_SESSION['r3fr3sh'])) {
-			return false;
+		// Check if session token match ?
+		if($this->matchUseragent) {
+			if($_SESSION['n3k0t']!=hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY)) {
+				return false;
+			}
+		} else {
+			if($_SESSION['n3k0t']!=hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY)) {
+				return false;
+			}
 		}
 
 		// Is session expired ?
@@ -177,18 +180,16 @@ class Session
      */
     public function regenerate()
     {
-        // Clear old session data
-        $_SESSION = [];
-        // Set session start time
+		// Clear old session data
+		$_SESSION = [];
+		// Set session start time
         $_SESSION['s3ss10nCr3at3d'] = time();
-        // Set last ID refresh timer
-        $_SESSION['r3fr3sh'] = time();
-        // Set new user agent match if enabled
-        if($this->matchUseragent) {
-            $_SESSION['userAgent'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
-        }
-        // Reset regenerate timer
-        $_SESSION['r3fr3sh'] = time();
+		// Set new session token
+		if($this->matchUseragent) {
+			$_SESSION['n3k0t'] = $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'];
+		} else {
+			$_SESSION['n3k0t'] = $_SESSION['s3ss10nCr3at3d'];
+		}
         // Regenerate session
         session_regenerate_id(true);
     }
