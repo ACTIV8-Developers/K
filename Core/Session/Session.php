@@ -151,7 +151,7 @@ class Session
 	*/
 	private function validate()
 	{
-		// Check if user agent match ?
+		// Check if user agent hash match ?
 		if($this->matchUseragent && (isset($_SESSION['userAgent'])
         && $_SESSION['userAgent']!=hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY))) {
 			return false;

@@ -28,7 +28,7 @@ return [
 |--------------------------------------------------------------------------
 | Encryption key is needed for use in some security classes.
 */
-'encryption_key' => 'abc',
+'encryption_key' => 'abc123',
 /*
 |--------------------------------------------------------------------------
 | Enable or disable log writing.

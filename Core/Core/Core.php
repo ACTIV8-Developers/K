@@ -16,7 +16,7 @@ class Core extends \Core\Util\Container
     * Core version.
     * @const string
     */
-    const VERSION = '0.92';
+    const VERSION = '0.97';
 
     /**
     * Singleton instance of Core.
