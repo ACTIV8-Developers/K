@@ -1,5 +1,5 @@
 <?php 
-namespace Core\Core;
+namespace Core\Http;
 
 /**
 * HTTP request class.
@@ -138,7 +138,7 @@ class Request
 	* Get the user IP Address.
 	* @return string
 	*/
-	public function getIPaddress()
+	public function getIpAddress()
 	{
 		if (isset($this->ipAddress)) {
 			return $this->ipAddress;

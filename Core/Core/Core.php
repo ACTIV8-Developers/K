@@ -1,8 +1,12 @@
 <?php 
 namespace Core\Core;
-use \Core\Database\Database as Database;
-use \Core\Util\Container as Container;
-use \Core\Session\Session as Session;
+
+use \Core\Database\Database;
+use \Core\Util\Container;
+use \Core\Session\Session;
+use \Core\Http\Request;
+use \Core\Http\Response;
+use \Core\Http\Input;
 
 /**
 * Core class of Core. This class is a container for all objects
@@ -61,7 +65,7 @@ class Core extends Container
 
         // Create database class.
         $this['database'] = function() {
-            return new Database(require 'App/Config/Database.php');
+            return new Database(require APP.'Config/Database.php');
         };  
 
         // Create session class.
@@ -90,7 +94,7 @@ class Core extends Container
         // Collect routes list from file.
         require ROUTES;
 
-        // Pre routing/controller language hook (must be enabled in configuration)
+        // Pre routing/controller  hooks (must be enabled in configuration)
         if($this['config']['languages']) {
             \Util::extractLanguage($this['config']['languages'], $this['request']->getUri());
         }
@@ -98,7 +102,7 @@ class Core extends Container
         // Route requests
         $this['router']->run($this['request']);
 
-        // Post routing/controller hook
+        // Post routing/controller hooks
 
         // Write log if enabled in config
         if($this['config']['logWrite']) {
@@ -136,7 +140,7 @@ class Core extends Container
     */
     private function loadModules()
     {
-        $modules = require 'App/Config/Modules.php';
+        $modules = require APP.'Config/Modules.php';
         foreach ($modules as $module => $value) {
             if($value) {
                 $class = '\\Core\Modules\\'.$module.'\\'.$module;

@@ -1,5 +1,7 @@
 <?php 
-namespace Core\Core;
+namespace Core\Http;
+
+use \Core\Util\Security;
 
 /**
 * Input class.
@@ -97,7 +99,7 @@ class Input
 		}
 
 		if (true === $xssClean) {
-			return \Core\Util\Security::xssClean($array[$index]);
+			return Security::xssClean($array[$index]);
 		}
 		return $array[$index];
 	}
