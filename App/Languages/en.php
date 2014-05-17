@@ -1,3 +1,3 @@
 <?php
 	// EN lang constants
-	define('HOME', 'Home');
+	define('NAME', 'User');

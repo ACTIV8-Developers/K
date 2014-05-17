@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Core\Core;
 
 /**
@@ -28,12 +28,14 @@ class Route
     private $callable;
 
     /**
-    * @var List of parameters to be passed if URI is matched.
+    * List of parameters to be passed if URI is matched.
+    * @var array
     */
     private $params = [];
 
     /**
-    * @var List of conditions
+    * List of conditions
+    * @var array
     */
     private $conditions = [];
 
@@ -56,8 +58,8 @@ class Route
 	}
 
     /**
-    *  Check if requested URI mathes this route.
-    *  Design by: http://blog.sosedoff.com/2009/09/20/rails-like-php-url-router/
+    * Check if requested URI matches this route.
+    * Design by: http://blog.sosedoff.com/2009/09/20/rails-like-php-url-router/
     * @param string
     * @param string
     * @return bool
@@ -101,23 +103,16 @@ class Route
 
     /**
     * Dispatch route to assigned controller/function.
-    * All files including subfodlers in APP/Controller
-    * will be considered for dispatch.
     */
     public function dispatch()
-    {   
-        // Check if callable function or controller path
-        if(false==$this->callable[1]) { // false is passed as second argument instead of function name
-            $this->callable[0]($this->params);
-        } else { // If it's not callable try to route to controller/action
-            // Require controller
-            require APP.'Controllers/'.$this->callable[0].'.php';
-            // Exctract exact controller name
-            $controller = explode('/', $this->callable[0]);
-            $controller = end($controller);
-            // Create controller
-            call_user_func_array([new $controller(), $this->callable[1]], $this->params);
-        }
+    {
+        // Require controller
+        require APP.'Controllers/'.$this->callable[0].'.php';
+        // Extract exact controller name
+        $controller = explode('/', $this->callable[0]);
+        $controller = end($controller);
+        // Create controller
+        call_user_func_array([new $controller(), $this->callable[1]], $this->params);
     }
 
     /**
@@ -148,7 +143,7 @@ class Route
 
     /**
 	* Set route url
-	* @param string $pattern
+	* @param string
 	*/
     public function setUrl($url)
     {

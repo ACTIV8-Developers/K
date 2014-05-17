@@ -35,17 +35,7 @@ return [
 'error' => PDO::ERRMODE_EXCEPTION,
 /*
 |--------------------------------------------------------------------------
-| Default Database Connection
-|--------------------------------------------------------------------------
-|
-| Default database used, it can be specified to use multitiple database
-| types through database class.
-| Supported types: mysql, pgsql, sqlsrv
-*/
-'type' => 'mysql',
-/*
-|--------------------------------------------------------------------------
-| Database Connection Parameters
+| Database Connections Parameters
 |--------------------------------------------------------------------------
 |
 | Each of the available database types settings, only used database 
@@ -65,23 +55,7 @@ return [
 /*
 | MySQL
 */
-'mysql' => [
-	'charset'   => 'utf8',
-	'collation' => 'utf8_unicode_ci',
-	'prefix'    => '',
-	],
-/*
-| PostgreSQL
-*/
-'pgsql' => [
-	'charset'  => 'utf8',
-	'prefix'   => '',
-	'schema'   => 'public',
-	],
-/*
-| SQL Server
-*/
-'sqlsrv' => [
-	'prefix'   => '',
-	]
+'charset'   => 'utf8',
+'collation' => 'utf8_unicode_ci',
+'prefix'    => '',
 ];

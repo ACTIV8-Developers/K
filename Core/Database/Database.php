@@ -5,14 +5,49 @@ namespace Core\Database;
 * Basic database class.
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-class Database extends Connection 
+class Database
 {
+    /**
+     * Database connection.
+     * @var resource
+     */
+    protected $connection = null;
+
 	/**
 	* Class constructor.
+    * @var resource (PDO database connection)
 	*/
-    public function __construct($params) 
+    public function __construct($connection)
     {
-    	parent::__construct($params);
+        $this->connection = $connection;
+    }
+
+    /**
+     * Get connection variable.
+     * @return resource
+     */
+    public function getConnection()
+    {
+        return $this->connection;
+    }
+
+    /**
+     * Classic query method using prepared statements.
+     * @param string (query to execute)
+     * @param array (parameter array)
+     * @return resource (query result)
+     */
+    public function query($query, $params = null)
+    {
+        // Execute query
+        $stmt = $this->connection->prepare($query);
+        if($params) {
+            $stmt->execute($params);
+        } else {
+            $stmt->execute();
+        }
+        // Return result resource variable
+        return $stmt;
     }
 
 	/**
@@ -83,6 +118,7 @@ class Database extends Connection
 	  	$stmt->execute($params);
 	  	return $stmt->fetchColumn();
 	}
+
 	/**
 	* Create table in database.
 	* @param $name (table name)

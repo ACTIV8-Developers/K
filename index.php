@@ -18,7 +18,7 @@
 *
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE
 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
@@ -26,7 +26,7 @@
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 * @link http://kframework.info/
-* @version 0.97
+* @version 0.98
 */
 /*
 |--------------------------------------------------------------------------
@@ -70,16 +70,20 @@ date_default_timezone_set('Europe/Belgrade');
 require __DIR__.'/vendor/autoload.php';
 /*
 |--------------------------------------------------------------------------
-| Set error reporting, if true "Whoops" package will take over 
-| error reporting, if false error reporting will be off.
+| Set error reporting
 |--------------------------------------------------------------------------
 */
-if(true) {
+define('SHOW_ERRORS', true);
+define('USE_WHOOPS', true);
+
+if(SHOW_ERRORS) {
  	ini_set("display_errors", 1);
 	error_reporting(E_ALL);
-	$whoops = new Whoops\Run();
-	$whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
-	$whoops->register();
+    if(USE_WHOOPS) {
+        $whoops = new Whoops\Run();
+        $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
+        $whoops->register();
+    }
 } else {
     ini_set('display_errors', 'Off');
     error_reporting(0);
@@ -99,7 +103,7 @@ PHP_Timer::start();
 \Core\Util\AliasLoader::getInstance(require(APP.'Config/Aliases.php'))->register();
 /*
 |--------------------------------------------------------------------------
-| Create main Core class and load configuration. 
+| Create main Core class
 |--------------------------------------------------------------------------
 | Load core class and load all dependencies.
 */

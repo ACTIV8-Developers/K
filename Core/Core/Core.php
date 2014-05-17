@@ -1,17 +1,18 @@
 <?php 
 namespace Core\Core;
 
-use \Core\Database\Database;
 use \Core\Util\Container;
-use \Core\Session\Session;
 use \Core\Http\Request;
-use \Core\Http\Response;
 use \Core\Http\Input;
+use \Core\Http\Response;
+use \Core\Session\Session;
+use \Core\Database\Database;
+use \Core\Errors\Log;
 
 /**
 * Core class of Core. This class is a container for all objects
 * of application, it is implemented as singleton, also main run method
-* with routing, database connection etc. is defined here.
+* with session, routing, database connection etc. is defined here.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 * @see Dependecy Injection Container
@@ -23,7 +24,7 @@ class Core extends Container
     * Core version.
     * @const string
     */
-    const VERSION = '0.97';
+    const VERSION = '0.98';
 
     /**
     * Singleton instance of Core.
@@ -65,18 +66,16 @@ class Core extends Container
 
         // Create database class.
         $this['database'] = function() {
-            return new Database(require APP.'Config/Database.php');
+            // Create connection with passed settings
+            $db = new \Core\Database\Connections\MySQLConnection(require APP.'Config/Database.php');
+            // Inject it into database class
+            return new Database($db->getConnection());
         };  
 
         // Create session class.
         $this['session'] = function ($c) {
             return new Session($c['config']['sessionAndCookies']);
-        }; 
-
-        // Load modules if enabled in configuration
-        if($this['config']['modules']) {
-            $this->loadModules();
-        }
+        };
     }
     
     /**
@@ -87,7 +86,7 @@ class Core extends Container
     public function run()
     {
         // Load and start session if enabled in configuration
-        if($this['config']['sessionAndCookies']['start']) {
+        if($this['config']['sessionStart']) {
             $this['session'];
         }
 
@@ -106,12 +105,12 @@ class Core extends Container
 
         // Write log if enabled in config
         if($this['config']['logWrite']) {
-            Error::writeLog();
+            \Error::writeLog();
         }
 
         // Append log to display if enabled
         if($this['config']['logDisplay']) {
-            $this['response']->appendBody(Error::displayLog());
+            $this['response']->appendBody(\Error::displayLog());
         }
 
         // Display final response
@@ -133,22 +132,5 @@ class Core extends Container
             self::$instance = new Core();
         }
         return self::$instance;
-    }
-
-    /**
-    * Load modules into application container.
-    */
-    private function loadModules()
-    {
-        $modules = require APP.'Config/Modules.php';
-        foreach ($modules as $module => $value) {
-            if($value) {
-                $class = '\\Core\Modules\\'.$module.'\\'.$module;
-                $this['tmp'] = $class;
-                $this[$module] = function ($c) {
-                    return new $c['tmp']();
-                };
-            } 
-        }
     }
 }

@@ -1,5 +1,5 @@
 <?php 
-namespace Core\Core;
+namespace Core\Errors;
 
 /**
 * Error class.
@@ -8,7 +8,7 @@ namespace Core\Core;
 class Error 
 {
 	/**
-	 * Array containing error logs.
+	 * Array containing logs.
 	 * @var array
 	 */
 	private static $log = [];
@@ -29,7 +29,7 @@ class Error
 	*/
 	public static function writeLog()
 	{
-		file_put_contents('Errors.txt', self::$log, FILE_APPEND | LOCK_EX);
+		file_put_contents('Log.txt', self::$log, FILE_APPEND | LOCK_EX);
 	}
 
     /**

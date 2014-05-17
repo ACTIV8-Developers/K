@@ -1,3 +1,3 @@
 <?php
 	// Latin lang constants
-	define('HOME', 'Početna');
+	define('NAME', 'Korisnik');

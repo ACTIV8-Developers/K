@@ -98,4 +98,13 @@ class BaseController
     {
         Core::getInstance()[$name] = $object; 
     }
+
+    /**
+     * Get database object.
+     * @return object
+     */
+    protected function db()
+    {
+        return Core::getInstance()['database'];
+    }
 }

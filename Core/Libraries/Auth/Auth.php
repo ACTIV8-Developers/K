@@ -1,8 +1,10 @@
 <?php 
 namespace Core\Libraries\Auth;
 
+use \Core\Core\Core;
+
 /**
-* Authentification class.
+* Authentication class.
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Auth
@@ -14,7 +16,7 @@ class Auth
 	private $table = 'users';
 
 	/**
-	 * Connection variable to use work with database,
+	 * Connections variable to use work with database,
 	 * loaded in class constructor.
 	 * @var resource
 	 */
@@ -31,15 +33,16 @@ class Auth
 	 * Class constructor, loads database connection
 	 * if available and sets table to use.
 	 * @param array
+     * @param resource
 	 */
-	public function __construct($params = [])
+	public function __construct($params = [], $conn = null)
 	{
 		// Take parameters from passed array
         foreach ($params as $key => $val) {
             $this->$key = $val;
         }
-		// Create database connection if not passed.
-		$this->conn = $this->conn===null?\Core\Core\Core::getInstance()['database']->getConnection():$this->conn;
+		// Try to get database connection from core class if one is not passed.
+		$this->conn = $conn===null?Core::getInstance()['database']->getConnection():$conn;
 		// Create hasher tool
 		$this->hasher = new PasswordHash(8, FALSE);
 	}
@@ -121,10 +124,10 @@ class Auth
 
 		if($this->hasher->CheckPassword($password, $result['user_pass'])) {
 			// Clear previous session
-            \Core\Core\Core::getInstance()['session']->regenerate();
+            Core::getInstance()['session']->regenerate();
 			// Write new data to session
             $_SESSION['user']['id'] = $result['user_id'];
-			$_SESSION['user']['logged_'.$this->table] = md5(\Core\Core\Core::getInstance()['config']['encryption_key']);
+			$_SESSION['user']['logged_'.$this->table] = $_SESSION['user']['id'];
 			return true;
 		}
 		return false;
@@ -171,8 +174,7 @@ class Auth
 	public function isLogged()
 	{
         if(isset($_SESSION['user']['logged_'.$this->table])
-            && $_SESSION['user']['logged_'.$this->table]===md5(\Core\Core\Core::getInstance()['config']['encryption_key'])) {
-                return $_SESSION['user']['id'];
+            && $_SESSION['user']['logged_'.$this->table]===$_SESSION['user']['id']) {
         }
         return false;
 	}

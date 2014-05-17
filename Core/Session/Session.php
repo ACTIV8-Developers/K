@@ -11,7 +11,7 @@ class Session
      * Encryption key
      * @var string
      */
-    const SUPER_KEY = 'wer23wasf23';
+    const SUPER_KEY = 'super_secret';
 
 	/**
 	* Lifetime of the session cookie and session duration, defined in seconds.
@@ -27,10 +27,10 @@ class Session
 
 	/**
 	* Cookie domain, for example 'www.php.net'. 
-	* To make cookies visible on all subdomains then the domain must be prefixed with a dot like '.php.net'. 
+	* To make cookies visible on all sub domains then the domain must be prefixed with a dot like '.php.net'.
 	* @var string|null
 	*/
-	private $domain = "";
+	private $domain = '';
 
 	/**
 	* If true the browser only sends the cookie over https.
@@ -62,13 +62,7 @@ class Session
 	* Match user agent across session requests
 	* @var bool
 	*/
-	private $matchUseragent = true;
-
-	/**
-	* Table name if storage system is database
-	* @var string
-	*/
-	private $tableName = 'sessions';
+	private $matchUserAgent = true;
 
 	/**
 	* Period of refreshing session ID
@@ -88,6 +82,7 @@ class Session
                 $this->$key = $val;
             }
         }
+
         // Hash algorithm to use for the session_id. (use hash_algos() to get a list of available hashes.)
         $session_hash = 'sha256';
 
@@ -111,9 +106,9 @@ class Session
 
 		// Select session handler
 		if ($this->handler==='file') {
-			$handler = new \Core\Session\Handlers\FileSession();
+			$handler = new Handlers\FileSession();
 		} elseif($this->handler==='database') {
-			$handler = new \Core\Session\Handlers\DatabaseSession();
+			$handler = new Handlers\DatabaseSession();
 		}
 
 		// Assign session handler
@@ -124,22 +119,13 @@ class Session
 
 		// Validate session, if session is new or irregular clear data and start new session.
 		if (!$this->validate()) {
-			// Clear old session data
-			$_SESSION = [];
-			// Set session start time
-            $_SESSION['s3ss10nCr3at3d'] = time();
-			// Set new session token
-			if ($this->matchUseragent) {
-				$_SESSION['n3k0t'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
-			} else {
-				$_SESSION['n3k0t'] = hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
-			}
-		}
+			$this->regenerate();
+        }
 
 		// Regenerate session ID cycle
 		if (mt_rand(1, 100)<$this->updateChance) {
 			// Regenerate session
-			session_regenerate_id(true);
+			session_regenerate_id();
 		}
 	}
 
@@ -155,7 +141,7 @@ class Session
 		}
 
 		// Check if session token match ?
-		if ($this->matchUseragent) {
+		if ($this->matchUserAgent) {
 			if ($_SESSION['n3k0t'] != hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY)) {
 				return false;
 			}
@@ -174,21 +160,21 @@ class Session
 
     /**
      * Completely regenerate session.
-     * Usualy called on logins or security level changes.
+     * Usually called on login or security level changes.
      */
     public function regenerate()
     {
+        // Regenerate session
+        session_regenerate_id();
 		// Clear old session data
 		$_SESSION = [];
 		// Set session start time
         $_SESSION['s3ss10nCr3at3d'] = time();
 		// Set new session token
-		if ($this->matchUseragent) {
+		if ($this->matchUserAgent) {
             $_SESSION['n3k0t'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
 		} else {
             $_SESSION['n3k0t'] = hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
 		}
-        // Regenerate session
-        session_regenerate_id(true);
     }
 }

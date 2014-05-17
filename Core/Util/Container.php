@@ -23,9 +23,9 @@
  * THE SOFTWARE.
  */
 namespace Core\Util;
+
 /**
  * Container main class.
- *
  * @author  Fabien Potencier
  */
 class Container implements \ArrayAccess

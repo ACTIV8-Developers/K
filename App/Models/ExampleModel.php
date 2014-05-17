@@ -7,6 +7,6 @@ class ExampleModel extends Model
 {
 	public function getData()
 	{
-		return 'Welcome';
+		return 'Hello world';
 	}
 }

@@ -32,8 +32,7 @@ class AliasLoader
 	/**
 	 * Create a new class alias loader instance.
 	 *
-	 * @param  array
-	 * @return void
+	 * @param array
 	 */
 	public function __construct(array $aliases = array())
 	{

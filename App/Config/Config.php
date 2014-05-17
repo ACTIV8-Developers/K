@@ -7,19 +7,24 @@
 return [
 /*
 |--------------------------------------------------------------------------
+| Start session
+|--------------------------------------------------------------------------
+*/
+'sessionStart' => true,
+/*
+|--------------------------------------------------------------------------
 | Session and cookies
 |--------------------------------------------------------------------------
 | All parameters are optional and default ones 
 | will be used if none is passed
 */
 'sessionAndCookies' => [
-    'start' => true,
     'name' => 'K',
     'handler' => 'file',// or database
     'tableName' => 'sessions', // Needed only if handler is database
     'expiration' => 7200,
     'updateChance' => 30,
-    'matchUseragent' => true
+    '$matchUserAgent' => true
     ],
 /*
 |--------------------------------------------------------------------------
@@ -48,16 +53,9 @@ return [
 'benchmark' => true,
 /*
 |--------------------------------------------------------------------------
-| Use modules in application.
-|--------------------------------------------------------------------------
-| List of modules to be activated is in App\Config\Modules.php file.
-*/
-'modules' => false,
-/*
-|--------------------------------------------------------------------------
 | Language support list
 |--------------------------------------------------------------------------
-| Used for autodetecting language from URL.
+| Used for auto detecting language from URL.
 | (can be set to false if not needed)
 */
 'languages' => [

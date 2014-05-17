@@ -18,7 +18,7 @@ class Router
 
 	/**
 	* Check routes and dispatch matching one.
-	* @var Core\Core\Request 
+	* @var object Core\Http\Request
 	*/
 	public function run($request)
 	{
@@ -34,26 +34,11 @@ class Router
 	        	break;
 	      	}
 	    }
+
 	    // If no route found show 404
 	    if(!$found) {
 	    	$this->show404();
 	    }
-	}
-
-	/**
-	* Call selected controller and method.
-	* @var string
-	* @var string
-	* @var array
-	*/
-	public static function controller($controller, $method, $params = [])
-	{
-        // Require controller
-        require APP.'Controllers/'.$controller.'.php';
-        // Extract exact controller name
-        $controller = end(explode('/', $controller));
-        // Create controller and call selected method
-        call_user_func_array([new $controller(), $method], $params);
 	}
 
     /**

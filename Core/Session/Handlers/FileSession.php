@@ -54,13 +54,6 @@ class FileSession implements \SessionHandlerInterface
      */
     protected $_keyName;
 
-
-    /**
-    * Cookie parameters
-    * @var array
-    */
-    private $cookie_param;
-
     public function __construct()
     {
         // change the default session folder in a temporary dir
