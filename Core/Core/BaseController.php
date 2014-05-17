@@ -71,7 +71,7 @@ class BaseController
     }
 
     /**
-    * Load language file
+    * Load language file with defined constants
     * @param string
     */
     protected function language($lang)
