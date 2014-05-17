@@ -93,7 +93,7 @@ class Core extends Container
         // Collect routes list from file.
         require ROUTES;
 
-        // Pre routing/controller  hooks (must be enabled in configuration)
+        // Pre routing/controller hooks (must be enabled in configuration)
         if($this['config']['languages']) {
             \Util::extractLanguage($this['config']['languages'], $this['request']->getUri());
         }

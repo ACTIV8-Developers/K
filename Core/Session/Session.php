@@ -50,7 +50,7 @@ class Session
 	* Session name
 	* @var string
 	*/
-	private $name = 'dAlkW';
+	private $name = 'PHPSESS';
 
 	/**
 	* Session storage system
@@ -164,8 +164,6 @@ class Session
      */
     public function regenerate()
     {
-        // Regenerate session
-        session_regenerate_id();
 		// Clear old session data
 		$_SESSION = [];
 		// Set session start time
@@ -176,5 +174,7 @@ class Session
 		} else {
             $_SESSION['n3k0t'] = hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
 		}
+        // Regenerate session
+        session_regenerate_id();
     }
 }

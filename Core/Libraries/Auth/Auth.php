@@ -78,8 +78,9 @@ class Auth
 		$stmt = $this->conn->prepare("INSERT INTO $this->table (user_name, user_pass, user_date) VALUES (:name, :pass, now())");
 		$stmt->execute([':name'=>$username,':pass'=>$password]);
 		// Return sucess status
-		if($stmt->rowCount()==1)
+		if($stmt->rowCount()==1) {
 			return true;
+		}
 		return false;
 	}
 
@@ -117,17 +118,17 @@ class Auth
 	{
 		$stmt = $this->conn->prepare("SELECT user_id, user_name, user_pass FROM $this->table WHERE user_name = :name LIMIT 1");
 		$stmt->execute([':name'=>$username]);
-		$result = $stmt -> fetch(\PDO::FETCH_ASSOC);
+		$result = $stmt->fetch(\PDO::FETCH_ASSOC);
 		if($result['user_name']!=$username) {
 			return false;
 		}
 
 		if($this->hasher->CheckPassword($password, $result['user_pass'])) {
 			// Clear previous session
-            Core::getInstance()['session']->regenerate();
+            //Core::getInstance()['session']->regenerate();
 			// Write new data to session
             $_SESSION['user']['id'] = $result['user_id'];
-			$_SESSION['user']['logged_'.$this->table] = $_SESSION['user']['id'];
+			$_SESSION['user']['logged_'.$this->table] = true;
 			return true;
 		}
 		return false;
@@ -155,7 +156,7 @@ class Auth
 
     /**
      * Get id of current logged user, return false if no user logged.
-     * @return int | bool
+     * @return int|bool
      */
     public function getUserId()
     {
@@ -174,7 +175,8 @@ class Auth
 	public function isLogged()
 	{
         if(isset($_SESSION['user']['logged_'.$this->table])
-            && $_SESSION['user']['logged_'.$this->table]===$_SESSION['user']['id']) {
+            && $_SESSION['user']['logged_'.$this->table]===true) {
+        	return true;
         }
         return false;
 	}

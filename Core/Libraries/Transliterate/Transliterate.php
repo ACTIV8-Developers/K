@@ -26,8 +26,8 @@ class Transliterate
 	* @param array
 	*/
 	private $lookup = [
-		'a'=>,
-		'A'=>,
+		'a' => 'а',
+		'A' => 'А',
 		'b' => 'б',
 		'B' => 'Б',
 		'v' => 'в',
