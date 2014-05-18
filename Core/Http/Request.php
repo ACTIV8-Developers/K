@@ -62,16 +62,16 @@ class Request
 		if (strncmp($this->uri, '?/', 2) === 0) {
 			$this->uri = substr($this->uri, 2);
 		}
-		
-		$parts = preg_split('#\?#i', $this->uri, 2);
-		$this->uri = $parts[0];
-		if (isset($parts[1])) {
-			$_SERVER['QUERY_STRING'] = $parts[1];
-			parse_str($_SERVER['QUERY_STRING'], $_GET);
-		} else {
-			$_SERVER['QUERY_STRING'] = '';
-			$_GET = array();
-		}
+
+        $parts = preg_split('#\?#i', $this->uri, 2);
+        $this->uri = $parts[0];
+        if (isset($parts[1])) {
+            $_SERVER['QUERY_STRING'] = $parts[1];
+            parse_str($_SERVER['QUERY_STRING'], $_GET);
+        } else {
+            $_SERVER['QUERY_STRING'] = '';
+            $_GET = array();
+        }
 
 		if ($this->uri == '/' || empty($this->uri)) {
 			return '/';
@@ -101,6 +101,7 @@ class Request
 
     /**
 	* Get request method.
+    * (GET, POST, PUT, DELETE etc.)
 	* @return String
 	*/
     public function getRequestMethod()
@@ -118,6 +119,15 @@ class Request
     		return true;
 		}
 		return false;
+    }
+
+    /**
+     * Get server protocol (eg. HTTP/1.1.)
+     * @return string
+     */
+    public function getServerProtocol()
+    {
+        return $_SERVER['SERVER_PROTOCOL'];
     }
 
     /**

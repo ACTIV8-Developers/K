@@ -5,7 +5,7 @@ namespace Core\Errors;
 * Error class.
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-class Error 
+class Log
 {
 	/**
 	 * Array containing logs.
@@ -30,18 +30,5 @@ class Error
 	public static function writeLog()
 	{
 		file_put_contents('Log.txt', self::$log, FILE_APPEND | LOCK_EX);
-	}
-
-    /**
-     * Display error page with message.
-    */
-	public static function displayLog()
-	{
-		foreach (self::$log as $value) {
-			if($value[2]!==null) {
-				$value[2] = ' <strong>Line:'.$value[2].'</strong>';
-			}
-			echo '<p><strong>'.$value[0].'</strong> '.$value[1].$value[2].'</p>';
-		}
 	}
 }

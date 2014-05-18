@@ -1,4 +1,5 @@
 <?php
+
 /**
 * Example model class.
 * @author miloskajnaco@gmail.com

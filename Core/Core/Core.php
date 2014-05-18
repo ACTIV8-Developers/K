@@ -85,6 +85,8 @@ class Core extends Container
     */        
     public function run()
     {
+        // Pre system hooks
+
         // Load and start session if enabled in configuration
         if($this['config']['sessionStart']) {
             $this['session'];
@@ -103,18 +105,15 @@ class Core extends Container
 
         // Post routing/controller hooks
 
-        // Write log if enabled in config
-        if($this['config']['logWrite']) {
-            \Error::writeLog();
-        }
-
-        // Append log to display if enabled
-        if($this['config']['logDisplay']) {
-            $this['response']->appendBody(\Error::displayLog());
-        }
-
         // Display final response
         $this['response']->display();
+
+        // Post system hooks
+
+        // Write log if enabled in config
+        if($this['config']['logEnable']) {
+            Log::writeLog();
+        }
 
         // Display benchmark time if enabled
         if($this['config']['benchmark']) {
