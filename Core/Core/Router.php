@@ -45,55 +45,65 @@ class Router
 	* Add a route object to the router accepting any request method.
 	* @param string
 	* @param mixed
+    * @return object /Core/Route
 	*/
     public static function any($url, $callable)
     {
     	$route = new Route($url, $callable);
 		self::$routes[] = $route;
+        return $route;
     }
 
     /**
 	* Add a route object to the router accepting GET request method.
 	* @param string 
 	* @param mixed
-	*/
+    * @return object /Core/Route
+    */
     public static function get($url, $callable)
     {
     	$route = new Route($url, $callable, 'GET');
 		self::$routes[] = $route;
+        return $route;
     }
 
     /**
 	* Add a route object to the router accepting POST request method.
 	* @param string
 	* @param mixed
-	*/
+    * @return object /Core/Route
+    */
     public static function post($url, $callable)
     {
     	$route = new Route($url, $callable, 'POST');
 		self::$routes[] = $route;
+        return $route;
     }
 
     /**
 	* Add a route object to the router accepting PUT request method.
 	* @param string
 	* @param mixed
+    * @return object /Core/Route
 	*/
     public static function put($url, $callable)
     {
     	$route = new Route($url, $callable, 'PUT');
 		self::$routes[] = $route;
+        return $route;
     }
 
     /**
 	* Add a route object to the router accepting DELETE request method.
 	* @param string $url
 	* @param mixed $callable
+    * @return object /Core/Route
 	*/
     public static function delete($url, $callable)
     {
     	$route = new Route($url, $callable, 'DELETE');
 		self::$routes[] = $route;
+        return $route;
     }
 
     /*
@@ -102,6 +112,6 @@ class Router
     private function show404()
     {
     	// TO DO make better page display
-    	echo '404 for request:';
+    	echo '<div>Error 404 requested page not found!</div>';
     }
 }

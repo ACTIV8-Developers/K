@@ -22,8 +22,8 @@ class Route
 	private $methods = [];
 
     /**
-    * The route callable (function or array path to certain controller). 
-	* @var mixed
+    * The route callable (name of controller and function to execute).
+	* @var array
 	*/
     private $callable;
 
@@ -34,7 +34,7 @@ class Route
     private $params = [];
 
     /**
-    * List of conditions
+    * List of conditions.
     * @var array
     */
     private $conditions = [];
@@ -47,7 +47,7 @@ class Route
     /**
 	* Class constructor.
 	* @param string
-    * @param mixed
+    * @param array
 	* @param string
 	*/
 	public function __construct($url, $callable, $requestMethod = 'ANY')
@@ -116,55 +116,18 @@ class Route
     }
 
     /**
-	* Set supported HTTP method(s)
-	*/
- 	public function setHttpMethods($method)
+     * Add GET as acceptable method.
+     */
+    public function viaGet()
     {
-        $this->methods = $method;
+        $this->methods[] = 'GET';
     }
 
     /**
-	* Get supported HTTP method(s)
-	* @return array
-	*/
-    public function getHttpMethods()
+     * Add POST as acceptable method.
+     */
+    public function viaPost()
     {
-        return $this->methods;
-    }
-
-	/**
-	* Get route URL
-	* @return string
-	*/
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-	* Set route url
-	* @param string
-	*/
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
-
-    /**
-	* Get route callable
-	* @return mixed
-	*/
-    public function getCallable()
-    {
-        return $this->callable;
-    }
-
-    /**
-	* Set route callable
-	* @param mixed $callable
-	*/
-    public function setCallable($callable)
-    {
-        $this->callable = $callable;
+        $this->methods[] = 'POST';
     }
 }

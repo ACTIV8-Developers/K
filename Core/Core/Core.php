@@ -88,7 +88,7 @@ class Core extends Container
         // Pre system hooks
 
         // Load and start session if enabled in configuration
-        if($this['config']['sessionStart']) {
+        if ($this['config']['sessionStart']) {
             $this['session'];
         }
 
@@ -96,7 +96,7 @@ class Core extends Container
         require ROUTES;
 
         // Pre routing/controller hooks (must be enabled in configuration)
-        if($this['config']['languages']) {
+        if ($this['config']['languages']) {
             \Util::extractLanguage($this['config']['languages'], $this['request']->getUri());
         }
 
@@ -111,12 +111,12 @@ class Core extends Container
         // Post system hooks
 
         // Write log if enabled in config
-        if($this['config']['logEnable']) {
+        if ($this['config']['logEnable']) {
             Log::writeLog();
         }
 
         // Display benchmark time if enabled
-        if($this['config']['benchmark']) {
+        if ($this['config']['benchmark']) {
             print \PHP_Timer::resourceUsage();
         }
     }  

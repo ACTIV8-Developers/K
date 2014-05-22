@@ -8,7 +8,7 @@ namespace Core\Util;
 class Util
 {
 	/**
-	* Variable for caching baseUrl() call, since often it is called multitple times.
+	* Variable for caching baseUrl() call, since often it is called multiple times.
 	* @var string
 	*/
 	private static $base = null;
@@ -20,7 +20,7 @@ class Util
 	 */
 	public static function baseUrl($path = '')
 	{
-		// Check for checked version of base path
+		// Check for cached version of base path
 		if(null!==self::$base) {
 			return self::$base.$path;
 		}
