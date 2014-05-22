@@ -3,6 +3,7 @@ namespace Core\Util;
 
 /**
 * Utility class.
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Util

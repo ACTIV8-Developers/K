@@ -5,6 +5,7 @@ use \Core\Util\Util;
 
 /**
 * HTTP response class.
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Response

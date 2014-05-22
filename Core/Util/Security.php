@@ -469,7 +469,7 @@ class Security
         if (defined('MCRYPT_DEV_URANDOM')) {
             return mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
         } else {
-            throw new Exception("I cannot generate a secure pseudo-random key. Please install OpenSSL or Mcrypt extension");
+            throw new Exception("Cannot generate a secure pseudo-random key. Please install OpenSSL or Mcrypt extension");
         }	
     }
 

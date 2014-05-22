@@ -20,7 +20,7 @@ class Router
 	* Check routes and dispatch matching one.
 	* @var object Core\Http\Request
 	*/
-	public function run($request)
+	public function run(\Core\Http\Request $request)
 	{
 		$found = false;
 		// Get parameters to check against
@@ -35,7 +35,7 @@ class Router
 	      	}
 	    }
 
-	    // If no route found show 404
+	    // If no route found send and show 404
 	    if(!$found) {
 	    	$this->show404();
 	    }
@@ -44,7 +44,7 @@ class Router
     /**
 	* Add a route object to the router accepting any request method.
 	* @param string
-	* @param mixed
+	* @param array
     * @return object /Core/Route
 	*/
     public static function any($url, $callable)
@@ -57,8 +57,8 @@ class Router
     /**
 	* Add a route object to the router accepting GET request method.
 	* @param string 
-	* @param mixed
-    * @return object /Core/Route
+	* @param array
+    * @return object Core\Route
     */
     public static function get($url, $callable)
     {
@@ -70,7 +70,7 @@ class Router
     /**
 	* Add a route object to the router accepting POST request method.
 	* @param string
-	* @param mixed
+	* @param array
     * @return object /Core/Route
     */
     public static function post($url, $callable)
@@ -83,7 +83,7 @@ class Router
     /**
 	* Add a route object to the router accepting PUT request method.
 	* @param string
-	* @param mixed
+	* @param array
     * @return object /Core/Route
 	*/
     public static function put($url, $callable)
@@ -95,8 +95,8 @@ class Router
 
     /**
 	* Add a route object to the router accepting DELETE request method.
-	* @param string $url
-	* @param mixed $callable
+	* @param string
+	* @param array
     * @return object /Core/Route
 	*/
     public static function delete($url, $callable)
@@ -111,7 +111,9 @@ class Router
     */
     private function show404()
     {
-    	// TO DO make better page display
-    	echo '<div>Error 404 requested page not found!</div>';
+    	header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+    	echo "<h1>404 Not Found</h1>";
+	    echo "The page that you have requested could not be found.";
+	    exit();
     }
 }

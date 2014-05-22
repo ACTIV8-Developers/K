@@ -22,15 +22,19 @@ class Core extends Container
 {
     /**
     * Core version.
-    * @const string
     */
-    const VERSION = '0.98';
+    const VERSION = '0.99';
 
     /**
     * Singleton instance of Core.
     * @var object
     */
     private static $instance = null;
+
+    /**
+    * Array of hooks.
+    */
+    private $hooks = [];
 
     /**
 	* Class constructor.
@@ -45,22 +49,22 @@ class Core extends Container
         $this['config'] = require APP.'Config/Config.php';
 
         // Create request
-        $this['request'] = function () {
+        $this['request'] = function() {
             return new Request();
         };
 
         // Create input class.
-        $this['input'] = function () {
+        $this['input'] = function() {
             return new Input();
         };
 
         // Create response class.
-        $this['response'] = function () {
+        $this['response'] = function() {
             return new Response();
         }; 
 
 		// Create router class.
-		$this['router'] = function () { 
+		$this['router'] = function() { 
             return new Router();
         };	
 
@@ -73,7 +77,7 @@ class Core extends Container
         };  
 
         // Create session class.
-        $this['session'] = function ($c) {
+        $this['session'] = function($c) {
             return new Session($c['config']['sessionAndCookies']);
         };
     }

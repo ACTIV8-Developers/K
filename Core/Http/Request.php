@@ -3,6 +3,7 @@ namespace Core\Http;
 
 /**
 * HTTP request class.
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Request
@@ -88,15 +89,6 @@ class Request
     public function getUri()
     {
         return $this->uri;
-    }
-
-	/**
-	* Set request uri.
-	* @param string
-	*/
-    public function setUri($uri)
-    {
-        $this->uri = $uri;
     }
 
     /**

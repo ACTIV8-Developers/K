@@ -4,7 +4,8 @@ namespace Core\Http;
 use \Core\Util\Security;
 
 /**
-* Input class.
+* Input class, used for processing received data.
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Input
