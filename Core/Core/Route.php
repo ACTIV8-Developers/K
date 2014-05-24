@@ -82,8 +82,8 @@ class Route
                 }
                 return true;
             }
-            return false;
         }
+        return false;
     }
 
     /**
@@ -129,5 +129,23 @@ class Route
     public function viaPost()
     {
         $this->methods[] = 'POST';
+    }
+
+    /**
+    * Get supported HTTP method(s)
+    * @return array
+    */
+    public function getHttpMethods()
+    {
+        return $this->methods;
+    }
+
+    /**
+    * Get route URL
+    * @return string
+    */
+    public function getUrl()
+    {
+        return $this->url;
     }
 }

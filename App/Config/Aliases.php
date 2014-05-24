@@ -11,5 +11,5 @@ return [
 	'Model'		=>'Core\Core\BaseModel',
 	'Security'	=>'Core\Util\Security',
 	'Util'		=>'Core\Util\Util',
-	'Error'		=>'Core\Core\Error'
+	'Log'		=>'Core\Util\Log'
 ];

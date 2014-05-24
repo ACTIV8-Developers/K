@@ -9,22 +9,22 @@ class Database
 {
     /**
      * Database connection.
-     * @var resource
+     * @var object \PDO
      */
     protected $connection = null;
 
 	/**
 	* Class constructor.
-    * @var resource (PDO database connection)
+    * @var object \PDO
 	*/
-    public function __construct($connection)
+    public function __construct(\PDO $connection)
     {
         $this->connection = $connection;
     }
 
     /**
      * Get connection variable.
-     * @return resource
+     * @return object \PDO
      */
     public function getConnection()
     {
@@ -32,10 +32,45 @@ class Database
     }
 
     /**
+    * Sets PDO attribute.
+    * @param int
+    * @param mixed (attribute value)
+    * @return bool
+    */
+    public function setAttribute($attr, $value)
+    {
+    	$this->connection->setAttribute($attr, $value);
+    }
+
+    /**
+    * Begin database transaction.
+    */
+    public function beginTrans()
+    {
+    	$this->connection->beginTransaction();
+    }
+
+    /*
+    * Commit database construction.
+    */
+    public function commit()
+    {
+    	$this->connection->commit();
+    }
+
+    /**
+    * Rollback current database transaction.
+    */
+    public function rollback()
+    {
+    	$this->connection->rollBack();	
+    }
+
+    /**
      * Classic query method using prepared statements.
-     * @param string (query to execute)
-     * @param array (parameter array)
-     * @return resource (query result)
+     * @param string
+     * @param array
+     * @return resource
      */
     public function query($query, $params = null)
     {
@@ -52,26 +87,27 @@ class Database
 
 	/**
 	* Select query.
-	* @param string (query to execute)
-	* @param array (parameter array)
-	* @param string (return type)
-	* @return associative array (query result)
+	* @param string
+	* @param array
+	* @param string
+	* @return associative array
 	*/
 	public function select($query, $params = [], $fetch = null)
 	{
 	  	// execute query	
 	  	$stmt = $this->connection->prepare($query);
 	  	$stmt->execute($params);
-	  	if($fetch!=null) 
+	  	if($fetch!=null) {
 			$stmt->setFetchMode($fetch);
+	  	}
 	  	return $stmt->fetchAll();
 	}
 
 	/**
 	* Insert query.
-	* @param string (query to execute)
-	* @param array (parameter array)
-	* @return int (number of affected rows)
+	* @param string
+	* @param array
+	* @return int
 	*/
 	public function insert($query, $params)
 	{
@@ -81,10 +117,20 @@ class Database
 	}
 
 	/**
+	* Wrapper for PDO last insert id.
+	* @param string
+	* @return int
+	*/
+	public function lastInsertId($name = null)
+	{
+	  	return $this->connection->lastInsertId($name);
+	}
+
+	/**
 	* Update query.
-	* @param string (query to execute)
-	* @param array (parameter array)
-	* @return int (number of affected rows)
+	* @param string
+	* @param array
+	* @return int
 	*/
 	public function update($query, $params)
 	{
@@ -95,9 +141,9 @@ class Database
 
 	/**
 	* Delete query.
-	* @param string (query to execute)
-	* @param array (parameter array)
-	* @return int (number of affected rows)
+	* @param string
+	* @param array
+	* @return int
 	*/
 	public function delete($query, $params)
 	{
@@ -108,9 +154,9 @@ class Database
 
 	/**
 	* Count query.
-	* @param string (query to execute)
-	* @param array (parameter array)
-	* @return int (number of rows)
+	* @param string
+	* @param array
+	* @return int
 	*/
 	public function count($query, $params)
 	{

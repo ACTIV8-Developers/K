@@ -7,7 +7,6 @@ use \Core\Http\Input;
 use \Core\Http\Response;
 use \Core\Session\Session;
 use \Core\Database\Database;
-use \Core\Errors\Log;
 
 /**
 * Core class of Core. This class is a container for all objects
@@ -23,18 +22,13 @@ class Core extends Container
     /**
     * Core version.
     */
-    const VERSION = '0.99';
+    const VERSION = '1.0';
 
     /**
     * Singleton instance of Core.
     * @var object
     */
     private static $instance = null;
-
-    /**
-    * Array of hooks.
-    */
-    private $hooks = [];
 
     /**
 	* Class constructor.
@@ -68,17 +62,38 @@ class Core extends Container
             return new Router();
         };	
 
-        // Create database class.
-        $this['database'] = function() {
-            // Create connection with passed settings
-            $db = new \Core\Database\Connections\MySQLConnection(require APP.'Config/Database.php');
-            // Inject it into database class
-            return new Database($db->getConnection());
-        };  
+        // Load database settings
+        $databaseList = require APP.'Config/Database.php';
+
+        // For each needed database create connection closure
+        foreach ($databaseList as $name => $dbConfig) {
+            $this['db'.$name] = function() use ($dbConfig) {
+                switch($dbConfig['driver']) {
+                    case 'mysql':
+                        // Create connection with passed settings
+                        $db = new \Core\Database\Connections\MySQLConnection($dbConfig);
+                        // Inject it into database class
+                        return new Database($db->getConnection());
+                    default:
+                        throw new \InvalidArgumentException('Error! Unsupported database driver type.');
+                        break;
+                }
+            };  
+        }
 
         // Create session class.
         $this['session'] = function($c) {
-            return new Session($c['config']['sessionAndCookies']);
+            // Select session handler
+            $handler = null;
+            switch($c['config']['sessionHandler']) {
+                case 'file':
+                    $handler = new \Core\Session\Handlers\FileSession();
+                    break;
+                case 'database':
+                    $handler = new \Core\Session\Handlers\DatabaseSession();
+                    break;
+            }
+            return new Session($c['config']['sessionAndCookies'], $handler);
         };
     }
     
@@ -105,7 +120,10 @@ class Core extends Container
         }
 
         // Route requests
-        $this['router']->run($this['request']);
+        if(!$this['router']->run($this['request'])) {
+            // If no route found send and show 404
+            $this->show404();
+        }
 
         // Post routing/controller hooks
 
@@ -113,11 +131,6 @@ class Core extends Container
         $this['response']->display();
 
         // Post system hooks
-
-        // Write log if enabled in config
-        if ($this['config']['logEnable']) {
-            Log::writeLog();
-        }
 
         // Display benchmark time if enabled
         if ($this['config']['benchmark']) {
@@ -135,5 +148,14 @@ class Core extends Container
             self::$instance = new Core();
         }
         return self::$instance;
+    }
+
+    /*
+    * Display 404 page.
+    */
+    private function show404()
+    {
+        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+        $this['response']->setBody('<h1>404 Not Found</h1>The page that you have requested could not be found.');
     }
 }

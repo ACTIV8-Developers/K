@@ -88,7 +88,7 @@ class Response
         // Start buffering
         ob_start();
         // Load view file (root location is declared in APPVIEW constant)
-        include APPVIEW.$view.'.php';;
+        include APPVIEW.$view.'.php';
         // Append to output body or return string
         // (depends on function parameter $show)
         if($show) {

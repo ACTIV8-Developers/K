@@ -8,21 +8,6 @@ namespace Core\Database\Connections;
 class MySQLConnection extends PDOConnection
 {
     /**
-     * @var string
-     */
-    protected $charset = 'utf8';
-
-    /**
-     * @var string
-     */
-    protected $collation = 'utf8_unicode_ci';
-
-    /**
-     * @var string
-     */
-    protected $prefix = '';
-
-    /**
     * Class constructor.
     * @param array
     */
@@ -51,7 +36,7 @@ class MySQLConnection extends PDOConnection
             $this->connection->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, $this->fetch);
             $this->connection->setAttribute(\PDO::ATTR_ERRMODE, $this->error);
         } catch (\PDOException $ex) {
-            throw new InvalidArgumentException('Invalid database settings!');
+            throw new \InvalidArgumentException('Error! Cannot connect, invalid database settings.');
         }
     }
 }

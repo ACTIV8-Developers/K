@@ -74,7 +74,7 @@ class Session
 	* Class construct
 	* Register handler and start session here.
 	*/
-	public function __construct($params = [])
+	public function __construct($params = [], $handler = null)
 	{
 		// Load configuration parameters
         foreach ($params as $key => $val) {
@@ -105,14 +105,10 @@ class Session
       	session_set_cookie_params($this->expiration, $this->path, $this->domain, $this->secure, $this->httponly);
 
 		// Select session handler
-		if ($this->handler==='file') {
-			$handler = new Handlers\FileSession();
-		} elseif($this->handler==='database') {
-			$handler = new Handlers\DatabaseSession();
+		if ($handler!==null) {
+			// Assign session handler
+			session_set_save_handler($handler, true);
 		}
-
-		// Assign session handler
-		session_set_save_handler($handler, true);
 
 		// Start session
 		session_start();

@@ -10,10 +10,11 @@ class BaseModel
 {
     /**
     * Get database object.
+    * @param string
     * @return object
     */
-    protected function db()
+    protected function db($dbName = 'default')
     {
-        return Core::getInstance()['database'];
+        return Core::getInstance()['db'.$dbName ];
     }
 }

@@ -20,7 +20,7 @@ class Router
 	* Check routes and dispatch matching one.
 	* @var object Core\Http\Request
 	*/
-	public function run(\Core\Http\Request $request)
+	public function run($request)
 	{
 		$found = false;
 		// Get parameters to check against
@@ -34,11 +34,7 @@ class Router
 	        	break;
 	      	}
 	    }
-
-	    // If no route found send and show 404
-	    if(!$found) {
-	    	$this->show404();
-	    }
+	    return $found;
 	}
 
     /**
@@ -106,14 +102,12 @@ class Router
         return $route;
     }
 
-    /*
-    * Display 404 page.
+    /**
+    * Add custom route object to routes array.
+    * @var object \Core\Core\Route
     */
-    private function show404()
+    public static function addRoute($route)
     {
-    	header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
-    	echo "<h1>404 Not Found</h1>";
-	    echo "The page that you have requested could not be found.";
-	    exit();
+    	self::$routes[] = $route;
     }
 }

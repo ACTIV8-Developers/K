@@ -13,18 +13,24 @@ return [
 'sessionStart' => true,
 /*
 |--------------------------------------------------------------------------
-| Session and cookies
+| Session handler
+|--------------------------------------------------------------------------
+| Currently supported file, database and null (native PHP sessions)
+*/
+'sessionHandler' => null,
+/*
+|--------------------------------------------------------------------------
+| Session and cookies specific settings
 |--------------------------------------------------------------------------
 | All parameters are optional and default ones 
-| will be used if none is passed
+| will be used if none is passed.
 */
 'sessionAndCookies' => [
     'name' => 'K',
-    'handler' => 'file',// or database
     'tableName' => 'sessions', // Needed only if handler is database
     'expiration' => 7200,
     'updateChance' => 30,
-    '$matchUserAgent' => true
+    'matchUserAgent' => true
     ],
 /*
 |--------------------------------------------------------------------------
@@ -33,12 +39,6 @@ return [
 | Encryption key is needed for use in some security classes.
 */
 'encryption_key' => 'abc123',
-/*
-|--------------------------------------------------------------------------
-| Enable or disable log writing.
-|--------------------------------------------------------------------------
-*/
-'logEnable' => false,
 /*
 |--------------------------------------------------------------------------
 | Display benchmarking.

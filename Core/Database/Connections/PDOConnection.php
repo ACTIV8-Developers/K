@@ -44,6 +44,16 @@ abstract class PDOConnection
     protected $password = '';
 
     /**
+     * @var string
+     */
+    protected $charset = 'utf8';
+
+    /**
+     * @var string
+     */
+    protected $collation = 'utf8_unicode_ci';
+
+    /**
      * Connect to database and store resource in connection variable
      */
     abstract protected function connect();

@@ -26,7 +26,7 @@
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 * @link http://kframework.info/
-* @version 0.99
+* @version 1.0
 */
 /*
 |--------------------------------------------------------------------------
@@ -108,12 +108,6 @@ PHP_Timer::start();
 | Load core class and load all dependencies.
 */
 $app = Core\Core\Core::getInstance();
-/*
-|--------------------------------------------------------------------------
-| Load hooks
-|--------------------------------------------------------------------------
-| Load core class and load all dependencies.
-*/
 /*
 |--------------------------------------------------------------------------
 | RUN! 
