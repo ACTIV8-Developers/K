@@ -73,6 +73,8 @@ class Session
 	/**
 	* Class construct
 	* Register handler and start session here.
+	* @param array
+	* @param object \SessionHandlerInterface
 	*/
 	public function __construct($params = [], $handler = null)
 	{

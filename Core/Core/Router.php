@@ -18,7 +18,8 @@ class Router
 
 	/**
 	* Check routes and dispatch matching one.
-	* @var object Core\Http\Request
+	* @var object \Core\Http\Request
+	* @return bool
 	*/
 	public function run($request)
 	{
@@ -41,7 +42,7 @@ class Router
 	* Add a route object to the router accepting any request method.
 	* @param string
 	* @param array
-    * @return object /Core/Route
+    * @return object \Core\Core\Route
 	*/
     public static function any($url, $callable)
     {
@@ -54,7 +55,7 @@ class Router
 	* Add a route object to the router accepting GET request method.
 	* @param string 
 	* @param array
-    * @return object Core\Route
+    * @return object \Core\Core\Route
     */
     public static function get($url, $callable)
     {
@@ -67,7 +68,7 @@ class Router
 	* Add a route object to the router accepting POST request method.
 	* @param string
 	* @param array
-    * @return object /Core/Route
+    * @return object \Core\Core\Route
     */
     public static function post($url, $callable)
     {
@@ -80,7 +81,7 @@ class Router
 	* Add a route object to the router accepting PUT request method.
 	* @param string
 	* @param array
-    * @return object /Core/Route
+    * @return object \Core\Core\Route
 	*/
     public static function put($url, $callable)
     {
@@ -93,7 +94,7 @@ class Router
 	* Add a route object to the router accepting DELETE request method.
 	* @param string
 	* @param array
-    * @return object /Core/Route
+    * @return object \Core\Core\Route
 	*/
     public static function delete($url, $callable)
     {

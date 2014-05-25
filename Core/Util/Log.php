@@ -3,6 +3,8 @@ namespace Core\Util;
 
 /**
 * Log class.
+* (To use log need to make directory writable)
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Log
@@ -16,21 +18,19 @@ class Log
     /**
      * Add message to log.
      * @param string
-     * @param string
-     * @param string
      */
-    public static function log($message, $type, $line)
+    public static function log($message)
 	{
-		self::$log[] = [$message, $type, $line];
+		self::$log[] = $message;
 	}
 
 	/**
 	* Write log to text file.
 	* @param bool
 	*/
-	public static function writeLog($clear)
+	public static function write($clear = false)
 	{
-		file_put_contents('Log.txt', self::$log, FILE_APPEND | LOCK_EX);
+		file_put_contents('log.txt', self::$log, FILE_APPEND | LOCK_EX);
 		if($clear) {
 			self::$log = [];
 		}

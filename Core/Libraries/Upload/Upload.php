@@ -1,7 +1,9 @@
 <?php
 namespace Core\Libraries\Upload;
+
 /**
 * File upload class.
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Upload 

@@ -4,6 +4,7 @@ namespace Core\Core;
 /**
 * Base model class.
 * Used with alias "Model".
+* 
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class BaseModel
@@ -11,7 +12,7 @@ class BaseModel
     /**
     * Get database object.
     * @param string
-    * @return object
+    * @return object \PDO
     */
     protected function db($dbName = 'default')
     {

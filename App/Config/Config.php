@@ -36,24 +36,13 @@ return [
 |--------------------------------------------------------------------------
 | Encryption Key
 |--------------------------------------------------------------------------
-| Encryption key is needed for use in some security classes.
+| Encryption key is needed for use in some classes.
 */
-'encryption_key' => 'abc123',
+'encryption_key' => 'super_secret',
 /*
 |--------------------------------------------------------------------------
 | Display benchmarking.
 |--------------------------------------------------------------------------
 */
-'benchmark' => true,
-/*
-|--------------------------------------------------------------------------
-| Language support list
-|--------------------------------------------------------------------------
-| Used for auto detecting language from URL.
-| (can be set to false if not needed)
-*/
-'languages' => [
-    'default'=>'latin',
-    'languages'=>['en']
-    ]
+'benchmark' => true
 ];

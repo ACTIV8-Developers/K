@@ -3,6 +3,7 @@ namespace Core\Libraries\Pagination;
 
 /**
 * Pagination class.
+*
 * @author <miloskajnaco@gmail.com>
 * @author <ndelevic@ymail.com>
 */
@@ -31,13 +32,12 @@ class Pagination
     }
 
     /**
-    * Generate the pagination links
-    * @access public
+    * Generate the pagination links.
     * @return string
     */
     public function create_links()
     {
-        $r='';//variable to hold result
+        $r = '';//variable to hold result
         // Calculate the total number of pages
         $num_pages = ceil($this->total_rows / $this->per_page);
 
@@ -67,8 +67,8 @@ class Pagination
 
         //create links according to parameters
         for ($i=$start;$i<$end;$i++) {//create links tags
-            $offset=$i*$this->per_page;//set offset to pass to jquery function
-            if($offset!=$this->cur_offset) $class=''; else $class=' active';//set current link active
+            $offset = $i*$this->per_page;//set offset to pass to jquery function
+            if($offset != $this->cur_offset) $class = ''; else $class=' active';//set current link active
             //add link to result variable
             $r.='<li class="'.$this->li_class.$class.'" id="'.($i+1).'"><a href="#">'.($i+1).'</a></li>';
         }

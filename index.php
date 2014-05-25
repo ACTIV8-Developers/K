@@ -30,9 +30,8 @@
 */
 /*
 |--------------------------------------------------------------------------
-| Set application paths
+| Set application path.
 |--------------------------------------------------------------------------
-| Define application folder.
 */
 define('APP', __DIR__.'/App/');
 /*
@@ -49,19 +48,25 @@ define('APPVIEW', APP.'Views/');
 define('ROUTES', APP.'routes.php');
 /*
 |--------------------------------------------------------------------------
-| Set path to public directory
+| Set name of the public directory.
 |--------------------------------------------------------------------------
 */
-define('PUBLIC_PATH', __DIR__.'/public/');
+define('PUBLIC_DIR', 'public');
 /*
 |--------------------------------------------------------------------------
-| Set default timezone
+| Set path to the public directory.
+|--------------------------------------------------------------------------
+*/
+define('PUBLIC_PATH', APP.PUBLIC_DIR.'/');
+/*
+|--------------------------------------------------------------------------
+| Set default timezone.
 |--------------------------------------------------------------------------
 */
 date_default_timezone_set('Europe/Belgrade');
 /*
 |--------------------------------------------------------------------------
-| Register the composer auto loader
+| Register the composer auto loader.
 |--------------------------------------------------------------------------
 | Composer provides a convenient, automatically generated class loader
 | for application. Require it into the script here so that the loading
@@ -72,6 +77,7 @@ require __DIR__.'/vendor/autoload.php';
 |--------------------------------------------------------------------------
 | Set error reporting
 |--------------------------------------------------------------------------
+| Two supported methods native PHP and WHOOPS error reporting.
 */
 define('SHOW_ERRORS', true);
 define('USE_WHOOPS', true);
@@ -90,24 +96,30 @@ if(SHOW_ERRORS) {
 }
 /*
 |--------------------------------------------------------------------------
-| Remember starting time for later benchmarking if needed
+| Remember starting time for later benchmarking if needed.
 |--------------------------------------------------------------------------
 */
 PHP_Timer::start();
 /*
 |--------------------------------------------------------------------------
-| Register aliases auto loader
+| Register aliases auto loader.
 |--------------------------------------------------------------------------
 | Additional auto loader for prettier class names.
 */
 \Core\Util\AliasLoader::getInstance(require(APP.'Config/Aliases.php'))->register();
 /*
 |--------------------------------------------------------------------------
-| Create main Core class
+| Create main Core class.
 |--------------------------------------------------------------------------
 | Load core class and load all dependencies.
 */
 $app = Core\Core\Core::getInstance();
+/*
+|--------------------------------------------------------------------------
+| Include hooks.
+|--------------------------------------------------------------------------
+*/
+include APP.'Hooks/Hooks.php';
 /*
 |--------------------------------------------------------------------------
 | RUN! 

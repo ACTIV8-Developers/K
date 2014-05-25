@@ -1,7 +1,9 @@
 <?php
 namespace Core\Libraries\Image;
+
 /**
 * Image manipulation class.
+*
 * @author Milos Kajnaco <miloskajnaco@warpmail.net>
 */
  class Image

@@ -63,7 +63,7 @@
 </IfModule>
 FileETag None
 # ------------------------------------------------------------------------------
-# | Rewrite URL |
+# | Rewrite URL | Front end controller pattern
 # ------------------------------------------------------------------------------
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f

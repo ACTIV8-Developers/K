@@ -5,6 +5,7 @@ namespace Core\Core;
 * Base controller class.
 * Used with alias "Controller".
 * Extend to get access to app main container.
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class BaseController
@@ -36,7 +37,7 @@ class BaseController
 
     /**
     * Get request object.
-    * @return object
+    * @return object \Core\Http\Request
     */
     protected function request()
     {
@@ -45,7 +46,7 @@ class BaseController
 
     /**
     * Get input object.
-    * @return object
+    * @return object \Core\Http\Input
     */
     protected function input()
     {
@@ -54,7 +55,7 @@ class BaseController
 
     /**
     * Get response object.
-    * @return object
+    * @return object \Core\Http\Response
     */
     protected function response()
     {
@@ -102,7 +103,7 @@ class BaseController
     /**
     * Get database object.
     * @param string
-    * @return object
+    * @return object \PDO
     */
     protected function db($dbName = 'default')
     {

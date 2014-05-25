@@ -5,6 +5,7 @@ use \Core\Core\Core;
 
 /**
 * Authentication class.
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Auth
@@ -18,7 +19,7 @@ class Auth
 	/**
 	 * Connections variable to use work with database,
 	 * loaded in class constructor.
-	 * @var resource
+	 * @var object \PDO
 	 */
 	private $conn = null;
 
@@ -30,10 +31,9 @@ class Auth
 	private $hasher = null;
 
 	/**
-	 * Class constructor, loads database connection
-	 * if available and sets table to use.
+	 * Class constructor.
 	 * @param array
-     * @param resource
+     * @param object \PDO
 	 */
 	public function __construct($params = [], $conn = null)
 	{
@@ -42,7 +42,7 @@ class Auth
             $this->$key = $val;
         }
 		// Try to get database connection from core class if one is not passed.
-		$this->conn = $conn===null?Core::getInstance()['database']->getConnection():$conn;
+		$this->conn = $conn===null?Core::getInstance()['dbdefault']->getConnection():$conn;
 		// Create hasher tool
 		$this->hasher = new PasswordHash(8, FALSE);
 	}
@@ -125,7 +125,7 @@ class Auth
 
 		if($this->hasher->CheckPassword($password, $result['user_pass'])) {
 			// Clear previous session
-            //Core::getInstance()['session']->regenerate();
+            Core::getInstance()['session']->regenerate();
 			// Write new data to session
             $_SESSION['user']['id'] = $result['user_id'];
 			$_SESSION['user']['logged_'.$this->table] = true;

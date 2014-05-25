@@ -4,6 +4,7 @@ namespace Core\Libraries\Transliterate;
 /**
 * Class for transliteration of HTML code with
 * Latin characters to Cyrilic Serbian characters.
+*
 * @author miloskajnaco@gmail.net
 */
 class Transliterate

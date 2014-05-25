@@ -42,7 +42,7 @@ class Util
 	 */
 	public static function css($css)
 	{
-		return self::baseUrl().'public/css/'.$css;
+		return self::baseUrl().PUBLIC_DIR.'/css/'.$css;
 	}	
 
 	/**
@@ -52,7 +52,7 @@ class Util
 	 */
 	public static function js($js)
 	{
-		return self::baseUrl().'public/js/'.$js;
+		return self::baseUrl().PUBLIC_DIR.'/js/'.$js;
 	}
 
 	/**
@@ -62,7 +62,7 @@ class Util
 	 */
 	public static function img($img)
 	{
-		return self::baseUrl().'public/images/'.$img;
+		return self::baseUrl().PUBLIC_DIR.'/images/'.$img;
 	}
 
 	/**
@@ -85,21 +85,5 @@ class Util
 	{
 		$date = explode('-',$date);
 		return $date[2].'.'.$date[1].'.'.$date[0].'.';
-	}
-
-	/**
-	* Extract language from given URI and put it into global variable,
-	* return rest.
-	* @param array
-	* @param string
-	*/
-	public static function extractLanguage($params, $uri)
-	{	
-		$parts = explode('/', $uri, 2);
-		if(in_array($parts[0], $params['languages'])) {
-			define('LANG', $parts[0]);
-		} else {
-			define('LANG', $params['default']);
-		}
 	}
 }

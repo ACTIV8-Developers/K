@@ -9,18 +9,16 @@ use \Core\Session\Session;
 use \Core\Database\Database;
 
 /**
-* Core class of Core. This class is a container for all objects
-* of application, it is implemented as singleton, also main run method
-* with session, routing, database connection etc. is defined here.
-*
+* Core class is the heart of whole framework. This class is a container for all main 
+* objects of application, it is implemented as singleton. This class containes main 
+* run method which defines and executes all functions in life cycle of application.
+* 
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
-* @see Dependecy Injection Container
-* @see Singleton
 */
 class Core extends Container
 {
     /**
-    * Core version.
+    * @const string
     */
     const VERSION = '1.0';
 
@@ -31,8 +29,17 @@ class Core extends Container
     private static $instance = null;
 
     /**
+    * Array of hooks to be applied.
+    * @var array
+    */
+    private static $hooks = [
+        'before.routing' => null, 
+        'after.routing'=> null
+     ];
+
+    /**
 	* Class constructor.
-    * Loads all needed classes closures into container.
+    * Loads all needed classes as closures into container.
 	**/
    	public function __construct()
     {
@@ -104,8 +111,6 @@ class Core extends Container
     */        
     public function run()
     {
-        // Pre system hooks
-
         // Load and start session if enabled in configuration
         if ($this['config']['sessionStart']) {
             $this['session'];
@@ -114,9 +119,9 @@ class Core extends Container
         // Collect routes list from file.
         require ROUTES;
 
-        // Pre routing/controller hooks (must be enabled in configuration)
-        if ($this['config']['languages']) {
-            \Util::extractLanguage($this['config']['languages'], $this['request']->getUri());
+        // Pre routing/controller hooks
+        if(is_callable(self::$hooks['before.routing'])) {
+            call_user_func(self::$hooks['before.routing'], $this);
         }
 
         // Route requests
@@ -126,11 +131,12 @@ class Core extends Container
         }
 
         // Post routing/controller hooks
+        if(is_callable(self::$hooks['after.routing'])) {
+            call_user_func(self::$hooks['after.routing'], $this);
+        }
 
-        // Display final response
+        // Send final response
         $this['response']->display();
-
-        // Post system hooks
 
         // Display benchmark time if enabled
         if ($this['config']['benchmark']) {
@@ -157,5 +163,14 @@ class Core extends Container
     {
         header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
         $this['response']->setBody('<h1>404 Not Found</h1>The page that you have requested could not be found.');
+    }
+
+    /**
+    * Add hook
+    * @param string
+    * @param callable
+    */
+    public function hook($key, $callable) {
+        self::$hooks[$key] = $callable;
     }
 }
