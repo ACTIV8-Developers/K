@@ -14,9 +14,8 @@ To install K download and extract files in working directory then run *composer 
 ###Setup web server
 ####Apache
 
-K uses front end controller pattern so ensure the .htaccess and index.php files are in the same public-accessible directory. The .htaccess file should contain at least this code:
+K uses front end controller pattern so ensure the .htaccess and index.php files are in the same public-accessible directory. The .htaccess file should contain at least this code (K ships with example .htaccess file that can be used):
 ```
-
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ /index.php [QSA,L]
@@ -30,7 +29,6 @@ AllowOverride All
 
 The nginx configuration file should contain at least this code in your location block:
 ```
-
 try_files $uri $uri/ /index.php?$args;
 ```
 
@@ -44,4 +42,4 @@ Author of framework is Milos Kajnaco
 miloskajnaco@gmail.com
 Licence
 =
-The K Framework is released under the MIT public license.
+The K Framework is released under the [MIT](http://opensource.org/licenses/MIT) public license.
