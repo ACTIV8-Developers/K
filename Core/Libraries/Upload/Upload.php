@@ -45,7 +45,7 @@ class Upload
     private $error = '';
 
     /**
-    *  File extension
+    * File extension
     * @var string
     */
     private $fileExt = '';
@@ -54,7 +54,13 @@ class Upload
     * File name override
     * @var string
     */
-    private $fileOverride = '';
+    private $nameOverride = false;
+
+    /**
+    * File name override
+    * @var string
+    */
+    private $overwrite = false;
 
     /**
     * Remove spaces from name
@@ -69,25 +75,31 @@ class Upload
     private $field = 'file';
 
     /**
+    * List of PHP upload errors
+    * @var array
+    */
+    private $uploadError = [
+        'There is no error, the file uploaded with success.',
+        'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
+        'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
+        'The uploaded file was only partially uploaded.',
+        'No file was uploaded.',
+        '',
+        'Missing a temporary folder.',
+        'Failed to write file to disk.',
+        'A PHP extension stopped the file upload.'
+    ];
+
+    /**
      * Class constructor
      * @param array
      * @throws \InvalidArgumentException
      */
     public function __construct($params = []) 
     {
-        // Check for valid uploaded file
-        if (isset($_FILES[$this->field])) {
-            // Load params from passed array
-            foreach ($params as $key => $val) {
-                $this->$key = $val;
-            }
-            // Get uploaded file parameters
-            $this->fileName = $this->prepFilename($_FILES[$this->field]['name']);
-            $this->fileSize = $_FILES[$this->field]['size'];
-            $this->fileTemp = $_FILES[$this->field]['tmp_name'];
-            $this->fileExt  = $this->getExtension($this->fileName);
-        } else {
-            throw new \InvalidArgumentException('File upload error!');
+        // Load params from passed array
+        foreach ($params as $key => $val) {
+            $this->$key = $val;
         }
     }
 
@@ -96,15 +108,26 @@ class Upload
     */
     public function execute()
     {
+        // Check for valid uploaded file
+        if (isset($_FILES[$this->field])) {
+            // Get uploaded file parameters
+            $this->fileName = $this->prepFilename($_FILES[$this->field]['name']);
+            $this->fileSize = $_FILES[$this->field]['size'];
+            $this->fileTemp = $_FILES[$this->field]['tmp_name'];
+            $this->fileExt  = $this->getExtension($this->fileName);
+        } else {
+            return false;
+        }
+
         // Check for upload errors
         if ($_FILES[$this->field]["error"] > 0) {
-            $this->error =  "Error: ".$_FILES[$this->field]["error"]."";
+            $this->error = $this->uploadError[$_FILES[$this->field]["error"]];
             return false;
         }
 
         // Is the file type allowed to be uploaded?
         if (!$this->isAllowedFiletype()) {
-            $this->error = 'upload_invalid_filetype';
+            $this->error = 'File type not allowed!';
             return false;
         }
 
@@ -117,17 +140,30 @@ class Upload
         $this->fileSize = round($this->fileSize/1024, 2);
         // Check file size
         if($this->fileSize > ($this->maxSize)) {
-            $this->error = 'file_size_not_alowed';
+            $this->error = 'File size not allowed!';
             return false;
+        }
+
+        // Set new file name if overide name is true
+        if($this->nameOverride) {
+            $this->fileName = $this->nameOverride.$this->fileExt;
         }
 
         // Sanitize the file name for security
         $this->fileName = $this->cleanFileName($this->fileName);
 
-
         // Remove white spaces in the name
         if ($this->removeSpaces == true) {
             $this->fileName = preg_replace("/\s+/", "_", $this->fileName);
+        }
+
+        if(!$this->overwrite) {
+            $i = 1;
+            $temp = $this->fileName;
+            while(file_exists($this->uploadPath.'/'.$temp)) {
+                $temp = strstr($this->fileName, $this->fileExt, true).'('.$i++.')'.$this->fileExt;
+            }
+            $this->fileName = $temp;
         }
 
         /*
@@ -138,7 +174,7 @@ class Upload
         */
         if (!@copy($this->fileTemp, $this->uploadPath.'/'.$this->fileName)) {
             if (!@move_uploaded_file($this->fileTemp, $this->uploadPath.'/'.$this->fileName)) {
-                $this->error = 'unable_to_copy_file';
+                $this->error = 'Unable to copy file to filesystem!';
                 return false;
             }
         }
@@ -159,7 +195,7 @@ class Upload
         }
 
         if (count($this->allowedTypes) == 0 || !is_array($this->allowedTypes)) {
-            $this->error = 'upload_no_file_types';
+            $this->error = 'No list of allowed file types set!';
             return false;
         }
 
@@ -187,7 +223,7 @@ class Upload
     public function validateUploadPath()
     {
         if ($this->uploadPath == '') {
-            $this->error = 'upload_no_filepath';
+            $this->error = 'No upload path set!';
             return false;
         }
 
@@ -196,7 +232,7 @@ class Upload
         }
 
         if (!@is_dir($this->uploadPath)) {
-            $this->error = 'upload_no_filepath';
+            $this->error = 'Invalid upload path!';
             return false;
         }
 
@@ -235,7 +271,7 @@ class Upload
     * @param string
     * @return string
     */
-    public function getExtension($filename)
+    private function getExtension($filename)
     {
         $x = explode('.', $filename);
         return '.'.end($x);
@@ -279,6 +315,7 @@ class Upload
         return stripslashes($filename);
     }
 
+
     /**
     * Helper function used to delete file.
     * @param string
@@ -298,6 +335,14 @@ class Upload
     }
 
     /**
+    * @return string
+    */
+    public function getFileExtension()
+    {
+        return $this->fileExt;
+    }
+
+    /**
     * @return int
     */
     public function getFileSize()
@@ -311,5 +356,61 @@ class Upload
     public function getError()
     {
         return $this->error;
+    }
+
+    /**
+    * @return string
+    */
+    public function getField()
+    {
+        return $this->field;
+    }
+
+    /**
+    * @return array
+    */
+    public function getAllowedTypes()
+    {
+        return $this->allowedTypes;
+    }
+
+    /**
+    * @return string
+    */
+    public function getUploadPath()
+    {
+        return $this->uploadPath;
+    }
+
+    /**
+    * @param array
+    */
+    public function setAllowedTypes($allowedTypes)
+    {
+        $this->allowedTypes = $allowedTypes;
+    }
+
+    /**
+    * @param string
+    */
+    public function setField($field)
+    {
+        $this->field = $field;
+    }
+
+    /**
+    * @param string
+    */
+    public function setUploadPath($uploadPath)
+    {
+        $this->uploadPath = $uploadPath;
+    }
+
+    /**
+    * @param string
+    */
+    public function setFileNameOverride($nameOverride)
+    {
+        $this->nameOverride = $nameOverride;
     }
 }

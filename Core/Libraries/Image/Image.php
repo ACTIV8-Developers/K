@@ -67,8 +67,7 @@ namespace Core\Libraries\Image;
  	* @return bool
  	*/
  	private function resizeGD($params = [])
- 	{
- 		 			
+ 	{	 			
 	    // Get extension
 	    $extension = strtolower(strrchr($this->filepath, '.'));
 

@@ -18,4 +18,16 @@ class BaseModel
     {
         return Core::getInstance()['db'.$dbName ];
     }
+
+    /**
+	* Load library.
+    * @param string
+    * @param array
+    * @return object
+    */
+    protected function library($library, $params = [])
+    {
+    	$library = '\\Core\\Libraries\\'.$library.'\\'.$library;
+		return new $library($params);
+    }
 }

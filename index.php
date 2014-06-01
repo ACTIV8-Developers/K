@@ -57,7 +57,7 @@ define('PUBLIC_DIR', 'public');
 | Set path to the public directory.
 |--------------------------------------------------------------------------
 */
-define('PUBLIC_PATH', APP.PUBLIC_DIR.'/');
+define('PUBLIC_PATH', __DIR__.'/'.PUBLIC_DIR.'/');
 /*
 |--------------------------------------------------------------------------
 | Set default timezone.
