@@ -15,7 +15,8 @@ class Util
 	private static $base = null;
 
 	/**
-	 * Get site base url.
+     * Deprecated, left for backward compatibility.
+	 * Get site base url. (Alias of base)
 	 * @param  string
 	 * @return string
 	 */
@@ -26,14 +27,29 @@ class Util
 			return self::$base.$path;
 		}
 
-		if (isset($_SERVER['HTTP_HOST'])) {
-			$base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https' : 'http';
-			$base_url .= '://'. $_SERVER['HTTP_HOST'];
-			$base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-			self::$base = $base_url;
-			return $base_url.$path;
-		}
+        return self::base($path);
 	}
+
+    /**
+     * Get site base url.
+     * @param  string
+     * @return string
+     */
+    public static function base($path = '')
+    {
+        // Check for cached version of base path
+        if(null!==self::$base) {
+            return self::$base.$path;
+        }
+
+        if (isset($_SERVER['HTTP_HOST'])) {
+            $base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https' : 'http';
+            $base_url .= '://'. $_SERVER['HTTP_HOST'];
+            $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+            self::$base = $base_url;
+            return $base_url.$path;
+        }
+    }
 
 	/**
 	 * Get CSS file path.

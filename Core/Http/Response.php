@@ -96,7 +96,7 @@ class Response
             if (ob_get_level() > $this->obLevel + 1) {
                 ob_end_flush();
             } else {
-                $this->appendBody(ob_get_contents());
+                $this->body .= ob_get_contents();
                 @ob_end_clean();
             }
         } else {          
@@ -104,6 +104,22 @@ class Response
             @ob_end_clean();
             return $buffer;
         }
+    }
+
+    /**
+     * Set response type to JSON.
+     */
+    public function outputJSON()
+    {
+        $this->headers[] = ["Content-Type: application/json", true];
+    }
+
+    /**
+     * Set response type to XML.
+     */
+    public function outputXML()
+    {
+        $this->headers[] = ["Content-Type: text/xml", true];
     }
 
     /**
@@ -120,7 +136,7 @@ class Response
     /**
     * Send final content and headers.
     */
-    public function display() 
+    public function display()
     {
         // Send headers.
         if (count($this->headers) > 0) {
