@@ -132,7 +132,7 @@ class Route
     }
 
     /**
-    * Get supported HTTP method(s)
+    * Get supported HTTP method(s).
     * @return array
     */
     public function getHttpMethods()
@@ -141,11 +141,20 @@ class Route
     }
 
     /**
-    * Get route URL
+    * Get route URL.
     * @return string
     */
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * Get name of controller and method to call.
+     * @return array
+     */
+    public function getCallable()
+    {
+        return $this->callable;
     }
 }

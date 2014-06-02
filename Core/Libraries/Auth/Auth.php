@@ -75,7 +75,7 @@ class Auth
 		// Hash password
 		$password = $this->hasher->HashPassword($password);
 		// Insert into database
-		$stmt = $this->conn->prepare("INSERT INTO $this->table (user_name, user_pass, user_date) VALUES (:name, :pass, now())");
+		$stmt = $this->conn->prepare("INSERT INTO $this->table (user_name, user_pass, user_created_on) VALUES (:name, :pass, now())");
 		$stmt->execute([':name'=>$username,':pass'=>$password]);
 		// Return sucess status
 		if($stmt->rowCount()==1) {

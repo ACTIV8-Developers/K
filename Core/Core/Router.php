@@ -111,4 +111,13 @@ class Router
     {
     	self::$routes[] = $route;
     }
+
+    /**
+     * Get list of routes.
+     * @return array
+     */
+    public static function getRoutes()
+    {
+        return self::$routes;
+    }
 }
