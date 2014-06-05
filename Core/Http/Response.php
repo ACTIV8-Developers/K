@@ -108,18 +108,14 @@ class Response
 
     /**
      * Set response type to JSON.
+     * @param array
+     * @param int
+     * @param int
      */
-    public function outputJSON()
+    public function sendJSON($value, $options = 0)
     {
         $this->headers[] = ["Content-Type: application/json", true];
-    }
-
-    /**
-     * Set response type to XML.
-     */
-    public function outputXML()
-    {
-        $this->headers[] = ["Content-Type: text/xml", true];
+        $this->body = json_encode($value, $options);
     }
 
     /**
