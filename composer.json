@@ -13,8 +13,10 @@
         "filp/whoops": "1.2.*@dev"
     },
     "autoload": {
-        "psr-0": {
-            "Core": ""
+        "psr-4": {
+            "Core\\": "Core/",
+            "Controllers\\": "App/Controllers/",
+            "Models\\": "App/Models/"
         }
     } 
 }

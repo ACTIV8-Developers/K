@@ -1,10 +1,11 @@
 <?php
+namespace Models;
 
 /**
 * Example model class.
 * @author miloskajnaco@gmail.com
 */
-class ExampleModel extends Model
+class ExampleModel extends \Model
 {
 	public function getData()
 	{

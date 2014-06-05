@@ -107,11 +107,12 @@ class Route
     public function dispatch()
     {
         // Require controller
-        require APP.'Controllers/'.$this->callable[0].'.php';
+        //require APP.'Controllers/'.$this->callable[0].'.php';
         // Extract exact controller name
-        $controller = explode('/', $this->callable[0]);
-        $controller = end($controller);
+        //$controller = explode('/', $this->callable[0]);
+        //$controller = end($controller);
         // Create controller
+        $controller = "Controllers\\".$this->callable[0];
         call_user_func_array([new $controller(), $this->callable[1]], $this->params);
     }
 

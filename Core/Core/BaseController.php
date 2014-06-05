@@ -29,9 +29,7 @@ class BaseController
     */
     protected function model($model)
     {
-        require APP.'Models/'.$model.'.php';
-        $model = explode('/', $model);
-        $model = end($model);
+        $model = "Models\\".$model;
         return new $model();
     }
 

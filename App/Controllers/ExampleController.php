@@ -1,16 +1,22 @@
 <?php
 
+namespace Controllers;
+
 /**
 * Example controller class.
 */
-class ExampleController extends Controller
+class ExampleController extends \Controller
 {
-	public function index()
+	public function __construct()
 	{
     	// Load model
-    	$model = $this->model('ExampleModel');
+    	$this->model = $this->model('ExampleModel');
+	}
+
+	public function index()
+	{
     	// Get data from model
-    	$data['content'] = $model->getData();
+    	$data['content'] = $this->model->getData();
     	// Load data into view and display it
     	$this->response()->render('ExampleView', $data);
 	}
