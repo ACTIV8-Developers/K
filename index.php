@@ -26,7 +26,7 @@
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 * @link http://kframework.info/
-* @version 1.0
+* @version 1.1
 */
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +34,21 @@
 |--------------------------------------------------------------------------
 */
 define('APP', __DIR__.'/App/');
+/*
+|--------------------------------------------------------------------------
+| Set name of directory and namespace where controllers are stored.
+|--------------------------------------------------------------------------
+| This needs to match structure defined in composer.json file, usually
+| controllers are stored in App/Controllers.
+*/
+define('CONTROLERS', 'Controllers');
+/*
+|--------------------------------------------------------------------------
+| Set name of directory and namespace where models are stored.
+|--------------------------------------------------------------------------
+| This needs to match structure defined in composer.json file.
+*/
+define('MODELS', 'Models');
 /*
 |--------------------------------------------------------------------------
 | Set path to directory where views are stored.
@@ -77,7 +92,7 @@ require __DIR__.'/vendor/autoload.php';
 |--------------------------------------------------------------------------
 | Set error reporting
 |--------------------------------------------------------------------------
-| Two supported methods native PHP and WHOOPS error reporting.
+| Two supported methods native PHP and Whoops error reporting.
 */
 define('SHOW_ERRORS', true);
 define('USE_WHOOPS', true);

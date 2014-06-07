@@ -1,6 +1,6 @@
 {
     "name": "Kajna/K",
-    "description": "Simplistic solution for full featured MVC framework",
+    "description": "Simple solution for full featured MVC framework",
     "authors": [
         {
         "name": "Milos Kajnaco",
@@ -18,5 +18,5 @@
             "Controllers\\": "App/Controllers/",
             "Models\\": "App/Models/"
         }
-    } 
+    }
 }

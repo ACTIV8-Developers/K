@@ -30,5 +30,4 @@ class Message {
         }
         return $value;
     }
-
 } 

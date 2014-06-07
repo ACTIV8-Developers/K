@@ -22,7 +22,8 @@ class Route
 	private $methods = [];
 
     /**
-    * The route callable (name of controller and function to execute).
+    * The route callable 
+    * (name of controller and function to execute e.g ['ExampleController', 'index']).
 	* @var array
 	*/
     private $callable;
@@ -34,15 +35,28 @@ class Route
     private $params = [];
 
     /**
-    * List of conditions.
+    * List of parameters conditions.
     * @var array
     */
     private $conditions = [];
 
     /**
+    * List of regex to use when matching conditions.
+    * @param array
+    */
+    private static $conditionRegex = [
+                        'default'           => '[a-zA-Z0-9_\-]+', // Default allows letters, numbers, underscores and dashes.
+                        'alpha-numeric'     => '[a-zA-Z0-9]+', // Numbers and letters.
+                        'numeric'           => '[0-9]+', // Numbers only.
+                        'alpha'             => '[a-zA-Z]+', // Letters only.
+                        'alpha-lowercase'   => '[a-z]+',  // All lowercase letter.
+                        'real-numeric'      => '[0-9\.\-]+' // Numbers, dots or minus signs.
+                    ];
+
+    /**
     * Regex used to parse routes.
     */
-    const REGEX = '@:([\w]+)@';
+    const MATCHES_REGEX = '@:([\w]+)@';
 
     /**
 	* Class constructor.
@@ -66,13 +80,13 @@ class Route
     */
     public function matches($uri, $method)
     {
-        if (in_array('ANY', $this->methods) || in_array($method, $this->methods)) {// Check request method
+        if (in_array('ANY', $this->methods) || in_array($method, $this->methods)) {
             $p_names = []; 
             $p_values = [];
-            preg_match_all(self::REGEX, $this->url, $p_names, PREG_PATTERN_ORDER);
+            preg_match_all(self::MATCHES_REGEX, $this->url, $p_names, PREG_PATTERN_ORDER);
             $p_names = $p_names[0];
          
-            $url_regex = preg_replace_callback(self::REGEX, [$this, 'regexUrl'], $this->url);
+            $url_regex = preg_replace_callback(self::MATCHES_REGEX, [$this, 'regexUrl'], $this->url);
             $url_regex .= '/?';
          
             if (preg_match('@^'. $url_regex.'$@', $uri, $p_values)) {
@@ -97,8 +111,20 @@ class Route
         if (array_key_exists($key, $this->conditions)) {
             return '('.$this->conditions[$key].')';
         } else {
-            return '([a-zA-Z0-9_\+\-%]+)';
+            return '('.self::$conditionRegex['default'].')';
         }
+    }
+
+    /**
+    * Set route parameter condition.
+    * @param string
+    * @param string
+    * @return object \Core\Core\Route (for method chaining)
+    */
+    public function where($key, $condition)
+    {
+        $this->conditions[$key] = self::$conditionRegex[$condition];
+        return $this;
     }
 
     /**
@@ -106,30 +132,29 @@ class Route
     */
     public function dispatch()
     {
-        // Require controller
-        //require APP.'Controllers/'.$this->callable[0].'.php';
-        // Extract exact controller name
-        //$controller = explode('/', $this->callable[0]);
-        //$controller = end($controller);
         // Create controller
-        $controller = "Controllers\\".$this->callable[0];
+        $controller = CONTROLERS."\\".$this->callable[0];
         call_user_func_array([new $controller(), $this->callable[1]], $this->params);
     }
 
     /**
-     * Add GET as acceptable method.
-     */
+    * Add GET as acceptable method.
+    * @return object \Core\Core\Route (for method chaining)
+    */
     public function viaGet()
     {
         $this->methods[] = 'GET';
+        return $this;
     }
 
     /**
-     * Add POST as acceptable method.
-     */
+    * Add POST as acceptable method.
+    * @return object \Core\Core\Route (for method chaining)
+    */
     public function viaPost()
     {
         $this->methods[] = 'POST';
+        return $this;
     }
 
     /**

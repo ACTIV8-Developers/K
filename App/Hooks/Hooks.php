@@ -5,7 +5,8 @@
 |--------------------------------------------------------------------------
 */
 $app->hook('before.routing', function($app) {
-   if(true) return;
+   if(true) 
+        return;
 
    $setup = [
         'create_controllers_from_routes' => true,

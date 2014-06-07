@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Core\Core;
 
 /**
@@ -29,7 +29,7 @@ class BaseController
     */
     protected function model($model)
     {
-        $model = "Models\\".$model;
+        $model = MODELS."\\".$model;
         return new $model();
     }
 

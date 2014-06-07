@@ -37,7 +37,7 @@ class Request
 	*/
 	public function __construct()
 	{
-		$this->uri = $_SERVER['REQUEST_URI'];
+		$this->uri = $_SERVER['REQUEST_URI'];		
 		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
 		$this->fixUri();
 	}

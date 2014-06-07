@@ -20,7 +20,7 @@ class Core extends Container
     /**
     * @const string
     */
-    const VERSION = '1.0';
+    const VERSION = '1.1';
 
     /**
     * Singleton instance of Core.
@@ -32,7 +32,7 @@ class Core extends Container
     * Array of hooks to be applied.
     * @var array
     */
-    private static $hooks = [
+    private $hooks = [
         'before.routing' => null, 
         'after.routing'=> null
      ];
@@ -120,8 +120,8 @@ class Core extends Container
         require ROUTES;
 
         // Pre routing/controller hooks
-        if(is_callable(self::$hooks['before.routing'])) {
-            call_user_func(self::$hooks['before.routing'], $this);
+        if(is_callable($this->hooks['before.routing'])) {
+            call_user_func($this->hooks['before.routing'], $this);
         }
 
         // Route requests
@@ -131,8 +131,8 @@ class Core extends Container
         }
 
         // Post routing/controller hooks
-        if(is_callable(self::$hooks['after.routing'])) {
-            call_user_func(self::$hooks['after.routing'], $this);
+        if(is_callable($this->hooks['after.routing'])) {
+            call_user_func($this->hooks['after.routing'], $this);
         }
 
         // Send final response
@@ -171,6 +171,15 @@ class Core extends Container
     * @param callable
     */
     public function hook($key, $callable) {
-        self::$hooks[$key] = $callable;
+        $this->hooks[$key] = $callable;
+    }
+
+    /**
+    * Get hook
+    * @param string
+    * @return callable
+    */
+    public function getHook($key) {
+        return $this->hooks[$key];
     }
 }

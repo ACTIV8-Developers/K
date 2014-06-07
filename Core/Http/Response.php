@@ -75,6 +75,15 @@ class Response
     }
 
     /**
+    * Return array of headers.
+    * @return array
+    */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
     * Buffer output or return it as string.
     * @param string
     * @param array

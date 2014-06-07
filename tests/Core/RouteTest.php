@@ -4,7 +4,6 @@ use \Core\Core\Route;
 
 class RouteTest extends PHPUnit_Framework_TestCase
 {
-	
 	public function testConstruct()
 	{
 		$route = new Route('foo/bar', ['foo', 'bar'], 'GET');
@@ -17,7 +16,6 @@ class RouteTest extends PHPUnit_Framework_TestCase
 
 		// Is array of methods good now ?
 		$this->assertEquals(['GET', 'POST'], $route->getHttpMethods());
-
 	}
 
 	public function testMatches()
@@ -40,12 +38,67 @@ class RouteTest extends PHPUnit_Framework_TestCase
 
 		$this->assertFalse($route2->matches('en/2014/wrong/delete/2','GET'));
 
-
 		// Case 3
 		$route3 = new Route('foo/bar', [], 'POST');
 
 		$this->assertTrue($route3->matches('foo/bar','POST'));
 
 		$this->assertFalse($route3->matches('foo/bar','GET'));
+
+		// Case 4
+		$route4 = new Route('foo/bar/:param', [], 'GET');
+
+		$this->assertTrue($route4->matches('foo/bar/foobar','GET'));
+
+		$this->assertFalse($route4->matches('foo/bar/foo/bar','GET'));
+	}
+
+	public function testMatchesWithCondition()
+	{
+		/* Test common routing regex conditions.
+		* (callable parameter can be empty here since route wont be dispatched)
+		******************************/
+
+		// Case 1
+		$route1 = new Route('foo/:param', [], 'GET');
+		$route1->where('param', 'numeric');
+
+		$this->assertFalse($route1->matches('foo/bar','GET'));
+
+		$this->assertTrue($route1->matches('foo/123','GET'));
+
+		$this->assertFalse($route1->matches('foo/a2c','GET'));
+
+		// Case 2
+		$route2 = new Route('foo/:param', [], 'GET');
+		$route2->where('param', 'alpha-lowercase');
+
+		$this->assertFalse($route2->matches('foo/BAR','GET'));
+
+		$this->assertTrue($route2->matches('foo/bar','GET'));
+
+		// Case 3
+		$route3 = new Route('foo/:param', [], 'GET');
+		$route3->where('param', 'alpha-numeric');
+
+		$this->assertFalse($route3->matches('foo/Ba#R$','GET'));
+
+		$this->assertTrue($route3->matches('foo/baR34','GET'));
+
+		// Case 4
+		$route4 = new Route('foo/:param', [], 'GET');
+		$route4->where('param', 'alpha');
+
+		$this->assertFalse($route4->matches('foo/bar2','GET'));
+
+		$this->assertTrue($route4->matches('foo/bar','GET'));
+
+		// Case 5
+		$route5 = new Route('foo/:param', [], 'GET');
+		$route5->where('param', 'real-numeric');
+
+		$this->assertFalse($route5->matches('foo/bar2.6','GET'));
+
+		$this->assertTrue($route5->matches('foo/3.5','GET'));
 	}
 }

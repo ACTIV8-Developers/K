@@ -38,7 +38,7 @@ class Util
     public static function base($path = '')
     {
         // Check for cached version of base path
-        if(null!==self::$base) {
+        if (null!==self::$base) {
             return self::$base.$path;
         }
 
@@ -49,6 +49,7 @@ class Util
             self::$base = $base_url;
             return $base_url.$path;
         }
+        return '';
     }
 
 	/**
