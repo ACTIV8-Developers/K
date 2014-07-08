@@ -123,6 +123,15 @@ class Request
     }
 
     /**
+	* Get request headers.
+	* @return array
+	*/
+	public function getHeaders()
+	{
+		return getallheaders();
+	}
+
+    /**
 	* Get user agent.
 	* @return string
 	*/

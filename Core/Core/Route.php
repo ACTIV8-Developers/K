@@ -26,7 +26,7 @@ class Route
     * (name of controller and function to execute e.g ['ExampleController', 'index']).
 	* @var array
 	*/
-    private $callable;
+    private $callable = [];
 
     /**
     * List of parameters to be passed if URI is matched.
@@ -80,23 +80,28 @@ class Route
     */
     public function matches($uri, $method)
     {
-        if (in_array('ANY', $this->methods) || in_array($method, $this->methods)) {
-            $p_names = []; 
-            $p_values = [];
-            preg_match_all(self::MATCHES_REGEX, $this->url, $p_names, PREG_PATTERN_ORDER);
-            $p_names = $p_names[0];
-         
-            $url_regex = preg_replace_callback(self::MATCHES_REGEX, [$this, 'regexUrl'], $this->url);
-            $url_regex .= '/?';
-         
-            if (preg_match('@^'. $url_regex.'$@', $uri, $p_values)) {
-                array_shift($p_values);
-                foreach ($p_names as $index => $value) {
-                    $this->params[substr($value, 1)] = urldecode($p_values[$index]);
+        // Check if request method matches.
+        if (in_array($method, $this->methods) || in_array('ANY', $this->methods)) {        
+            $paramValues = [];
+
+            // Replace parameters with proper regex patterns.
+            $urlRegex = preg_replace_callback(self::MATCHES_REGEX, [$this, 'regexUrl'], $this->url);
+
+            // Check if URI matches and if it matches put results in values array.
+            if (preg_match('@^'.$urlRegex.'/?$@', $uri, $paramValues)===1) {
+                // Extract parameter names.
+                $paramNames = []; 
+                preg_match_all(self::MATCHES_REGEX, $this->url, $paramNames, PREG_PATTERN_ORDER);
+
+                // Put parameters to array to be passed to controller/function later.
+                foreach ($paramNames[0] as $index => $value) {
+                    $this->params[substr($value, 1)] = urldecode($paramValues[$index + 1]);
                 }
+                // Everything is done return true.
                 return true;
             }
         }
+        // No match found return false.
         return false;
     }
 
@@ -107,8 +112,8 @@ class Route
     **/
     private function regexUrl($matches) 
     {
-        $key = str_replace(':', '', $matches[0]);
-        if (array_key_exists($key, $this->conditions)) {
+        $key = substr($matches[0], 1);
+        if (isset($this->conditions[$key])) {
             return '('.$this->conditions[$key].')';
         } else {
             return '('.self::$conditionRegex['default'].')';
@@ -124,6 +129,18 @@ class Route
     public function where($key, $condition)
     {
         $this->conditions[$key] = self::$conditionRegex[$condition];
+        return $this;
+    }
+
+    /**
+    * Set route custom matching pattern.
+    * @param string
+    * @param string
+    * @return object \Core\Core\Route (for method chaining)
+    */
+    public function filter($key, $pattern)
+    {
+        $this->conditions[$key] = $pattern;
         return $this;
     }
 

@@ -20,7 +20,7 @@ class Core extends Container
     /**
     * @const string
     */
-    const VERSION = '1.1';
+    const VERSION = '1.11';
 
     /**
     * Singleton instance of Core.
