@@ -9,6 +9,6 @@ class ExampleModel extends \Model
 	public function getData()
 	{
 		// Dummy value (usually there is a database call here)
-		return 'Hello world!';
+		return 'Simple solution for full featured MVC framework';
 	}
 }
