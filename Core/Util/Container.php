@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of Pimple.
  *
@@ -22,12 +23,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Core\Util;
 
 /**
  * Container main class.
- * @author Fabien Potencier
- * @see http://pimple.sensiolabs.org/
+ *
+ * @author  Fabien Potencier
  */
 class Container implements \ArrayAccess
 {
@@ -106,10 +108,13 @@ class Container implements \ArrayAccess
             return $this->values[$id]($this);
         }
 
-        $this->frozen[$id] = true;
-        $this->raw[$id] = $this->values[$id];
+        $raw = $this->values[$id];
+        $val = $this->values[$id] = $raw($this);
+        $this->raw[$id] = $raw;
 
-        return $this->values[$id] = $this->values[$id]($this);
+        $this->frozen[$id] = true;
+
+        return $val;
     }
 
     /**
@@ -144,7 +149,9 @@ class Container implements \ArrayAccess
      * Marks a callable as being a factory service.
      *
      * @param callable $callable A service definition to be used as a factory
+     *
      * @return callable The passed callable
+     *
      * @throws \InvalidArgumentException Service definition has to be a closure of an invokable object
      */
     public function factory($callable)
@@ -160,9 +167,11 @@ class Container implements \ArrayAccess
 
     /**
      * Protects a callable from being interpreted as a service.
+     *
      * This is useful when you want to store a callable as a parameter.
      *
      * @param callable $callable A callable to protect from being evaluated
+     *
      * @return callable The passed callable
      *
      * @throws \InvalidArgumentException Service definition has to be a closure of an invokable object
@@ -180,6 +189,7 @@ class Container implements \ArrayAccess
 
     /**
      * Gets a parameter or the closure defining an object.
+     *
      * @param string $id The unique identifier for the parameter or object
      *
      * @return mixed The value of the parameter or the closure defining an object
@@ -201,6 +211,7 @@ class Container implements \ArrayAccess
 
     /**
      * Extends an object definition.
+     *
      * Useful when you want to extend an existing object definition,
      * without necessarily loading that object.
      *
@@ -241,6 +252,7 @@ class Container implements \ArrayAccess
 
     /**
      * Returns all defined value names.
+     *
      * @return array An array of value names
      */
     public function keys()
@@ -250,8 +262,10 @@ class Container implements \ArrayAccess
 
     /**
      * Registers a service provider.
+     *
      * @param ServiceProviderInterface $provider A ServiceProviderInterface instance
      * @param array                    $values   An array of values that customizes the provider
+     *
      * @return static
      */
     public function register(ServiceProviderInterface $provider, array $values = array())
