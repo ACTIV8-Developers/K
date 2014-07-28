@@ -76,7 +76,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 		// Create instance of response class
 		$response = new Response();
 
-		// Dummt array
+		// Dummy array
 		$a = ['for'=>'bar', 'bar'=>'foo'];
 
 		// Send JSON test

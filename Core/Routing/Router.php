@@ -1,5 +1,5 @@
 <?php 
-namespace Core\Core;
+namespace Core\Routing;
 
 /**
 * Router class, it contains list of application routes,

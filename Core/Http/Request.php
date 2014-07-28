@@ -32,6 +32,13 @@ class Request
 	 */
 	private $userAgent;
 
+	/**
+	* Server protocol (eg. HTTP/1.1.)
+	* @var string
+	*/
+	private $protocol;
+
+
     /**
 	* Class constructor.
 	*/
@@ -119,7 +126,12 @@ class Request
      */
     public function getServerProtocol()
     {
-        return $_SERVER['SERVER_PROTOCOL'];
+		if (isset($this->protocol)) {
+			return $this->protocol;
+		}
+        $this->protocol = $_SERVER['SERVER_PROTOCOL'];
+
+        return $this->protocol;
     }
 
     /**
@@ -155,6 +167,7 @@ class Request
 			return $this->ipAddress;
 		}
 		$this->ipAddress = $_SERVER['REMOTE_ADDR'];
+		
 		return $this->ipAddress;
 	}
 }

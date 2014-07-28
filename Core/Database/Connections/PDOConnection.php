@@ -7,11 +7,6 @@ namespace Core\Database\Connections;
 */
 abstract class PDOConnection
 {
-    /**
-     * Database connection.
-     * @var resource
-     */
-    protected $connection = null;
 
     /**
      * @var \PDO::ATTR_DEFAULT_FETCH_MODE

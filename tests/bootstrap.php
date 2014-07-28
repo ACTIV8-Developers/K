@@ -50,3 +50,11 @@ date_default_timezone_set('Europe/Belgrade');
 |--------------------------------------------------------------------------
 */
 require __DIR__.'/../vendor/autoload.php';
+
+/*
+|--------------------------------------------------------------------------
+| Register aliases auto loader.
+|--------------------------------------------------------------------------
+| Additional auto loader for prettier class names.
+*/
+\Core\Util\AliasLoader::getInstance(require(APP.'Config/Aliases.php'))->register();

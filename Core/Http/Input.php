@@ -9,7 +9,34 @@ use \Core\Util\Security;
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Input
-{	
+{
+	/**
+	* Get an item or array from input data.
+	* @param	string
+	* @param	bool
+	* @return	array|mixed|null
+	*/
+	public function get($index, $xssClean = false)
+	{
+		// Detect method.
+		$method = strtolower($_SERVER['REQUEST_METHOD']);
+
+		return $this->$method($index, $xssClean);
+	}
+
+
+	/**
+	* Get everything from input data.
+	* @param	bool
+	* @return	array|mixed|null
+	*/
+	public function all($xssClean = false)
+	{
+		$method = strtolower($_SERVER['REQUEST_METHOD']);
+
+		return $this->$method(null, $xssClean);
+	}
+
 	/**
 	* Get an item or array from POST data.
 	* @param	string

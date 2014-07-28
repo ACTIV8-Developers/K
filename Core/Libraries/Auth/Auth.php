@@ -35,16 +35,31 @@ class Auth
 	 * @param array
      * @param object \PDO
 	 */
-	public function __construct($params = [], $conn = null)
+	public function __construct($params = [], $conn = false)
 	{
 		// Take parameters from passed array
         foreach ($params as $key => $val) {
             $this->$key = $val;
         }
+
 		// Try to get database connection from core class if one is not passed.
-		$this->conn = $conn===null?Core::getInstance()['dbdefault']->getConnection():$conn;
+		if ($conn === false) {
+			$this->conn = $this->getDbConnection();
+		} else {
+			$this->conn = $conn
+		}
+		
 		// Create hasher tool
 		$this->hasher = new PasswordHash(8, FALSE);
+	}
+
+	/**
+	* Get PDO connection object.
+	* @return object \PDO
+	*/
+	private function getDbConnection()
+	{
+		return Core::getInstance()['dbdefault']->getConnection();
 	}
 
 	/**
@@ -69,7 +84,7 @@ class Auth
 		$stmt->execute([':name'=>$username]);
 		$result = $stmt->fetchAll();
 		// If username exists return false
-		if(count($result)) {
+		if (count($result)) {
 			return false;
 		}
 		// Hash password
@@ -78,7 +93,7 @@ class Auth
 		$stmt = $this->conn->prepare("INSERT INTO $this->table (user_name, user_pass, user_created_on) VALUES (:name, :pass, now())");
 		$stmt->execute([':name'=>$username,':pass'=>$password]);
 		// Return sucess status
-		if($stmt->rowCount()==1) {
+		if ($stmt->rowCount()==1) {
 			return true;
 		}
 		return false;
@@ -116,14 +131,15 @@ class Auth
 	 */
 	public function login($username, $password)
 	{
-		$stmt = $this->conn->prepare("SELECT user_id, user_name, user_pass FROM $this->table WHERE user_name = :name LIMIT 1");
+		$stmt = $this->conn->prepare("SELECT user_id, user_name, user_pass 
+			FROM $this->table WHERE user_name = :name LIMIT 1");
 		$stmt->execute([':name'=>$username]);
 		$result = $stmt->fetch(\PDO::FETCH_ASSOC);
-		if($result['user_name']!=$username) {
+		if ($result['user_name']!=$username) {
 			return false;
 		}
 
-		if($this->hasher->CheckPassword($password, $result['user_pass'])) {
+		if ($this->hasher->CheckPassword($password, $result['user_pass'])) {
 			// Clear previous session
             Core::getInstance()['session']->regenerate();
 			// Write new data to session
@@ -160,7 +176,7 @@ class Auth
      */
     public function getUserId()
     {
-        if($this->isLogged()) {
+        if ($this->isLogged()) {
             return $_SESSION['user']['id'];
         } else {
             return false;
@@ -174,7 +190,7 @@ class Auth
 	 */
 	public function isLogged()
 	{
-        if(isset($_SESSION['user']['logged_'.$this->table])
+        if (isset($_SESSION['user']['logged_'.$this->table])
             && $_SESSION['user']['logged_'.$this->table]===true) {
         	return true;
         }

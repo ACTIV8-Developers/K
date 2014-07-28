@@ -1,5 +1,5 @@
 <?php
-namespace Core\Core;
+namespace Core\Routing;
 
 /**
 * Route class represents single route and contains method
@@ -73,7 +73,7 @@ class Route
 
     /**
     * Check if requested URI matches this route.
-    * Design by: http://blog.sosedoff.com/2009/09/20/rails-like-php-url-router/
+    * Inspired by: http://blog.sosedoff.com/2009/09/20/rails-like-php-url-router/
     * @param string
     * @param string
     * @return bool

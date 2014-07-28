@@ -4,24 +4,54 @@ use \Core\Http\Input;
 
 class InputTest extends PHPUnit_Framework_TestCase
 {
+	public function __construct()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+
+		// Create input class
+		$this->input = new Input();
+	}
+
+	public function testAll()
+	{
+		$_POST['foo'] = 'bar';
+
+		// Test get specific input.
+		$this->assertEquals($this->input->get('foo'),'bar');
+
+		$_POST['bar'] = 'foo';
+
+		// Test get all all.
+		$this->assertEquals($this->input->all(), ['foo'=>'bar', 'bar'=>'foo']);
+	}
+
 	public function testPost()
 	{
-		// Create input class
-		$input = new Input();
-
+	
 		// Simulate POST array
 		$_POST['foo'] = 'bar';
 		
 		// Test
-		$this->assertEquals($input->post('foo'),'bar');
+		$this->assertEquals($this->input->post('foo'), 'bar');
 
 		$_POST['bar'] = 'foo';
 
-		$this->assertEquals($input->post(),['foo'=>'bar', 'bar'=>'foo']);
+		$this->assertEquals($this->input->post(), ['foo'=>'bar', 'bar'=>'foo']);
 
 		// Simulate invalid POST array
 		$_POST['foo2'] = "alert('Hacker')";
 
-		$this->assertNotEquals($input->post('foo2', true), "alert('Hacker')");
+		$this->assertNotEquals($this->input->post('foo2', true), "alert('Hacker')");
+	}
+
+	public function testInputFacade()
+	{
+		$_POST['foo'] = 'bar';
+
+		$this->assertEquals('bar', \Input::post('foo'));
+
+		$this->assertEquals('bar', \Input::get('foo'));
+
+		$this->assertEquals(['foo'=>'bar'], \Input::all());
 	}
 }

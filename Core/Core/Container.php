@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Core\Util;
+namespace Core\Core;
 
 /**
  * Container main class.
@@ -33,12 +33,12 @@ namespace Core\Util;
  */
 class Container implements \ArrayAccess
 {
-    private $values = array();
+    private $values = [];
     private $factories;
     private $protected;
-    private $frozen = array();
-    private $raw = array();
-    private $keys = array();
+    private $frozen = [];
+    private $raw = [];
+    private $keys = [];
 
     /**
      * Instantiate the container.

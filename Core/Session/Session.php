@@ -76,7 +76,7 @@ class Session
 	* @param array
 	* @param object \SessionHandlerInterface
 	*/
-	public function __construct($params = [], $handler = null)
+	public function __construct($params = [], \SessionHandlerInterface $handler = null)
 	{
 		// Load configuration parameters
         foreach ($params as $key => $val) {
@@ -174,5 +174,55 @@ class Session
 		}
         // Regenerate session
         session_regenerate_id();
+    }
+
+    /**
+    * @param string
+    * @return mixed
+    */
+    public function get($key)
+    {
+    	return $_SESSION[$key];
+    }
+
+    /**
+    * @param string
+    * @param mixed
+    */
+    public function put($key, $value)
+    {
+    	$_SESSION[$key] = $value;
+    }
+
+    /**
+    * @return array
+    */
+    public function all()
+    {
+    	return $_SESSION;
+    }
+
+    /**
+    * Clear session values.
+    */
+    public function flush()
+    {
+    	$_SESSION = [];
+    }
+
+    /**
+    * @param string
+    */
+    public function forget($key)
+    {
+    	unset($_SESSION[$key]);
+    }
+
+    /**
+    * @param string
+    */
+    public function has($key)
+    {
+    	return isset($_SESSION[$key]);
     }
 }

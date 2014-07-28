@@ -139,13 +139,13 @@ class Upload
         // Convert the file size to kilobytes
         $this->fileSize = round($this->fileSize/1024, 2);
         // Check file size
-        if($this->fileSize > ($this->maxSize)) {
+        if ($this->fileSize > ($this->maxSize)) {
             $this->error = 'File size not allowed!';
             return false;
         }
 
         // Set new file name if overide name is true
-        if($this->nameOverride) {
+        if ($this->nameOverride) {
             $this->fileName = $this->nameOverride.$this->fileExt;
         }
 
@@ -157,10 +157,10 @@ class Upload
             $this->fileName = preg_replace("/\s+/", "_", $this->fileName);
         }
 
-        if(!$this->overwrite) {
+        if (!$this->overwrite) {
             $i = 1;
             $temp = $this->fileName;
-            while(file_exists($this->uploadPath.'/'.$temp)) {
+            while (file_exists($this->uploadPath.'/'.$temp)) {
                 $temp = strstr($this->fileName, $this->fileExt, true).'('.$i++.')'.$this->fileExt;
             }
             $this->fileName = $temp;

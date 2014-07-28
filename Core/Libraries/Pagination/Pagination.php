@@ -32,7 +32,7 @@ class Pagination
             }
         }
 
-        if($this->extraParams!='') {
+        if ($this->extraParams!='') {
             $this->extraParams = '/'.$this->extraParams;
         }
     }
@@ -74,7 +74,7 @@ class Pagination
         //create links according to parameters
         for ($i=$start;$i<$end;$i++) {//create links tags
             $offset = $i*$this->perPage;//set offset to pass to jquery function
-            if($offset != $this->curOffset) $class = ''; else $class=' active';//set current link active
+            if ($offset != $this->curOffset) $class = ''; else $class=' active';//set current link active
             //add link to result variable
             $r.='<li class="'.$this->liClass.$class.'" id="'.($i+1).'">
             <a href="'.$this->baseUrl.'/'.($i*$this->perPage).'/'.$this->perPage.$this->extraParams.'">'.($i+1).'</a></li>';

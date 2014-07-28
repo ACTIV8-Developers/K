@@ -1,8 +1,8 @@
 <?php 
 namespace Core\Core;
 
-use \Core\Util\Container;
 use \Core\Http\Request;
+use \Core\Routing\Router;
 use \Core\Http\Input;
 use \Core\Http\Response;
 use \Core\Session\Session;
@@ -11,7 +11,7 @@ use \Core\Database\Database;
 /**
 * Core class is the heart of whole framework. This class is a container for all main 
 * objects of application, it is implemented as singleton. This class containes main 
-* run method which defines and executes all functions in life cycle of application.
+* run method which executes all functions in life cycle of application.
 * 
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -20,7 +20,7 @@ class Core extends Container
     /**
     * @const string
     */
-    const VERSION = '1.11';
+    const VERSION = '1.2';
 
     /**
     * Singleton instance of Core.
@@ -75,12 +75,12 @@ class Core extends Container
         // For each needed database create connection closure
         foreach ($databaseList as $name => $dbConfig) {
             $this['db'.$name] = function() use ($dbConfig) {
-                switch($dbConfig['driver']) {
+                switch ($dbConfig['driver']) {
                     case 'mysql':
                         // Create connection with passed settings
                         $db = new \Core\Database\Connections\MySQLConnection($dbConfig);
                         // Inject it into database class
-                        return new Database($db->getConnection());
+                        return new Database($db);
                     default:
                         throw new \InvalidArgumentException('Error! Unsupported database driver type.');
                         break;
@@ -92,14 +92,15 @@ class Core extends Container
         $this['session'] = function($c) {
             // Select session handler
             $handler = null;
-            switch($c['config']['sessionHandler']) {
+            switch ($c['config']['sessionHandler']) {
                 case 'file':
-                    $handler = new \Core\Session\Handlers\FileSession();
+                    $handler = new \Core\Session\Handlers\FileSessionHandler();
                     break;
                 case 'database':
-                    $handler = new \Core\Session\Handlers\DatabaseSession();
+                    $handler = new \Core\Session\Handlers\DatabaseSessionHandler();
                     break;
             }
+
             return new Session($c['config']['sessionAndCookies'], $handler);
         };
     }
@@ -120,18 +121,18 @@ class Core extends Container
         require ROUTES;
 
         // Pre routing/controller hooks
-        if(is_callable($this->hooks['before.routing'])) {
+        if (is_callable($this->hooks['before.routing'])) {
             call_user_func($this->hooks['before.routing'], $this);
         }
 
         // Route requests
-        if(!$this['router']->run($this['request'])) {
+        if (!$this['router']->run($this['request'])) {
             // If no route found send and show 404
             $this->show404();
         }
 
         // Post routing/controller hooks
-        if(is_callable($this->hooks['after.routing'])) {
+        if (is_callable($this->hooks['after.routing'])) {
             call_user_func($this->hooks['after.routing'], $this);
         }
 
@@ -170,7 +171,8 @@ class Core extends Container
     * @param string
     * @param callable
     */
-    public function hook($key, $callable) {
+    public function hook($key, $callable) 
+    {
         $this->hooks[$key] = $callable;
     }
 
@@ -179,7 +181,8 @@ class Core extends Container
     * @param string
     * @return callable
     */
-    public function getHook($key) {
+    public function getHook($key) 
+    {
         return $this->hooks[$key];
     }
 }
