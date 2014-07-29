@@ -43,31 +43,31 @@ class Core extends Container
 	**/
    	public function __construct()
     {
-        // Call container parent constructor
+        // Call container parent constructor.
         parent::__construct();
 
-        // Load configuration
+        // Load configuration.
         $this['config'] = require APP.'Config/Config.php';
 
-        // Create request
+        // Create request class closure.
         $this['request'] = function() {
             return new Request();
         };
 
-        // Create input class.
+        // Create router class closure.
+        $this['router'] = function() { 
+            return new Router();
+        };  
+
+        // Create input class closure.
         $this['input'] = function() {
             return new Input();
         };
 
-        // Create response class.
+        // Create response class closure.
         $this['response'] = function() {
             return new Response();
         }; 
-
-		// Create router class.
-		$this['router'] = function() { 
-            return new Router();
-        };	
 
         // Load database settings
         $databaseList = require APP.'Config/Database.php';
@@ -106,7 +106,7 @@ class Core extends Container
     }
     
     /**
-    * Main executive function of Core class.
+    * Framework run function.
     * Function will start session, connect to database, apply hooks,
     * route requests, execute controllers and display response.
     */        
@@ -137,7 +137,7 @@ class Core extends Container
         }
 
         // Send final response
-        $this['response']->display();
+        $this['response']->send();
 
         // Display benchmark time if enabled
         if ($this['config']['benchmark']) {

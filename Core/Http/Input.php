@@ -12,9 +12,9 @@ class Input
 {
 	/**
 	* Get an item or array from input data.
-	* @param	string
-	* @param	bool
-	* @return	array|mixed|null
+	* @param string
+	* @param bool
+	* @return array|mixed|null
 	*/
 	public function get($index, $xssClean = false)
 	{
@@ -27,8 +27,8 @@ class Input
 
 	/**
 	* Get everything from input data.
-	* @param	bool
-	* @return	array|mixed|null
+	* @param bool
+	* @return array|mixed|null
 	*/
 	public function all($xssClean = false)
 	{
@@ -39,9 +39,9 @@ class Input
 
 	/**
 	* Get an item or array from POST data.
-	* @param	string
-	* @param	bool
-	* @return	array|mixed|null
+	* @param string
+	* @param bool
+	* @return array|mixed|null
 	*/
 	public function post($index = null, $xssClean = false)
 	{
@@ -95,10 +95,10 @@ class Input
 
     /**
 	* This is a helper function to retrieve values from global arrays.
-	* @param	array
-	* @param	string
-	* @param	bool
-	* @return	string
+	* @param array
+	* @param string
+	* @param bool
+	* @return string
     */
     private function getData(&$data, $index = '', $xssClean = false)
     {
@@ -115,10 +115,10 @@ class Input
 
 	/**
 	 * This is a helper function to retrieve value from array.
-	 * @param	array
-	 * @param	string
-	 * @param	bool
-	 * @return	string|bool
+	 * @param array
+	 * @param string
+	 * @param bool
+	 * @return string|bool
 	 */
 	private function getParam(&$array, $index = '', $xssClean = false)
 	{

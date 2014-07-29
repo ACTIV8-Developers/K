@@ -27,5 +27,10 @@ class SessionTest extends PHPUnit_Framework_TestCase
 		$this->session->flush();
 
 		$this->assertTrue(!$this->session->has('bar'));
+
+		//\Session::put('foo', 'bar');
+		$_SESSION['foo'] = 'bar';
+		
+		$this->assertEquals('bar', \Session::get('foo'));
 	}
 }

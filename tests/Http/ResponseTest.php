@@ -55,7 +55,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 		$response->appendBody($append);
 
 		// Display and send headers
-		$response->display();
+		$response->send();
 
 		$this->expectOutputString($test.$append);
 	}

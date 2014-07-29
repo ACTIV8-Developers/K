@@ -3,7 +3,7 @@ namespace Core\Util\Facades;
 
 class DbFacade extends Facade
 {
-	protected static function getName() 
+	public static function getName() 
 	{ 
 		return 'dbdefault'; 
 	}

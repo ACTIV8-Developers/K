@@ -21,44 +21,14 @@ class Request
 	private $requestMethod;
 
     /**
-	 * IP address of the current user.
-	 * @var string
-	 */
-	private $ipAddress;
-
-	/**
-	 * Web browser being used by the current user.
-	 * @var string
-	 */
-	private $userAgent;
-
-	/**
-	* Server protocol (eg. HTTP/1.1.)
-	* @var string
-	*/
-	private $protocol;
-
-
-    /**
 	* Class constructor.
 	*/
 	public function __construct()
 	{
 		$this->uri = $_SERVER['REQUEST_URI'];		
 		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
-		$this->fixUri();
-	}
-
-	/**
-	 * This function will check URI and fix the query string
-	 * if necessary.
-	 */
-	private function fixUri()
-	{
-		if (!isset($_SERVER['REQUEST_URI']) || !isset($_SERVER['SCRIPT_NAME'])) {
-			return '';
-		}
-
+		
+		// Fix URi if neeeded
         if (strpos($this->uri, $_SERVER['SCRIPT_NAME']) === 0) {
             $this->uri = substr($this->uri, strlen($_SERVER['SCRIPT_NAME']));
         } elseif (strpos($this->uri, dirname($_SERVER['SCRIPT_NAME'])) === 0) {
@@ -126,22 +96,8 @@ class Request
      */
     public function getServerProtocol()
     {
-		if (isset($this->protocol)) {
-			return $this->protocol;
-		}
-        $this->protocol = $_SERVER['SERVER_PROTOCOL'];
-
-        return $this->protocol;
+        return $_SERVER['SERVER_PROTOCOL'];
     }
-
-    /**
-	* Get request headers.
-	* @return array
-	*/
-	public function getHeaders()
-	{
-		return getallheaders();
-	}
 
     /**
 	* Get user agent.
@@ -149,25 +105,15 @@ class Request
 	*/
 	public function getUserAgent()
 	{
-		if (isset($this->userAgent)) {
-			return $this->userAgent;
-		}
-		$this->userAgent = (!isset($_SERVER['HTTP_USER_AGENT'])) ? false : $_SERVER['HTTP_USER_AGENT'];
-
-		return $this->userAgent;
+		return (!isset($_SERVER['HTTP_USER_AGENT'])) ? false : $_SERVER['HTTP_USER_AGENT'];
 	}
 
 	/**
 	* Get the user IP Address.
 	* @return string
 	*/
-	public function getIpAddress()
+	public function getUserIpAddress()
 	{
-		if (isset($this->ipAddress)) {
-			return $this->ipAddress;
-		}
-		$this->ipAddress = $_SERVER['REMOTE_ADDR'];
-		
-		return $this->ipAddress;
+		return $_SERVER['REMOTE_ADDR'];;
 	}
 }

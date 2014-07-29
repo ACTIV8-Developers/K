@@ -141,7 +141,7 @@ class Response
     /**
     * Send final content and headers.
     */
-    public function display()
+    public function send()
     {
         // Send headers.
         if (count($this->headers) > 0) {

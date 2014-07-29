@@ -1,6 +1,6 @@
 <?php
 /**
-* K - Simplistic solution for full featured MVC framework
+* K - Simple solution for full featured MVC framework
 *
 * The MIT License (MIT)
 *
@@ -26,7 +26,7 @@
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 * @link http://kframework.info/
-* @version 1.11
+* @version 1.2
 */
 /*
 |--------------------------------------------------------------------------

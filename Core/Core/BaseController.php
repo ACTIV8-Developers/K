@@ -70,6 +70,15 @@ class BaseController
     }
 
     /**
+    * Get session object.
+    * @return object \Core\Session\Session
+    */
+    protected function session()
+    {
+        return Core::getInstance()['session'];
+    }
+
+    /**
     * Load language file with defined constants
     * @param string
     */

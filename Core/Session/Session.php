@@ -113,7 +113,9 @@ class Session
 		}
 
 		// Start session
-		session_start();
+	    if (session_status() !== PHP_SESSION_ACTIVE) { 
+	        session_start(); 
+	    } 
 
 		// Validate session, if session is new or irregular clear data and start new session.
 		if (!$this->validate()) {
