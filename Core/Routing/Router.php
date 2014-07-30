@@ -17,11 +17,11 @@ class Router
 	private static $routes = [];
 
 	/**
-	* Check routes and dispatch matching one.
+	* Check routes and dispatch matching one if found.
 	* @var object \Core\Http\Request
 	* @return bool
 	*/
-	public function run($request)
+	public function run(\Core\Http\Request  $request)
 	{
 		$found = false;
 		// Get parameters to check against
@@ -42,7 +42,7 @@ class Router
 	* Add a route object to the router accepting any request method.
 	* @param string
 	* @param array
-    * @return object \Core\Core\Route
+    * @return object \Core\Routing\Route
 	*/
     public static function any($url, $callable)
     {
@@ -55,7 +55,7 @@ class Router
 	* Add a route object to the router accepting GET request method.
 	* @param string 
 	* @param array
-    * @return object \Core\Core\Route
+    * @return object \Core\Routing\Route
     */
     public static function get($url, $callable)
     {
@@ -68,7 +68,7 @@ class Router
 	* Add a route object to the router accepting POST request method.
 	* @param string
 	* @param array
-    * @return object \Core\Core\Route
+    * @return object \Core\Routing\Route
     */
     public static function post($url, $callable)
     {
@@ -107,7 +107,7 @@ class Router
     * Add custom route object to routes array.
     * @var object \Core\Core\Route
     */
-    public static function addRoute($route)
+    public static function addRoute(Route $route)
     {
     	self::$routes[] = $route;
     }

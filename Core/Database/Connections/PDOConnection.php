@@ -49,6 +49,11 @@ abstract class PDOConnection
     protected $collation = 'utf8_unicode_ci';
 
     /**
+    * @var object \PDO
+    */
+    protected $connection;
+
+    /**
      * Connect to database and store resource in connection variable
      */
     abstract protected function connect();
@@ -59,7 +64,7 @@ abstract class PDOConnection
      */
     public function getConnection()
     {
-        if(null==$this->connection) {
+        if (null==$this->connection) {
             $this->connect();
         }
         return $this->connection;

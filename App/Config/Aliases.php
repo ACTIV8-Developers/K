@@ -12,8 +12,5 @@ return [
 	'Security'	=>'Core\Util\Security',
 	'Util'		=>'Core\Util\Util',
 	'Log'		=>'Core\Util\Log',
-    'Message'   =>'Core\Util\Message',
-    // Facades
-    'Input'     =>'Core\Util\Facades\InputFacade',
-    'Session'   =>'Core\Util\Facades\SessionFacade',
+    'Message'   =>'Core\Util\Message'
 ];

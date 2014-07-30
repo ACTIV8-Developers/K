@@ -44,17 +44,11 @@ class Container implements \ArrayAccess
      * Instantiate the container.
      *
      * Objects and parameters can be passed as argument to the constructor.
-     *
-     * @param array $values The parameters or objects.
      */
-    public function __construct(array $values = array())
+    protected function __construct()
     {
         $this->factories = new \SplObjectStorage();
         $this->protected = new \SplObjectStorage();
-
-        foreach ($values as $key => $value) {
-            $this->offsetSet($key, $value);
-        }
     }
 
     /**

@@ -137,11 +137,11 @@ class Transliterate
         // Get input length
 		$len = count($input);
 
-		for($i = 0; $i<$len; ++$i) { // Iterate over input array
+		for ($i = 0; $i<$len; ++$i) { // Iterate over input array
 
-			switch($input[$i]) { // Whats the status ?
+			switch ($input[$i]) { // Whats the status ?
 				case '<';
-					if($this->tagStatus == self::TAG_START_END) { // Start of tag
+					if ($this->tagStatus == self::TAG_START_END) { // Start of tag
 						$this->tagStatus = self::TAG_CLOSE_START;
 						$this->textStatus = self::OFF;
 					} else {
@@ -157,7 +157,7 @@ class Transliterate
 					}
 					break;
 				case '>';
-					if(in_array($this->tagBuffer, $this->tags)) { // Check if tag is self-closing
+					if (in_array($this->tagBuffer, $this->tags)) { // Check if tag is self-closing
 						$this->tagStatus = self::NO_TAG;
 						$this->textStatus = self::OFF;
 					} else if ($this->tagStatus == self::TAG_START_BEGIN) {
@@ -170,21 +170,21 @@ class Transliterate
 					break;
 				default:
 				// If character doesn't belong to any tag turn transliterate flag ON
-				if(($this->tagStatus != self::TAG_START_BEGIN && $this->tagStatus != self::TAG_CLOSE_START) || $this->tagStatus == self::NO_TAG) {
+				if (($this->tagStatus != self::TAG_START_BEGIN && $this->tagStatus != self::TAG_CLOSE_START) || $this->tagStatus == self::NO_TAG) {
 					$this->textStatus = self::ON;
 				}
 			}
 
 			// Transliterate or just append tag char (depends on status)
-			if($this->textStatus == self::ON) {
+			if ($this->textStatus == self::ON) {
 				// Some character are written as two letters, check for them
-				if(($input[$i]=='l' || $input[$i]=='L') && ($input[$i+1]=='J' || $input[$i+1]=='j')) {
+				if (($input[$i]=='l' || $input[$i]=='L') && ($input[$i+1]=='J' || $input[$i+1]=='j')) {
 					$input[$i] = $input[$i].$input[++$i];
 				}
-				if(($input[$i]=='n' || $input[$i]=='N') && ($input[$i+1]=='J' || $input[$i+1]=='j')) {
+				if (($input[$i]=='n' || $input[$i]=='N') && ($input[$i+1]=='J' || $input[$i+1]=='j')) {
 					$input[$i] = $input[$i].$input[++$i];
 				}
-				if(($input[$i]=='d' || $input[$i]=='D') && ($input[$i+1]=='ž' || $input[$i+1]=='Ž')) {
+				if (($input[$i]=='d' || $input[$i]=='D') && ($input[$i+1]=='ž' || $input[$i+1]=='Ž')) {
 					$input[$i] = $input[$i].$input[++$i];
 				}
 				// Transliterate then append
@@ -204,7 +204,7 @@ class Transliterate
 	*/
 	private function trans($char)
 	{
-		if(array_key_exists($char, $this->lookup)) {
+		if (array_key_exists($char, $this->lookup)) {
 			return $this->lookup[$char];
 		}
 		return $char;

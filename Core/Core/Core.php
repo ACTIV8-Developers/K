@@ -18,7 +18,8 @@ use \Core\Database\Database;
 class Core extends Container
 {
     /**
-    * @const string
+    * Core version.
+    * @var string
     */
     const VERSION = '1.2';
 
@@ -40,10 +41,10 @@ class Core extends Container
     /**
 	* Class constructor.
     * Loads all needed classes as closures into container.
-	**/
-   	public function __construct()
+	*/
+   	protected function __construct()
     {
-        // Call container parent constructor.
+        // Call parent container constructor.
         parent::__construct();
 
         // Load configuration.
@@ -69,28 +70,26 @@ class Core extends Container
             return new Response();
         }; 
 
-        // Load database settings
+        // Load database settings.
         $databaseList = require APP.'Config/Database.php';
 
-        // For each needed database create connection closure
+        // For each needed database create database class closure.
         foreach ($databaseList as $name => $dbConfig) {
             $this['db'.$name] = function() use ($dbConfig) {
+                $db = null;
                 switch ($dbConfig['driver']) {
                     case 'mysql':
-                        // Create connection with passed settings
+                        // Create connection with passed settings.
                         $db = new \Core\Database\Connections\MySQLConnection($dbConfig);
-                        // Inject it into database class
-                        return new Database($db);
-                    default:
-                        throw new \InvalidArgumentException('Error! Unsupported database driver type.');
-                        break;
                 }
+                // Inject it into database class.
+                return new Database($db);
             };  
         }
 
-        // Create session class.
+        // Create session class closure.
         $this['session'] = function($c) {
-            // Select session handler
+            // Select session handler.
             $handler = null;
             switch ($c['config']['sessionHandler']) {
                 case 'file':
@@ -167,7 +166,7 @@ class Core extends Container
     }
 
     /**
-    * Add hook
+    * Add hook.
     * @param string
     * @param callable
     */
@@ -177,7 +176,7 @@ class Core extends Container
     }
 
     /**
-    * Get hook
+    * Get hook.
     * @param string
     * @return callable
     */

@@ -26,7 +26,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
 	}
 }
 
-class MockRoute
+class MockRoute extends \Core\Routing\Route
 {
   	/**
     * The route pattern (The URL pattern (e.g. "/article/:id")).
@@ -64,7 +64,7 @@ class MockRoute
     }
 }
 
-class MockRequest
+class MockRequest extends \Core\Http\Request
 {
 	/**
 	* Request URI.

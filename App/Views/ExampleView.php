@@ -18,7 +18,8 @@
   </head>
   <body id="page">
         <div>
-            <h1>Welcome to home of K framework</h1>
+            <h1>Welcome to home of K</h1>
+            <h3>Framework that lets you write PHP code</h3>
         </div>
         <hr>
         <article>

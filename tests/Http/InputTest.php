@@ -22,7 +22,7 @@ class InputTest extends PHPUnit_Framework_TestCase
 		$_POST['bar'] = 'foo';
 
 		// Test get all all.
-		$this->assertEquals($this->input->all(), ['foo'=>'bar', 'bar'=>'foo']);
+		$this->assertEquals($this->input->post(), ['foo'=>'bar', 'bar'=>'foo']);
 	}
 
 	public function testPost()
@@ -42,16 +42,5 @@ class InputTest extends PHPUnit_Framework_TestCase
 		$_POST['foo2'] = "alert('Hacker')";
 
 		$this->assertNotEquals($this->input->post('foo2', true), "alert('Hacker')");
-	}
-
-	public function testInputFacade()
-	{
-		$_POST['foo'] = 'bar';
-
-		$this->assertEquals('bar', \Input::post('foo'));
-
-		$this->assertEquals('bar', \Input::get('foo'));
-
-		$this->assertEquals(['foo'=>'bar'], \Input::all());
 	}
 }

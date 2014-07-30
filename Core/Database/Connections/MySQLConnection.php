@@ -11,7 +11,7 @@ class MySQLConnection extends PDOConnection
     * Class constructor.
     * @param array
     */
-    public function __construct($params)
+    public function __construct(array $params)
     {
         // Load configuration parameters
         foreach ($params as $key => $val) {
@@ -24,6 +24,7 @@ class MySQLConnection extends PDOConnection
     /**
     * Connect to database with passed settings.
     * @throws \PDOException
+    * @throws \InvalidArgumentException
     */
     protected function connect()
     {

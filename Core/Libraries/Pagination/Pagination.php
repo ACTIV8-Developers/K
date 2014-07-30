@@ -10,21 +10,54 @@ namespace Core\Libraries\Pagination;
 class Pagination
 {
     // ------------------------------------------------------------------------
-    private $perPage = 12; // number of products to display per page
-    private $totalRows = 0; // total number of rows
-    private $curOffset = 0; // current displaying offset
-    private $numLinks = 9; // number of links to display at once
-    private $liClass = 'pagi'; // class to add to <li> tag
-    private $baseUrl = '';   // Base added to all links
-    private $extraParams = '';  // Added at end of every link
-    //!!CAUTION numLinks must be odd number in order to class function properly
-    // ------------------------------------------------------------------------
+
+    /**
+    * Number of products to display per page.
+    * @var int
+    */
+    private $perPage = 12;
+    /**
+    * Total number of rows.
+    * @var int
+    */
+    private $totalRows = 0; 
+
+    /**
+    * Current displaying offset.
+    * @var int
+    */
+    private $curOffset = 0;
+    
+    /**
+    * Number of links to display at once.
+    * NumLinks must be odd number in order to class function properly.
+    * @var int
+    */
+    private $numLinks = 9;
+
+    /**
+    * Class to add to <li> tag.
+    * @var string
+    */
+    private $liClass = 'pagi';
+
+    /**
+    * Base added to all links.
+    * @var string
+    */
+    private $baseUrl = '';
+
+    /**
+    * Added at end of every link.
+    * @var string
+    */
+    private $extraParams = '';
     
     /**
     * Class constructor
     * @param array
     */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         foreach ($params as $key => $val) {
             if (isset($this->$key)) {

@@ -2,6 +2,7 @@
 namespace Core\Database;
 
 use \Core\Database\Connections\PDOConnection as PDOConn;
+
 /**
 * Basic database class.
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
@@ -16,11 +17,20 @@ class Database
 
 	/**
 	* Class constructor.
-    * @var object \PDO
+    * @var object \PDOConn
 	*/
-    public function __construct(PDOConn $conn)
+    public function __construct(PDOConn $PDOConn)
     {
-        $this->connection = $conn->getConnection();
+        $this->connection = $PDOConn->getConnection();
+    }
+
+    /**
+     * Set connection variable.
+     * @var object \PDO
+     */
+    public function setConnection(PDOConn $PDOConn)
+    {
+        $this->connection = $PDOConn;
     }
 
     /**
@@ -91,7 +101,7 @@ class Database
 	* @param string
 	* @param array
 	* @param string
-	* @return associative array
+	* @return array
 	*/
 	public function select($query, $params = [], $fetch = null)
 	{

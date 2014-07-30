@@ -1,6 +1,6 @@
 <?php
 /**
-* K - Simple solution for full featured MVC framework
+* K
 *
 * The MIT License (MIT)
 *
@@ -97,10 +97,10 @@ require __DIR__.'/vendor/autoload.php';
 define('SHOW_ERRORS', true);
 define('USE_WHOOPS', true);
 
-if(SHOW_ERRORS) {
+if (SHOW_ERRORS) {
  	ini_set("display_errors", 1);
 	error_reporting(E_ALL);
-    if(USE_WHOOPS) {
+    if (USE_WHOOPS) {
         $whoops = new Whoops\Run();
         $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
         $whoops->register();

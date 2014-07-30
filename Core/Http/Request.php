@@ -25,10 +25,11 @@ class Request
 	*/
 	public function __construct()
 	{
+        // Get request method and URI
 		$this->uri = $_SERVER['REQUEST_URI'];		
 		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
 		
-		// Fix URi if neeeded
+		// Fix URI if neeeded
         if (strpos($this->uri, $_SERVER['SCRIPT_NAME']) === 0) {
             $this->uri = substr($this->uri, strlen($_SERVER['SCRIPT_NAME']));
         } elseif (strpos($this->uri, dirname($_SERVER['SCRIPT_NAME'])) === 0) {
@@ -48,7 +49,7 @@ class Request
             parse_str($_SERVER['QUERY_STRING'], $_GET);
         } else {
             $_SERVER['QUERY_STRING'] = '';
-            $_GET = array();
+            $_GET = [];
         }
 
 		if ($this->uri == '/' || empty($this->uri)) {
@@ -69,6 +70,20 @@ class Request
     }
 
     /**
+    * Get request URI segment.
+    * @param int
+    * @return string|bool
+    */
+    public function segment($num)
+    {
+    	$segments = explode('/', $this->uri);
+    	if (isset($segments[$num])) {
+    		return $segments[$num];
+    	}
+    	return false;
+    }
+
+    /**
 	* Get request method.
     * (GET, POST, PUT, DELETE etc.)
 	* @return String
@@ -80,7 +95,7 @@ class Request
 
     /**
     * Check if it is AJAX request.	
-    * @return boolean
+    * @return bool
     */
     public function isAjax()
     {
@@ -101,7 +116,7 @@ class Request
 
     /**
 	* Get user agent.
-	* @return string
+	* @return string|bool
 	*/
 	public function getUserAgent()
 	{
@@ -116,4 +131,13 @@ class Request
 	{
 		return $_SERVER['REMOTE_ADDR'];;
 	}
+
+    /**
+	* Get Content Type
+	* @return string|null
+	*/
+    public function getContentType()
+    {
+        return $_SERVER['CONTENT_TYPE'];
+    }
 }

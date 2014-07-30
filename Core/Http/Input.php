@@ -24,19 +24,6 @@ class Input
 		return $this->$method($index, $xssClean);
 	}
 
-
-	/**
-	* Get everything from input data.
-	* @param bool
-	* @return array|mixed|null
-	*/
-	public function all($xssClean = false)
-	{
-		$method = strtolower($_SERVER['REQUEST_METHOD']);
-
-		return $this->$method(null, $xssClean);
-	}
-
 	/**
 	* Get an item or array from POST data.
 	* @param string

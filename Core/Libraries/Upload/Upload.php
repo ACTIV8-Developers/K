@@ -95,7 +95,7 @@ class Upload
      * @param array
      * @throws \InvalidArgumentException
      */
-    public function __construct($params = []) 
+    public function __construct(array $params = []) 
     {
         // Load params from passed array
         foreach ($params as $key => $val) {

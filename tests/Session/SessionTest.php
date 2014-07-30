@@ -16,6 +16,8 @@ class SessionTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals('bar', $_SESSION['foo']);
 
+		$this->assertEquals('bar', $this->session->get('foo'));
+
 		$this->session->put('bar', 'foo');
 
 		$this->assertEquals('foo', $this->session->get('bar'));
@@ -27,10 +29,5 @@ class SessionTest extends PHPUnit_Framework_TestCase
 		$this->session->flush();
 
 		$this->assertTrue(!$this->session->has('bar'));
-
-		//\Session::put('foo', 'bar');
-		$_SESSION['foo'] = 'bar';
-		
-		$this->assertEquals('bar', \Session::get('foo'));
 	}
 }
