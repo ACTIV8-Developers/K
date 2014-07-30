@@ -35,7 +35,7 @@ class Auth
 	 * @param array
      * @param object \PDO
 	 */
-	public function __construct(array $params = [], \PDO $conn = false)
+	public function __construct(array $params = [], \PDO $conn = null)
 	{
 		// Take parameters from passed array
         foreach ($params as $key => $val) {
@@ -46,7 +46,7 @@ class Auth
 		if ($conn === false) {
 			$this->conn = $this->getDbConnection();
 		} else {
-			$this->conn = $conn
+			$this->conn = $conn;
 		}
 		
 		// Create hasher tool

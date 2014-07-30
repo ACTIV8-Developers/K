@@ -10,7 +10,7 @@ namespace Core\Session\Handlers;
 *
 * @author Enrico Zimuel (enrico@zimuel.it)
 */
-class FileSession implements \SessionHandlerInterface
+class FileSessionHandler implements \SessionHandlerInterface
 {
     /**
      * Encryption algorithm
