@@ -23,7 +23,7 @@ class Util
 	public static function baseUrl($path = '')
 	{
 		// Check for cached version of base path
-		if(null!==self::$base) {
+		if (null!==self::$base) {
 			return self::$base.$path;
 		}
 
@@ -59,7 +59,7 @@ class Util
 	 */
 	public static function css($css)
 	{
-		return self::baseUrl().PUBLIC_DIR.'/css/'.$css;
+		return self::$base.PUBLIC_DIR.'/css/'.$css;
 	}	
 
 	/**
@@ -69,7 +69,7 @@ class Util
 	 */
 	public static function js($js)
 	{
-		return self::baseUrl().PUBLIC_DIR.'/js/'.$js;
+		return self::$base.PUBLIC_DIR.'/js/'.$js;
 	}
 
 	/**
@@ -79,28 +79,30 @@ class Util
 	 */
 	public static function img($img)
 	{
-		return self::baseUrl().PUBLIC_DIR.'/images/'.$img;
+		return self::$base.PUBLIC_DIR.'/images/'.$img;
 	}
 
 	/**
 	 * Converts from ISO 8601 (yy-mm-dd) to dd-mm-yy format and vice-versa
 	 * @param  string
+	 * @param char
 	 * @return string
 	 */
-	public static function convertDate($date)
+	public static function convertDate($date, $delimiter = '-')
 	{
-		$date = explode('-',$date);
+		$date = explode($delimiter, $date);
 		return $date[2].'-'.$date[1].'-'.$date[0];
 	}
 
 	/**
 	 * Converts from ISO 8601 (yy-mm-dd) to serbian display date
 	 * @param  string
+	 * @param char
 	 * @return string
 	 */
-	public static function convertSrbDate($date)
+	public static function convertSrbDate($date, $delimiter = '-')
 	{
-		$date = explode('-',$date);
+		$date = explode($delimiter, $date);
 		return $date[2].'.'.$date[1].'.'.$date[0].'.';
 	}
 }

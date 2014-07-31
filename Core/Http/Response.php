@@ -11,7 +11,7 @@ use \Core\Util\Util;
 class Response
 {
     /**
-     * List of server headers.
+     * List of HTTP headers to be sent.
      * @var array
      */
     private $headers = [];
@@ -21,6 +21,12 @@ class Response
 	* @var string 
 	*/
     private $body = '';
+
+    /**
+    * HTTP response code.
+    * @var int
+    */
+    private $statusCode = 200;
 
     /**
      * Nesting level of the output buffering mechanism.
@@ -34,6 +40,26 @@ class Response
     public function __construct()
     {
         $this->obLevel = ob_get_level();
+    }
+
+    /**
+    * Add or replace header.
+    * @var string
+    * @var string
+    * @var bool
+    */
+    public function setHeader($header, $value, $replace = true)
+    {
+        $this->headers[] = [$header.': '.$value, $replace];
+    }
+
+    /**
+    * Return array of headers.
+    * @return array
+    */
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 
     /**
@@ -64,23 +90,21 @@ class Response
     }
 
     /**
-    * Add or replace header.
-    * @var string
-    * @var string
-    * @var bool
+    * Set HTTP response code to be sent with headers.
+    * @var int
     */
-    public function setHeader($header, $value, $replace = true)
+    public function setStatusCode($code)
     {
-        $this->headers[] = [$header.': '.$value, $replace];
+        $this->statusCode = $code;
     }
 
     /**
-    * Return array of headers.
-    * @return array
+    * Get HTTP response code.
+    * @return int
     */
-    public function getHeaders()
+    public function getStatusCode()
     {
-        return $this->headers;
+        return $this->statusCode;
     }
 
     /**
@@ -143,13 +167,16 @@ class Response
     */
     public function send()
     {
-        // Send headers.
-        if (count($this->headers) > 0) {
-            foreach ($this->headers as $header) {
-                @header($header[0], $header[1]);
+        // Check if headers are sent already.
+        if (!headers_sent()) {
+            // Send headers.
+            if (count($this->headers) > 0) {
+                foreach ($this->headers as $header) {
+                    @header($header[0], $header[1], $this->statusCode);
+                }
             }
+            // Send body.
+            echo $this->body;
         }
-        // Send body.
-        echo $this->body;
     }
 }

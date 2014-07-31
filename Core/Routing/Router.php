@@ -23,7 +23,6 @@ class Router
 	*/
 	public function run(\Core\Http\Request  $request)
 	{
-		$found = false;
 		// Get parameters to check against
 		$resourceUri = $request->getUri();
 		$requestMethod = $request->getRequestMethod();
@@ -31,11 +30,10 @@ class Router
 	    foreach (self::$routes as $route) {
 	    	if (true===$route->matches($resourceUri, $requestMethod)) {
 	        	$route->dispatch();
-	        	$found = true;
-	        	break;
+	        	return true;
 	      	}
 	    }
-	    return $found;
+	    return false;
 	}
 
     /**
