@@ -61,12 +61,12 @@ class BaseController
     }
 
     /**
-    * Get configuration.
-    * @return array
+    * Get response object.
+    * @return object \Core\Http\Cookies
     */
-    protected function config()
+    protected function cookies()
     {
-        return Core::getInstance()['config'];
+        return Core::getInstance()['cookies'];
     }
 
     /**
@@ -76,6 +76,15 @@ class BaseController
     protected function session()
     {
         return Core::getInstance()['session'];
+    }
+
+    /**
+    * Get configuration.
+    * @return array
+    */
+    protected function config()
+    {
+        return Core::getInstance()['config'];
     }
 
     /**

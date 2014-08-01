@@ -4,7 +4,9 @@ namespace Core\Http;
 use \Core\Util\Security;
 
 /**
-* Input class, used for processing received data.
+* Input class.
+* This class is used for fetching request input data from 
+* common sources such as POST, PUT, DELETE etc.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -44,7 +46,7 @@ class Input
     public function put($index = null, $xssClean = false)
     {
         $_PUT = [];  
-	    if($_SERVER['REQUEST_METHOD'] == 'PUT') {  
+	    if ($_SERVER['REQUEST_METHOD'] == 'PUT') {  
 	        parse_str(file_get_contents('php://input'), $_PUT);  
 	    }  
 	    return $this->getData($_PUT, $index, $xssClean);
@@ -59,7 +61,7 @@ class Input
     public function patch($index = null, $xssClean = false)
     {
         $_PATCH = [];  
-	    if($_SERVER['REQUEST_METHOD'] == 'PATCH') {  
+	    if ($_SERVER['REQUEST_METHOD'] == 'PATCH') {  
 	        parse_str(file_get_contents('php://input'), $_PATCH);  
 	    }  
 	    return $this->getData($_PATCH, $index, $xssClean);
@@ -74,7 +76,7 @@ class Input
     public function delete($index = null, $xssClean = false)
     {      
         $_DELETE = [];  
-	    if($_SERVER['REQUEST_METHOD'] == 'DELETE') {  
+	    if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {  
 	        parse_str(file_get_contents('php://input'), $_DELETE);  
 	    }  
 	    return $this->getData($_DELETE, $index, $xssClean);

@@ -2,15 +2,17 @@
 namespace Core\Core;
 
 use \Core\Http\Request;
-use \Core\Routing\Router;
+use \Core\Http\Cookies;
 use \Core\Http\Input;
 use \Core\Http\Response;
+use \Core\Routing\Router;
 use \Core\Session\Session;
 use \Core\Database\Database;
 
 /**
-* Core class is the heart of whole framework. This class is a container for all main 
-* objects of application, it is implemented as singleton. This class containes main 
+* Core class.
+* This is the heart of whole framework. It is a singleton container for all main 
+* objects of application. This class containes main 
 * run method which executes all functions in life cycle of application.
 * 
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
@@ -65,6 +67,11 @@ class Core extends Container
             return new Input();
         };
 
+        // Create cookies class closure.
+        $this['cookies'] = function($c) {
+            return new Cookies($c['config']['sessionAndCookies']);
+        };
+
         // Create response class closure.
         $this['response'] = function() {
             return new Response();
@@ -105,13 +112,13 @@ class Core extends Container
     }
     
     /**
-    * Framework run function.
+    * Core main executive function.
     * Function will start session, connect to database, apply hooks,
     * route requests, execute controllers and display response.
     */        
     public function run()
     {
-        // Load and start session if enabled in configuration
+        // Load and start session if enabled in configuration.
         if ($this['config']['sessionStart']) {
             $this['session'];
         }
@@ -119,26 +126,26 @@ class Core extends Container
         // Collect routes list from file.
         require ROUTES;
 
-        // Pre routing/controller hooks
+        // Pre routing/controller hooks.
         if (is_callable($this->hooks['before.routing'])) {
             call_user_func($this->hooks['before.routing'], $this);
         }
 
         // Route requests
         if (!$this['router']->run($this['request'])) {
-            // If no route found send and show 404
+            // If no route found send and show 404.
             $this->show404();
         }
 
-        // Post routing/controller hooks
+        // Post routing/controller hooks.
         if (is_callable($this->hooks['after.routing'])) {
             call_user_func($this->hooks['after.routing'], $this);
         }
 
-        // Send final response
+        // Send final response.
         $this['response']->send();
 
-        // Display benchmark time if enabled
+        // Display benchmark time if enabled.
         if ($this['config']['benchmark']) {
             print \PHP_Timer::resourceUsage();
         }
@@ -146,7 +153,7 @@ class Core extends Container
 
     /**
     * Get singleton instance of Core class.
-    * @return object
+    * @return object \Core\Core\Core
     */
     public static function getInstance()
     {
@@ -161,7 +168,7 @@ class Core extends Container
     */
     private function show404()
     {
-        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+        $this['response']->setStatusCode(404);
         $this['response']->setBody('<h1>404 Not Found</h1>The page that you have requested could not be found.');
     }
 

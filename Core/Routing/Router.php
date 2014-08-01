@@ -2,7 +2,8 @@
 namespace Core\Routing;
 
 /**
-* Router class, it contains list of application routes,
+* Router class.
+* This class contains list of application routes,
 * also here are methods for adding things to list and
 * finally here is defined run method for routing requests.
 *

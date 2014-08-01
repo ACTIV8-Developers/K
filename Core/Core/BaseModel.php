@@ -25,7 +25,7 @@ class BaseModel
     * @param array
     * @return object
     */
-    protected function library($library, $params = [])
+    protected function library($library, array $params = [])
     {
     	$library = '\\Core\\Libraries\\'.$library.'\\'.$library;
 		return new $library($params);

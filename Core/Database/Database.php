@@ -4,7 +4,7 @@ namespace Core\Database;
 use \Core\Database\Connections\PDOConnection as PDOConn;
 
 /**
-* Basic database class.
+* Basic database class used for common CRUD operations.
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Database

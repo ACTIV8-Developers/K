@@ -5,6 +5,9 @@ use \Core\Util\Util;
 
 /**
 * HTTP response class.
+* This class provides simple abstraction over top an HTTP response. 
+* This class provides methods to set the HTTP status, the HTTP headers,
+* the HTTP body and also handles 'Views' rendering.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -245,8 +248,8 @@ class Response
         if (headers_sent() === false) {
 
             // Send status code
-            header(sprintf('%s %s %s', $this->getStatusProtocol(), $this->statusCode, self::$messages[$this->statusCode]), true, $this->statusCode);
-
+            header(sprintf('%s %s', $this->getStatusProtocol(), self::$messages[$this->statusCode]), true, $this->statusCode);
+            
             // Send headers.
             if (count($this->headers) > 0) {
                 foreach ($this->headers as $header) {

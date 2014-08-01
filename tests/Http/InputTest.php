@@ -26,8 +26,7 @@ class InputTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testPost()
-	{
-	
+	{	
 		// Simulate POST array
 		$_POST['foo'] = 'bar';
 		

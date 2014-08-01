@@ -2,7 +2,8 @@
 namespace Core\Routing;
 
 /**
-* Route class represents single route and contains method
+* Route class. 
+* This class represents single route and contains method
 * for self dispatching if passed parameters are matched.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
@@ -88,7 +89,7 @@ class Route
             $urlRegex = preg_replace_callback(self::MATCHES_REGEX, [$this, 'regexUrl'], $this->url);
 
             // Check if URI matches and if it matches put results in values array.
-            if (preg_match('@^'.$urlRegex.'/?$@', $uri, $paramValues)===1) {
+            if (preg_match('@^'.$urlRegex.'/?$@', $uri, $paramValues)===1) {// We have match.
                 // Extract parameter names.
                 $paramNames = []; 
                 preg_match_all(self::MATCHES_REGEX, $this->url, $paramNames, PREG_PATTERN_ORDER);

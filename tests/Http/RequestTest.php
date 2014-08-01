@@ -47,7 +47,5 @@ class RequestTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($request1->segment(0), 'foo');
 
 		$this->assertEquals($request1->segment(2), '2');
-
-
 	}
 }

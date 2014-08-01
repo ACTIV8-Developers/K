@@ -20,7 +20,7 @@ class Session
 	private $expiration = 7200;
 
 	/**
-	* Used to restrict where the browser sends the cookie (Use a single slash ('/') for all paths on the domain. )
+	* Used to restrict where the browser sends the cookie (Use a single slash ('/') for all paths on the domain).
 	* @var string
 	*/
 	private $path = '/';
@@ -47,72 +47,72 @@ class Session
 	private $httponly = true;
 
 	/**
-	* Session name
+	* Session name.
 	* @var string
 	*/
 	private $name = 'PHPSESS';
 
 	/**
-	* Session storage system
+	* Session storage system.
 	* @var string
 	*/
 	private $handler = 'file';
 
 	/**
-	* Match user agent across session requests
+	* Match user agent across session requests.
 	* @var bool
 	*/
 	private $matchUserAgent = true;
 
 	/**
-	* Period of refreshing session ID
+	* Period of refreshing session ID.
 	* @var int
 	*/
 	private $updateChance = 30;
 
 	/**
-	* Class construct
+	* Class construct.
 	* Register handler and start session here.
 	* @param array
 	* @param object \SessionHandlerInterface
 	*/
-	public function __construct($params = [], \SessionHandlerInterface $handler = null)
+	public function __construct(array $params = [], \SessionHandlerInterface $handler = null)
 	{
-		// Load configuration parameters
+		// Load configuration parameters.
         foreach ($params as $key => $val) {
             if (isset($this->$key)) {
                 $this->$key = $val;
             }
         }
 
-        // Hash algorithm to use for the session_id. (use hash_algos() to get a list of available hashes.)
+        // Hash algorithm to use for the session_id. (use hash_algos() to get a list of available hashes).
         $session_hash = 'sha256';
 
-        // Check if hash is available
+        // Check if hash is available.
         if (in_array($session_hash, hash_algos())) {
             // Set the has function.
             ini_set('session.hash_function', $session_hash);
         }
 
-		// Set session cookie name
+		// Set session cookie name.
 		session_name($this->name.'z1c4z');
 
-      	// Set the default secure value to whether the site is being accessed with SSL
+      	// Set the default secure value to whether the site is being accessed with SSL.
       	$this->secure = $this->secure!==null ? $this->secure : isset($_SERVER['HTTPS']);
 
       	// Set the domain to default or to the current domain.
       	$this->domain = isset($this->domain) ? $this->domain : isset($_SERVER['SERVER_NAME']);
 
-	    // Set the cookie settings
+	    // Set the cookie settings.
       	session_set_cookie_params($this->expiration, $this->path, $this->domain, $this->secure, $this->httponly);
 
-		// Select session handler
+		// Select session handler.
 		if ($handler!==null) {
-			// Assign session handler
+			// Assign session handler.
 			session_set_save_handler($handler, true);
 		}
 
-		// Start session
+		// If no active session start one.
 	    if (session_status() !== PHP_SESSION_ACTIVE) { 
 	        session_start(); 
 	    } 
@@ -191,7 +191,7 @@ class Session
     * @param string
     * @param mixed
     */
-    public function put($key, $value)
+    public function set($key, $value)
     {
     	$_SESSION[$key] = $value;
     }
