@@ -7,6 +7,11 @@ define('APPVIEW', __DIR__.'/MockViews/');
 
 class ResponseTest extends PHPUnit_Framework_TestCase
 {
+	public function __construct()
+	{
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+	}
+
 	public function testRenderStaticPage()
 	{
 		// Create instance of response class

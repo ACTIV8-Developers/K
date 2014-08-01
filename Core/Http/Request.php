@@ -18,7 +18,7 @@ class Request
 	* Request method
 	* @var string
 	*/
-	private $requestMethod;
+	private $method;
 
     /**
 	* Class constructor.
@@ -27,7 +27,7 @@ class Request
 	{
         // Get request method and URI
 		$this->uri = $_SERVER['REQUEST_URI'];		
-		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
+		$this->method = $_SERVER['REQUEST_METHOD'];
 		
 		// Fix URI if neeeded
         if (strpos($this->uri, $_SERVER['SCRIPT_NAME']) === 0) {
@@ -60,6 +60,28 @@ class Request
 		$this->uri = str_replace(array('//', '../'), '/', trim($this->uri, '/'));
 	}
 
+    /**
+    * @param string
+    * @return string
+    */
+    public function server($key)
+    {
+        if (isset($_SERVER[$key])) {
+            return $_SERVER[$key];
+        } else {
+            return '';
+        }
+    }
+
+    /**
+    * Get server variable.
+    * @return array
+    */
+    public function getServer()
+    {
+        return $_SERVER;
+    }
+
 	/**
 	* Get request uri.
 	* @return string
@@ -90,7 +112,7 @@ class Request
 	*/
     public function getRequestMethod()
     {
-        return $this->requestMethod;
+        return $this->method;
     }
 
     /**
@@ -109,7 +131,7 @@ class Request
      * Get server protocol (eg. HTTP/1.1.)
      * @return string
      */
-    public function getServerProtocol()
+    public function getProtocolVersion()
     {
         return $_SERVER['SERVER_PROTOCOL'];
     }
