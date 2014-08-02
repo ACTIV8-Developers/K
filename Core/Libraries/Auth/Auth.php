@@ -43,7 +43,7 @@ class Auth
         }
 
 		// Try to get database connection from core class if one is not passed.
-		if ($conn === false) {
+		if ($conn === null) {
 			$this->conn = $this->getDbConnection();
 		} else {
 			$this->conn = $conn;
