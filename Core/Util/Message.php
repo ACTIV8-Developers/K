@@ -24,7 +24,7 @@ class Message {
     public static function get($key)
     {
         $value = null;
-        if(isset($_SESSION['flashmessage'][$key])) {
+        if (isset($_SESSION['flashmessage'][$key])) {
             $value = $_SESSION['flashmessage'][$key];
             unset($_SESSION['flashmessage'][$key]);
         }

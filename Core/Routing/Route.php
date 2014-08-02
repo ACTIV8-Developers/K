@@ -11,7 +11,7 @@ namespace Core\Routing;
 class Route
 {
   	/**
-    * The route pattern (The URL pattern (e.g. "/article/:id")).
+    * The route pattern (The URL pattern (e.g. "article/:year/:category")).
 	* @var string 
 	*/
 	private $url;
@@ -89,7 +89,7 @@ class Route
             $urlRegex = preg_replace_callback(self::MATCHES_REGEX, [$this, 'regexUrl'], $this->url);
 
             // Check if URI matches and if it matches put results in values array.
-            if (preg_match('@^'.$urlRegex.'/?$@', $uri, $paramValues)===1) {// We have match.
+            if (preg_match('@^'.$urlRegex.'/?$@', $uri, $paramValues)===1) {// There is a match.
                 // Extract parameter names.
                 $paramNames = []; 
                 preg_match_all(self::MATCHES_REGEX, $this->url, $paramNames, PREG_PATTERN_ORDER);
@@ -146,16 +146,6 @@ class Route
     }
 
     /**
-    * Dispatch route to assigned controller/function.
-    */
-    public function dispatch()
-    {
-        // Create controller
-        $controller = CONTROLERS."\\".$this->callable[0];
-        call_user_func_array([new $controller(), $this->callable[1]], $this->params);
-    }
-
-    /**
     * Add GET as acceptable method.
     * @return object \Core\Core\Route (for method chaining)
     */
@@ -173,6 +163,16 @@ class Route
     {
         $this->methods[] = 'POST';
         return $this;
+    }
+
+    /**
+    * Dispatch route to assigned controller/function.
+    */
+    public function dispatch()
+    {
+        // Create controller
+        $controller = CONTROLERS."\\".$this->callable[0];
+        call_user_func_array([new $controller(), $this->callable[1]], $this->params);
     }
 
     /**

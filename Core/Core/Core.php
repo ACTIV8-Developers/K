@@ -69,7 +69,7 @@ class Core extends Container
 
         // Create cookies class closure.
         $this['cookies'] = function($c) {
-            return new Cookies($c['config']['sessionAndCookies']);
+            return new Cookies($c['config']['cookies']);
         };
 
         // Create response class closure.
@@ -107,7 +107,7 @@ class Core extends Container
                     break;
             }
 
-            return new Session($c['config']['sessionAndCookies'], $handler);
+            return new Session($c['config']['session'], $handler);
         };
     }
     

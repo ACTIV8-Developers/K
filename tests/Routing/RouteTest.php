@@ -72,6 +72,20 @@ class RouteTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($route7->matches('foo/2/3/asc','DELETE'));
 
 		$this->assertFalse($route7->matches('foo/bar/are/','DELETE'));
+
+		// Case 8
+		$route8 = new Route('foo/bar', [], 'GET');
+
+		$this->assertTrue($route8->matches('foo/bar','GET'));
+
+		$this->assertFalse($route8->matches('foo','GET'));
+
+		// Case 9
+		$route9 = new Route('foo/:id/bar/jar', [], 'GET');
+
+		$this->assertTrue($route9->matches('foo/22/bar/jar/','GET'));
+
+		$this->assertFalse($route9->matches('foo/44/bar/jara','GET'));
 	}
 
 	public function testMatchesWithCondition()

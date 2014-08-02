@@ -8,22 +8,16 @@ namespace Core\Session;
 class Session
 {
     /**
-     * Encryption key
+     * Encryption key.
      * @var string
      */
-    const SUPER_KEY = 'super_secret';
+    private $hashKey = 'super_secret';
 
 	/**
 	* Lifetime of the session cookie and session duration, defined in seconds.
 	* @var int
 	*/
 	private $expiration = 7200;
-
-	/**
-	* Used to restrict where the browser sends the cookie (Use a single slash ('/') for all paths on the domain).
-	* @var string
-	*/
-	private $path = '/';
 
 	/**
 	* Cookie domain, for example 'www.php.net'. 
@@ -38,13 +32,6 @@ class Session
 	* @var bool|null
 	*/
 	private $secure = null;
-
-	/**
-	* Marks the cookie as accessible only through the HTTP protocol. 
-	* This means that the cookie won't be accessible by scripting languages, such as JavaScript. 
-	* @var bool
-	*/
-	private $httponly = true;
 
 	/**
 	* Session name.
@@ -68,7 +55,7 @@ class Session
 	* Period of refreshing session ID.
 	* @var int
 	*/
-	private $updateChance = 30;
+	private $updateFrequency = 10;
 
 	/**
 	* Class construct.
@@ -85,26 +72,17 @@ class Session
             }
         }
 
-        // Hash algorithm to use for the session_id. (use hash_algos() to get a list of available hashes).
-        $session_hash = 'sha256';
-
-        // Check if hash is available.
-        if (in_array($session_hash, hash_algos())) {
-            // Set the has function.
-            ini_set('session.hash_function', $session_hash);
-        }
-
 		// Set session cookie name.
-		session_name($this->name.'z1c4z');
+		session_name($this->name.'');
 
       	// Set the default secure value to whether the site is being accessed with SSL.
-      	$this->secure = $this->secure!==null ? $this->secure : isset($_SERVER['HTTPS']);
+      	$this->secure = $this->secure !== null ? $this->secure : isset($_SERVER['HTTPS']);
 
       	// Set the domain to default or to the current domain.
       	$this->domain = isset($this->domain) ? $this->domain : isset($_SERVER['SERVER_NAME']);
 
 	    // Set the cookie settings.
-      	session_set_cookie_params($this->expiration, $this->path, $this->domain, $this->secure, $this->httponly);
+      	session_set_cookie_params($this->expiration, '/', $this->domain, $this->secure, true);
 
 		// Select session handler.
 		if ($handler!==null) {
@@ -123,7 +101,7 @@ class Session
         }
 
 		// Regenerate session ID cycle
-		if (mt_rand(1, 100)<$this->updateChance) {
+		if (mt_rand(1, 100)<$this->updateFrequency) {
 			// Regenerate session
 			session_regenerate_id();
 		}
@@ -142,10 +120,10 @@ class Session
 
 		// Check if session token match ?
 		if ($this->matchUserAgent) {
-			if ($_SESSION['n3k0t'] != hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY)) {
+			if ($_SESSION['n3k0t'] != hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], $this->hashKey)) {
 				return false;
 			}
-		} elseif ($_SESSION['n3k0t'] != hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY)) {
+		} elseif ($_SESSION['n3k0t'] != hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], $this->hashKey)) {
 				return false;
         }
 
@@ -170,9 +148,9 @@ class Session
         $_SESSION['s3ss10nCr3at3d'] = time();
 		// Set new session token
 		if ($this->matchUserAgent) {
-            $_SESSION['n3k0t'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
+            $_SESSION['n3k0t'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], $this->hashKey);
 		} else {
-            $_SESSION['n3k0t'] = hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], self::SUPER_KEY);
+            $_SESSION['n3k0t'] = hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], $this->hashKey);
 		}
         // Regenerate session
         session_regenerate_id();

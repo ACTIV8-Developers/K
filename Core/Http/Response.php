@@ -13,36 +13,6 @@ use \Core\Util\Util;
 */
 class Response
 {
-    /**
-     * List of HTTP headers to be sent.
-     * @var array
-     */
-    private $headers = [];
-
-    /**
-    * HTTP response body.
-	* @var string 
-	*/
-    private $body = '';
-
-    /**
-    * HTTP response code.
-    * @var int
-    */
-    private $statusCode = 200;
-
-    /**
-    * HTTP response code.
-    * @var string
-    */
-    private $statusProtocol = '';
-
-    /**
-     * Nesting level of the output buffering mechanism.
-     * @var int
-     */
-    private $obLevel;
-
      /**
      * HTTP response codes and messages
      * @var array 
@@ -98,6 +68,36 @@ class Response
         504 => '504 Gateway Timeout',
         505 => '505 HTTP Version Not Supported'
     ];
+    
+    /**
+     * List of HTTP headers to be sent.
+     * @var array
+     */
+    private $headers = [];
+
+    /**
+    * HTTP response body.
+	* @var string 
+	*/
+    private $body = '';
+
+    /**
+    * HTTP response code.
+    * @var int
+    */
+    private $statusCode = 200;
+
+    /**
+    * HTTP protocol version.
+    * @var string
+    */
+    private $statusProtocol = '';
+
+    /**
+     * Nesting level of the output buffering mechanism.
+     * @var int
+     */
+    private $obLevel;
 
     /**
     * Class constructor.
@@ -128,15 +128,6 @@ class Response
     }
 
     /**
-    * Get HTTP response body.
-    * @return string
-    */
-    public function getBody()
-    {
-        return $this->body;
-    }
-
-    /**
     * Set HTTP response body.
     * @var string
     */
@@ -152,6 +143,15 @@ class Response
     public function appendBody($part)
     {
         $this->body .= $part;
+    }
+
+    /**
+    * Get HTTP response body.
+    * @return string
+    */
+    public function getBody()
+    {
+        return $this->body;
     }
 
     /**
@@ -173,7 +173,16 @@ class Response
     }
 
     /**
-    * Name and revision of the information protocol via which the page was requested; i.e. 'HTTP/1.0'; 
+    * Set server protocol.
+    * @return string
+    */
+    public function setStatusProtocol($protocol)
+    {
+        return $this->serverProtocol = $protocol;
+    }
+
+    /**
+    * Name and revision of the information protocol via which the page was requested; i.e. 'HTTP/1.0'.
     * @param string
     */
     public function getStatusProtocol()
@@ -189,9 +198,9 @@ class Response
     * @param string
     * @param array
     * @param bool
-    * @return string | null
+    * @return string|null
     */
-    public function render($view, $data = [], $show = true)
+    public function render($view, $data = [], $display = true)
     {
         // Extract variables
         extract($data);
@@ -200,8 +209,8 @@ class Response
         // Load view file (root location is declared in APPVIEW constant)
         include APPVIEW.$view.'.php';
         // Append to output body or return string
-        // (depends on function parameter $show)
-        if ($show) {
+        // (depends on function parameter $display)
+        if ($display) {
             // Check output level to allow nested views
             if (ob_get_level() > $this->obLevel + 1) {
                 ob_end_flush();
@@ -235,7 +244,7 @@ class Response
     */
     public function redirect($url = '', $statusCode = 303)
     {
-        header('Location: '.Util::baseUrl($url), true, $statusCode);
+        header('Location: '.Util::base($url), true, $statusCode);
         die();
     }
 

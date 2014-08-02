@@ -16,19 +16,21 @@ class Request
 	private $uri;
 	
 	/**
-	* Request method
+	* Request method.
 	* @var string
 	*/
-	private $method;
+	private $requestMethod;
 
     /**
 	* Class constructor.
 	*/
 	public function __construct()
 	{
-        // Get request method and URI
-		$this->uri = $_SERVER['REQUEST_URI'];		
-		$this->method = $_SERVER['REQUEST_METHOD'];
+        // Get request URI.
+		$this->uri = $_SERVER['REQUEST_URI'];	
+
+        // Get request method.	
+		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
 		
 		// Fix URI if neeeded
         if (strpos($this->uri, $_SERVER['SCRIPT_NAME']) === 0) {
@@ -52,13 +54,7 @@ class Request
             $_SERVER['QUERY_STRING'] = '';
             $_GET = [];
         }
-
-		if ($this->uri == '/' || empty($this->uri)) {
-			return '/';
-		}
-
-		$this->uri = parse_url($this->uri, PHP_URL_PATH);
-		$this->uri = str_replace(array('//', '../'), '/', trim($this->uri, '/'));
+		$this->uri = trim($this->uri, '/');
 	}
 
     /**
@@ -113,7 +109,7 @@ class Request
 	*/
     public function getRequestMethod()
     {
-        return $this->method;
+        return $this->requestMethod;
     }
 
     /**
@@ -126,6 +122,15 @@ class Request
     		return true;
 		}
 		return false;
+    }
+
+    /**
+    * Check if it is POST request.  
+    * @return bool
+    */
+    public function isPost()
+    {
+        return 'POST' === $this->requestMethod;
     }
 
     /**

@@ -24,7 +24,7 @@ function detectLanguage($app)
     ];
 
 	$lang = $app['request']->segment(0);
-	if(in_array($lang, $languages['languages'])) {
+	if (in_array($lang, $languages['languages'])) {
 		define('LANG', $lang);
 	} else {
 		define('LANG', $languages['default']);

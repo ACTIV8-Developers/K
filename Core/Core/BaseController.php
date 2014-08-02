@@ -111,7 +111,7 @@ class BaseController
     * @param string
     * @param object|mixed
     */
-    protected function put($name, $object)
+    protected function set($name, $object)
     {
         Core::getInstance()[$name] = $object; 
     }

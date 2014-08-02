@@ -20,17 +20,32 @@ return [
 'sessionHandler' => null,
 /*
 |--------------------------------------------------------------------------
-| Session and cookies specific settings
+| Session specific settings
 |--------------------------------------------------------------------------
 | All parameters are optional and default ones 
 | will be used if none is passed.
 */
-'sessionAndCookies' => [
+'session' => [
     'name' => 'K',
     'tableName' => 'sessions', // Needed only if handler is database
     'expiration' => 7200,
     'updateChance' => 30,
-    'matchUserAgent' => true
+    'matchUserAgent' => true,
+    'hashKey' => 'super_secret',
+    'updateFrequency' => 10
+    ],
+/*
+|--------------------------------------------------------------------------
+| Cookies specific settings
+|--------------------------------------------------------------------------
+| All parameters are optional and default ones 
+| will be used if none is passed.
+*/
+'cookies' => [
+    'domain' => '',
+    'path' => '/',
+    'secure' => false,
+    'httponly' => true
     ],
 /*
 |--------------------------------------------------------------------------

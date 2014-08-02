@@ -32,6 +32,9 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
 		// Test method
 		$this->assertEquals($request2->getRequestMethod(), 'POST');
+
+		// Test isPost ?
+		$this->assertTrue($request2->isPost());
 	}
 
 	public function testSegment()
