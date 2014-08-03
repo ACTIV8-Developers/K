@@ -38,7 +38,7 @@ class Request
         } elseif (strpos($this->uri, dirname($_SERVER['SCRIPT_NAME'])) === 0) {
             $this->uri = substr($this->uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
         }
-
+        /*
         // This section ensures that even on servers that require the URI to be in the query string (Nginx) a correct
         // URI is found, and also fixes the QUERY_STRING server var and $_GET array.
         if (strncmp($this->uri, '?/', 2) === 0) {
@@ -54,6 +54,7 @@ class Request
             $_SERVER['QUERY_STRING'] = '';
             $_GET = [];
         }
+        */
         $this->uri = trim($this->uri, '/');
     }
 
