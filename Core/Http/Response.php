@@ -77,8 +77,8 @@ class Response
 
     /**
     * HTTP response body.
-	* @var string 
-	*/
+    * @var string 
+    */
     private $body = '';
 
     /**
@@ -231,7 +231,7 @@ class Response
      * @param int
      * @param int
      */
-    public function sendJSON($value, $options = 0)
+    public function json($value, $options = 0)
     {
         $this->headers[] = ["Content-Type: application/json", true];
         $this->body = json_encode($value, $options);

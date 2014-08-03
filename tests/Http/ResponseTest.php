@@ -85,7 +85,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 		$a = ['for'=>'bar', 'bar'=>'foo'];
 
 		// Send JSON test
-		$response->sendJSON($a);
+		$response->json($a);
 
 		// Test result
 		$this->assertEquals(json_decode($response->getBody(), true), $a);

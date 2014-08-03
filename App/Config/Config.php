@@ -29,7 +29,6 @@ return [
     'name' => 'K',
     'tableName' => 'sessions', // Needed only if handler is database
     'expiration' => 7200,
-    'updateChance' => 30,
     'matchUserAgent' => true,
     'hashKey' => 'super_secret',
     'updateFrequency' => 10

@@ -83,16 +83,27 @@ class Input
     }
 
     /**
+	* Get an item or array from $_FILES data.
+	* @param array
+	* @param bool
+	* @return array|mixed|null
+	*/
+    public function file($index = null, $xssClean = false)
+    {      
+	    return $this->getData($_FILES, $index, $xssClean);
+    }
+
+    /**
 	* This is a helper function to retrieve values from global arrays.
 	* @param array
 	* @param string
 	* @param bool
-	* @return string
+	* @return string|array
     */
-    private function getData(&$data, $index = '', $xssClean = false)
+    private function getData(&$data, $index, $xssClean = false)
     {
 		// Check if a field has been provided
-		if ($index === NULL && !empty($data)) {
+		if ($index === null) {
 			$array = [];
 			foreach (array_keys($data) as $key) {
 				$array[$key] = $this->getParam($data, $key, $xssClean);
