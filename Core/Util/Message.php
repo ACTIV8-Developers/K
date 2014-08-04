@@ -6,9 +6,10 @@ namespace Core\Util;
  * Class Message
  * @author miloskajnaco@gmail.com
  */
-class Message {
-
+class Message 
+{
     /**
+     * Set message. 
      * @param string
      * @param mixed
      */
@@ -18,6 +19,7 @@ class Message {
     }
 
     /**
+     * Get message and destroy upon reading. 
      * @param string
      * @return mixed
      */

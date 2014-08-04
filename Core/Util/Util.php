@@ -23,7 +23,7 @@ class Util
 	public static function baseUrl($path = '')
 	{
 		// Check for cached version of base path
-		if (null!==self::$base) {
+		if (null !== self::$base) {
 			return self::$base.$path;
 		}
 
@@ -38,7 +38,7 @@ class Util
     public static function base($path = '')
     {
         // Check for cached version of base path
-        if (null!==self::$base) {
+        if (null !== self::$base) {
             return self::$base.$path;
         }
 
@@ -83,7 +83,7 @@ class Util
 	}
 
 	/**
-	 * Converts from ISO 8601 (yy-mm-dd) to dd-mm-yy format and vice-versa
+	 * Converts from ISO 8601 (yy-mm-dd) to dd-mm-yy format and vice-versa.
 	 * @param  string
 	 * @param char
 	 * @return string

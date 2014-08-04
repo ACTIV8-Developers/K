@@ -27,7 +27,7 @@ class Session
 	private $domain = '';
 
 	/**
-	* If true the browser only sends the cookie over https.
+	* If true the browser only sends the cookie over HTTPS.
 	* Null denotes class will decide.
 	* @var bool|null
 	*/
@@ -85,7 +85,7 @@ class Session
       	session_set_cookie_params($this->expiration, '/', $this->domain, $this->secure, true);
 
 		// Select session handler.
-		if ($handler!==null) {
+		if ($handler !== null) {
 			// Assign session handler.
 			session_set_save_handler($handler, true);
 		}
@@ -108,13 +108,13 @@ class Session
 	}
 
 	/**
-	* Validate session
+	* Validate session.
 	* @return bool
 	*/
 	private function validate()
 	{
 		// Are needed session variables set ?
-		if (empty($_SESSION['s3ss10nCr3at3d']) || empty($_SESSION['n3k0t'])) {
+		if (!isset($_SESSION['s3ss10nCr3at3d']) || !isset($_SESSION['n3k0t'])) {
 			return false;
 		}
 
@@ -138,7 +138,6 @@ class Session
 
     /**
      * Completely regenerate session.
-     * Usually called on login or security level changes.
      */
     public function regenerate()
     {

@@ -38,46 +38,7 @@ class Request
         } elseif (strpos($this->uri, dirname($_SERVER['SCRIPT_NAME'])) === 0) {
             $this->uri = substr($this->uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
         }
-        /*
-        // This section ensures that even on servers that require the URI to be in the query string (Nginx) a correct
-        // URI is found, and also fixes the QUERY_STRING server var and $_GET array.
-        if (strncmp($this->uri, '?/', 2) === 0) {
-            $this->uri = substr($this->uri, 2);
-        }
-
-        $parts = preg_split('#\?#i', $this->uri, 2);
-        $this->uri = $parts[0];
-        if (isset($parts[1])) {
-            $_SERVER['QUERY_STRING'] = $parts[1];
-            parse_str($_SERVER['QUERY_STRING'], $_GET);
-        } else {
-            $_SERVER['QUERY_STRING'] = '';
-            $_GET = [];
-        }
-        */
         $this->uri = trim($this->uri, '/');
-    }
-
-    /**
-    * @param string
-    * @return string
-    */
-    public function server($key)
-    {
-        if (isset($_SERVER[$key])) {
-            return $_SERVER[$key];
-        } else {
-            return '';
-        }
-    }
-
-    /**
-    * Get server variable.
-    * @return array
-    */
-    public function getServer()
-    {
-        return $_SERVER;
     }
 
     /**

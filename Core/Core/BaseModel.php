@@ -12,7 +12,7 @@ class BaseModel
     /**
     * Get database object.
     * @param string
-    * @return object \PDO
+    * @return object \Core\Database\Database
     */
     protected function db($dbName = 'default')
     {

@@ -22,14 +22,14 @@ class Router
 	* @var object \Core\Http\Request
 	* @return bool
 	*/
-	public function run(\Core\Http\Request  $request)
+	public function run(\Core\Http\Request $request)
 	{
 		// Get parameters to check against
 		$resourceUri = $request->getUri();
 		$requestMethod = $request->getRequestMethod();
 		// Dispatch correct route
 	    foreach (self::$routes as $route) {
-	    	if (true===$route->matches($resourceUri, $requestMethod)) {
+	    	if (true === $route->matches($resourceUri, $requestMethod)) {
 	        	$route->dispatch();
 	        	return true;
 	      	}

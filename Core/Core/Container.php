@@ -23,12 +23,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Core\Core;
 
 /**
  * Container main class.
  *
- * @author Fabien Potencier
+ * @author  Fabien Potencier
  */
 class Container implements \ArrayAccess
 {
@@ -261,7 +262,7 @@ class Container implements \ArrayAccess
      *
      * @return static
      */
-    public function register(ServiceProviderInterface $provider, array $values = array())
+    public function register(ServiceProviderInterface $provider, array $values = [])
     {
         $provider->register($this);
 

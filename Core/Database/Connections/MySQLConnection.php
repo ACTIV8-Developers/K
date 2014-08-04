@@ -23,21 +23,26 @@ class MySQLConnection extends PDOConnection
 
     /**
     * Connect to database with passed settings.
+    * @return object \PDO
     * @throws \PDOException
     * @throws \InvalidArgumentException
     */
-    protected function connect()
+    public function connect()
     {
         try {
             // Make string containing database settings
             $database = 'mysql:host='.$this->host.';dbname='.$this->database.';charset='.$this->charset;
+
             // Make connection.
-            $this->connection = new \PDO($database, $this->username, $this->password);
+            $conn = new \PDO($database, $this->username, $this->password);
+
             // Set attributes from parameters
-            $this->connection->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, $this->fetch);
-            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, $this->error);
+            $conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, $this->fetch);
+            $conn->setAttribute(\PDO::ATTR_ERRMODE, $this->error);
+
+            return $conn;
         } catch (\PDOException $ex) {
-            throw new \InvalidArgumentException('Error! Cannot connect, invalid database settings.');
+            throw new \InvalidArgumentException('Error! Cannot connect to database '.$ex->getMessage());
         }
     }
 }

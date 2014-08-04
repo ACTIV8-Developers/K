@@ -11,7 +11,6 @@ class AliasLoader
 {
 	/**
 	 * The array of class aliases.
-	 *
 	 * @var array
 	 */
 	protected $aliases;
@@ -24,17 +23,15 @@ class AliasLoader
 
 	/**
 	 * The singleton instance of the loader.
-	 *
-	 * @var \Core\Util\AliasLoader
+	 * @var object \Core\Util\AliasLoader
 	 */
 	protected static $instance;
 
 	/**
 	 * Create a new class alias loader instance.
-	 *
 	 * @param array
 	 */
-	public function __construct(array $aliases = array())
+	public function __construct(array $aliases = [])
 	{
 		$this->aliases = $aliases;
 	}
@@ -45,7 +42,7 @@ class AliasLoader
 	 * @param  array 
 	 * @return \Core\Util\AliasLoader
 	 */
-	public static function getInstance(array $aliases = array())
+	public static function getInstance(array $aliases = [])
 	{
 		if (is_null(static::$instance)) static::$instance = new static($aliases);
 		
@@ -64,8 +61,7 @@ class AliasLoader
 	 */
 	public function load($alias)
 	{
-		if (isset($this->aliases[$alias]))
-		{
+		if (isset($this->aliases[$alias])) {
 			return class_alias($this->aliases[$alias], $alias);
 		}
 	}
@@ -87,8 +83,7 @@ class AliasLoader
 	 */
 	public function register()
 	{
-		if ( ! $this->registered)
-		{
+		if (!$this->registered) {
 			$this->prependToLoaderStack();
 
 			$this->registered = true;

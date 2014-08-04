@@ -84,13 +84,15 @@ class Core extends Container
         foreach ($databaseList as $name => $dbConfig) {
             $this['db'.$name] = function() use ($dbConfig) {
                 $db = null;
-                switch ($dbConfig['driver']) {
-                    case 'mysql':
-                        // Create connection with passed settings.
+                switch ($dbConfig['driver']) { // Choose connection and create it.
+                    case 'mysql':               
                         $db = new \Core\Database\Connections\MySQLConnection($dbConfig);
+                        break;
+                    default:
+                        throw new \InvalidArgumentException('Error! Unsupported database connection type.');
                 }
                 // Inject it into database class.
-                return new Database($db);
+                return new Database($db->connect());
             };  
         }
 
@@ -157,7 +159,7 @@ class Core extends Container
     */
     public static function getInstance()
     {
-        if (null===self::$instance) {
+        if (null === self::$instance) {
             self::$instance = new Core();
         }
         return self::$instance;

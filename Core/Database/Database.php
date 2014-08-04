@@ -17,18 +17,18 @@ class Database
 
 	/**
 	* Class constructor.
-    * @var object \PDOConn
+    * @var object \PDO
 	*/
-    public function __construct(PDOConn $PDOConn)
+    public function __construct(\PDO $PDOConn)
     {
-        $this->connection = $PDOConn->getConnection();
+        $this->connection = $PDOConn;
     }
 
     /**
      * Set connection variable.
      * @var object \PDO
      */
-    public function setConnection(PDOConn $PDOConn)
+    public function setConnection(\PDO $PDOConn)
     {
         $this->connection = $PDOConn;
     }

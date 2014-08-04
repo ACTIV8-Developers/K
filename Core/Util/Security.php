@@ -41,10 +41,8 @@ class Security
 		/*
 		 * Is the string an array?
 		 */
-		if (is_array($str))
-		{
-			while (list($key) = each($str))
-			{
+		if (is_array($str)) {
+			while (list($key) = each($str)) {
 				$str[$key] = self::xssClean($str[$key]);
 			}
 			return $str;
@@ -479,7 +477,7 @@ class Security
 	*/
 	public static function getTokenId()
 	{
-        if(isset($_SESSION['tk_dd'])) { 
+        if (isset($_SESSION['tk_dd'])) { 
             return $_SESSION['tk_dd'];
         } else {
             $tokenId = self::random(10);
@@ -494,7 +492,7 @@ class Security
 	*/
 	public static function getTokenValue()
 	{
-        if(isset($_SESSION['tk_vl'])) { 
+        if (isset($_SESSION['tk_vl'])) { 
             return $_SESSION['tk_vl'];
         } else {
             $token = self::randomKey(16);
@@ -507,10 +505,10 @@ class Security
 	* Check generated token.
 	*/
 	public static function checkValid($method) {
-        if($method == 'post' || $method == 'get') {
+        if ($method == 'post' || $method == 'get') {
             $post = $_POST;
             $get = $_GET;
-            if(isset(${$method}[self::getTokenId()]) && (${$method}[self::getTokenId()] == self::getTokenValue())) {
+            if (isset(${$method}[self::getTokenId()]) && (${$method}[self::getTokenId()] == self::getTokenValue())) {
                 return true;
             } else {
                 return false;   

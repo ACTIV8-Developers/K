@@ -17,7 +17,7 @@ class Route
 	private $url;
 
   	/**
-    * List of supported HTTP methods for route.
+    * List of supported HTTP methods for this route.
 	* @var array
 	*/
 	private $methods = [];
@@ -30,7 +30,7 @@ class Route
     private $callable = [];
 
     /**
-    * List of parameters to be passed if URI is matched.
+    * List of parameters to be passed if URL is matched.
     * @var array
     */
     private $params = [];
@@ -171,7 +171,7 @@ class Route
     public function dispatch()
     {
         // Create controller
-        $controller = CONTROLERS."\\".$this->callable[0];
+        $controller = CONTROLERS.'\\'.$this->callable[0];
         call_user_func_array([new $controller(), $this->callable[1]], $this->params);
     }
 

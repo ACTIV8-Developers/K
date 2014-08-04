@@ -88,7 +88,7 @@ class BaseController
     }
 
     /**
-    * Load language file with defined constants
+    * Load language file with defined constants.
     * @param string
     */
     protected function language($lang)
@@ -119,7 +119,7 @@ class BaseController
     /**
     * Get database object.
     * @param string
-    * @return object \PDO
+    * @return object \Core\Database\Database
     */
     protected function db($dbName = 'default')
     {

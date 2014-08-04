@@ -70,6 +70,18 @@ class Response
     ];
     
     /**
+    * HTTP response protocol version
+    * @var string
+    */
+    private $protocolVersion = 'HTTP/1.1';
+
+    /**
+    * HTTP response code.
+    * @var int
+    */
+    private $statusCode = 200;
+
+    /**
      * List of HTTP headers to be sent.
      * @var array
      */
@@ -80,18 +92,6 @@ class Response
     * @var string 
     */
     private $body = '';
-
-    /**
-    * HTTP response code.
-    * @var int
-    */
-    private $statusCode = 200;
-
-    /**
-    * HTTP protocol version.
-    * @var string
-    */
-    private $statusProtocol = '';
 
     /**
      * Nesting level of the output buffering mechanism.
@@ -173,28 +173,25 @@ class Response
     }
 
     /**
-    * Set server protocol.
+    * Get HTTP protocol version.
     * @return string
     */
-    public function setStatusProtocol($protocol)
+    public function getProtocolVersion()
     {
-        return $this->serverProtocol = $protocol;
+        return $this->protocolVersion;
     }
 
     /**
-    * Name and revision of the information protocol via which the page was requested; i.e. 'HTTP/1.0'.
-    * @param string
+    * Set HTTP protocol version ("HTTP/1.1" or "HTTP/1.0").
+    * @param string 
     */
-    public function getStatusProtocol()
+    public function setProtocolVersion($version)
     {
-        if (!isset($this->serverProtocol)) {
-            $this->serverProtocol = $_SERVER['SERVER_PROTOCOL'];
-        }
-        return $this->serverProtocol;
+        $this->protocolVersion = $version;
     }
 
     /**
-    * Buffer output or return it as string.
+    * Buffer output for display or return it as string.
     * @param string
     * @param array
     * @param bool
@@ -216,11 +213,11 @@ class Response
                 ob_end_flush();
             } else {
                 $this->body .= ob_get_contents();
-                @ob_end_clean();
+                ob_end_clean();
             }
         } else {          
             $buffer = ob_get_contents();
-            @ob_end_clean();
+            ob_end_clean();
             return $buffer;
         }
     }
@@ -233,7 +230,7 @@ class Response
      */
     public function json($value, $options = 0)
     {
-        $this->headers[] = ["Content-Type: application/json", true];
+        $this->headers[] = ['Content-Type: application/json', true];
         $this->body = json_encode($value, $options);
     }
 
@@ -257,12 +254,12 @@ class Response
         if (headers_sent() === false) {
 
             // Send status code
-            header(sprintf('%s %s', $this->getStatusProtocol(), self::$messages[$this->statusCode]), true, $this->statusCode);
+            header(sprintf('%s %s', $this->protocolVersion, self::$messages[$this->statusCode]), true, $this->statusCode);
             
             // Send headers.
             if (count($this->headers) > 0) {
                 foreach ($this->headers as $header) {
-                    @header($header[0], $header[1], $this->statusCode);
+                    header($header[0], $header[1], $this->statusCode);
                 }
             }
 
