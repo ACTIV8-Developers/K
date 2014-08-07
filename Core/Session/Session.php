@@ -89,7 +89,13 @@ class Session
 			// Assign session handler.
 			session_set_save_handler($handler, true);
 		}
+	}
 
+	/**
+	* Start session.
+	*/
+	public function start()
+	{
 		// If no active session start one.
 	    if (session_status() !== PHP_SESSION_ACTIVE) { 
 	        session_start(); 

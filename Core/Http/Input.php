@@ -13,20 +13,6 @@ use \Core\Util\Security;
 class Input
 {
 	/**
-	* Get an item or array from input data.
-	* @param string
-	* @param bool
-	* @return array|mixed|null
-	*/
-	public function get($index, $xssClean = false)
-	{
-		// Detect method.
-		$method = strtolower($_SERVER['REQUEST_METHOD']);
-
-		return $this->$method($index, $xssClean);
-	}
-
-	/**
 	* Get an item or array from POST data.
 	* @param string
 	* @param bool
@@ -118,12 +104,12 @@ class Input
 	 * @param array
 	 * @param string
 	 * @param bool
-	 * @return string|bool
+	 * @return string|null
 	 */
 	private function getParam(&$array, $index = '', $xssClean = false)
 	{
 		if (!isset($array[$index])) {
-			return false;
+			return null;
 		}
 
 		if (true === $xssClean) {

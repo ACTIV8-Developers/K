@@ -38,11 +38,12 @@ class Core extends Container
     private $hooks = [
         'before.routing' => null, 
         'after.routing'=> null
-     ];
+    ];
 
     /**
 	* Class constructor.
     * Loads all needed classes as closures into container.
+    * @throws \InvalidArgumentException
 	*/
    	protected function __construct()
     {
@@ -54,7 +55,7 @@ class Core extends Container
 
         // Create request class closure.
         $this['request'] = function() {
-            return new Request();
+            return new Request($_SERVER);
         };
 
         // Create router class closure.
@@ -73,8 +74,10 @@ class Core extends Container
         };
 
         // Create response class closure.
-        $this['response'] = function() {
-            return new Response();
+        $this['response'] = function($c) {
+            $response = new Response();
+            $response->setProtocolVersion($c['request']->getProtocolVersion());
+            return $response;
         }; 
 
         // Load database settings.
@@ -122,7 +125,7 @@ class Core extends Container
     {
         // Load and start session if enabled in configuration.
         if ($this['config']['sessionStart']) {
-            $this['session'];
+            $this['session']->start();
         }
 
         // Collect routes list from file.

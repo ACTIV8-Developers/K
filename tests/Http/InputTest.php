@@ -12,19 +12,6 @@ class InputTest extends PHPUnit_Framework_TestCase
 		$this->input = new Input();
 	}
 
-	public function testAll()
-	{
-		$_POST['foo'] = 'bar';
-
-		// Test get specific input.
-		$this->assertEquals($this->input->get('foo'),'bar');
-
-		$_POST['bar'] = 'foo';
-
-		// Test get all all.
-		$this->assertEquals($this->input->post(), ['foo'=>'bar', 'bar'=>'foo']);
-	}
-
 	public function testPost()
 	{	
 		// Simulate POST array
@@ -36,6 +23,8 @@ class InputTest extends PHPUnit_Framework_TestCase
 		$_POST['bar'] = 'foo';
 
 		$this->assertEquals($this->input->post(), ['foo'=>'bar', 'bar'=>'foo']);
+
+		$this->assertNull($this->input->post('none'));
 
 		// Simulate invalid POST array
 		$_POST['foo2'] = "alert('Hacker')";

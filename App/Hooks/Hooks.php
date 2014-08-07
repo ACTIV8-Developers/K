@@ -23,7 +23,7 @@ function detectLanguage($app)
 	    'languages'=>['sr-latin', 'sr-cyr']
     ];
 
-	$lang = $app['request']->segment(0);
+	$lang = $app['request']->getUriSegment(0);
 	if (in_array($lang, $languages['languages'])) {
 		define('LANG', $lang);
 	} else {

@@ -28,8 +28,7 @@ namespace Core\Core;
 
 /**
  * Container main class.
- *
- * @author  Fabien Potencier
+ * @author Fabien Potencier
  */
 class Container implements \ArrayAccess
 {
@@ -42,7 +41,6 @@ class Container implements \ArrayAccess
 
     /**
      * Instantiate the container.
-     *
      * Objects and parameters can be passed as argument to the constructor.
      */
     protected function __construct()
@@ -53,9 +51,7 @@ class Container implements \ArrayAccess
 
     /**
      * Sets a parameter or an object.
-     *
      * Objects must be defined as Closures.
-     *
      * Allowing any PHP callable leads to difficult to debug problems
      * as function names (strings) are callable (creating a function with
      * the same name as an existing parameter would break your container).
@@ -78,9 +74,7 @@ class Container implements \ArrayAccess
      * Gets a parameter or an object.
      *
      * @param string $id The unique identifier for the parameter or object
-     *
      * @return mixed The value of the parameter or an object
-     *
      * @throws \InvalidArgumentException if the identifier is not defined
      */
     public function offsetGet($id)
@@ -115,7 +109,6 @@ class Container implements \ArrayAccess
      * Checks if a parameter or an object is set.
      *
      * @param string $id The unique identifier for the parameter or object
-     *
      * @return bool
      */
     public function offsetExists($id)
@@ -143,9 +136,7 @@ class Container implements \ArrayAccess
      * Marks a callable as being a factory service.
      *
      * @param callable $callable A service definition to be used as a factory
-     *
      * @return callable The passed callable
-     *
      * @throws \InvalidArgumentException Service definition has to be a closure of an invokable object
      */
     public function factory($callable)
@@ -165,9 +156,7 @@ class Container implements \ArrayAccess
      * This is useful when you want to store a callable as a parameter.
      *
      * @param callable $callable A callable to protect from being evaluated
-     *
      * @return callable The passed callable
-     *
      * @throws \InvalidArgumentException Service definition has to be a closure of an invokable object
      */
     public function protect($callable)
@@ -185,9 +174,7 @@ class Container implements \ArrayAccess
      * Gets a parameter or the closure defining an object.
      *
      * @param string $id The unique identifier for the parameter or object
-     *
      * @return mixed The value of the parameter or the closure defining an object
-     *
      * @throws \InvalidArgumentException if the identifier is not defined
      */
     public function raw($id)
@@ -205,15 +192,12 @@ class Container implements \ArrayAccess
 
     /**
      * Extends an object definition.
-     *
      * Useful when you want to extend an existing object definition,
      * without necessarily loading that object.
      *
      * @param string   $id       The unique identifier for the object
      * @param callable $callable A service definition to extend the original
-     *
      * @return callable The wrapped callable
-     *
      * @throws \InvalidArgumentException if the identifier is not defined or not a service definition
      */
     public function extend($id, $callable)
@@ -259,7 +243,6 @@ class Container implements \ArrayAccess
      *
      * @param ServiceProviderInterface $provider A ServiceProviderInterface instance
      * @param array                    $values   An array of values that customizes the provider
-     *
      * @return static
      */
     public function register(ServiceProviderInterface $provider, array $values = [])
