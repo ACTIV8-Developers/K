@@ -6,6 +6,5 @@ php:
   - hhvm
   
 before_script:
-  - wget http://getcomposer.org/composer.phar
-  - php composer.phar install
-  - phpunit
+  - composer install
+  - phpunit --bootstrap tests/bootstrap.php tests/
