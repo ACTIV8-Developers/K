@@ -1,5 +1,7 @@
 K
 =
+[![Build Status](https://travis-ci.org/Kajna/K.svg?branch=master)](https://travis-ci.org/Kajna/K)
+
 Simple solution for full featured MVC framework.
 > *Everything should be made as simple as possible, but not simpler* 
 **Albert Einstein**
