@@ -15,37 +15,39 @@ class RouterTest extends PHPUnit_Framework_TestCase
 		// Create mock route and add it to router
 		Router::addRoute(new MockRoute('foo/bar', [], 'GET'));
 
-		// Create mock request
-		$request = new MockRequest('foo/bar', 'GET');
-
 		// Inject request and run test
-		$this->assertTrue($router->run($request));
+		$this->assertTrue($router->run('foo/bar', 'GET'));
 
         // Mock route should output name of passed url.
         $this->expectOutputString('foo/bar');
+	}
+
+	public function testRouteAdd()
+	{
+		$route1 = \Route::get('foo/bar', ['', '']);
+
+		$route2 = \Route::post('bar/foo', ['', '']);
+
+		$route3 = \Route::put('bar/foo2', ['', '']);
+
+		$route4 = \Route::delete('bar/foo3', ['', '']);
+
+		$route5 = \Route::any('bar/foo4', ['', '']);
+
+		$this->assertContains($route1, Router::getRoutes());
+
+		$this->assertContains($route2, Router::getRoutes());
+
+		$this->assertContains($route3, Router::getRoutes());
+
+		$this->assertContains($route4, Router::getRoutes());
+
+		$this->assertContains($route5, Router::getRoutes());
 	}
 }
 
 class MockRoute extends \Core\Routing\Route
 {
-  	/**
-    * The route pattern (The URL pattern (e.g. "/article/:id")).
-	* @var string 
-	*/
-	private $url;
-
-  	/**
-    * List of supported HTTP methods for route.
-	* @var array
-	*/
-	private $methods = [];
-
-    /**
-    * The route callable (name of controller and function to execute).
-	* @var array
-	*/
-    private $callable;
-
 	public function __construct($url, $callable, $requestMethod = 'ANY')
 	{
         $this->url = $url;
@@ -61,36 +63,5 @@ class MockRoute extends \Core\Routing\Route
     public function dispatch()
     {
     	echo $this->url;
-    }
-}
-
-class MockRequest extends \Core\Http\Request
-{
-	/**
-	* Request URI.
-	* @var string 
-	*/
-	private $uri;
-	
-	/**
-	* Request method
-	* @var string
-	*/
-	private $requestMethod;
-
-	public function __construct($uri, $method)
-	{
-		$this->uri = $uri;
-		$this->requestMethod = $method;
-	}
-
-    public function getUri()
-    {
-        return $this->uri;
-    }
-
-    public function getRequestMethod()
-    {
-        return $this->requestMethod;
     }
 }

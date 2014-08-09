@@ -19,17 +19,15 @@ class Router
 
 	/**
 	* Check routes and dispatch matching one if found.
-	* @var object \Core\Http\Request
+	* @var string
+    * @var string
 	* @return bool
 	*/
-	public function run(\Core\Http\Request $request)
+	public function run($uri, $requestMethod)
 	{
-		// Get parameters to check against
-		$resourceUri = $request->getUri();
-		$requestMethod = $request->getRequestMethod();
 		// Dispatch correct route
 	    foreach (self::$routes as $route) {
-	    	if (true === $route->matches($resourceUri, $requestMethod)) {
+	    	if (true === $route->matches($uri, $requestMethod)) {
 	        	$route->dispatch();
 	        	return true;
 	      	}

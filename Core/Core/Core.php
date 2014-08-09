@@ -137,7 +137,7 @@ class Core extends Container
         }
 
         // Route requests
-        if (!$this['router']->run($this['request'])) {
+        if (!$this['router']->run($this['request']->getUri(), $this['request']->getRequestMethod())) {
             // If no route found send and show 404.
             $this->show404();
         }
