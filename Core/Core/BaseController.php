@@ -14,12 +14,15 @@ class BaseController
 	* Load library.
     * @param string
     * @param array
-    * @return object
+    * @return object|null
     */
-    protected function library($library, $params = [])
+    protected function library($library, array $params = [])
     {
     	$library = '\\Core\\Libraries\\'.$library.'\\'.$library;
-		return new $library($params);
+        if (class_exists($library)) {
+            return new $library($params);
+        }
+        return null;	
     }
 
     /**
@@ -94,26 +97,6 @@ class BaseController
     protected function language($lang)
     {
         include APP.'Languages/'.$lang.'.php';
-    }
-
-    /**
-    * Get any object from app main container.
-    * @param string
-    * @return object|mixed
-    */
-    protected function get($name)
-    {
-        return Core::getInstance()[$name];
-    }
-
-    /**
-    * Put anything into main container.
-    * @param string
-    * @param object|mixed
-    */
-    protected function set($name, $object)
-    {
-        Core::getInstance()[$name] = $object; 
     }
 
     /**

@@ -6,13 +6,13 @@ class MessageTest extends PHPUnit_Framework_TestCase
 {
 	public function testSetGet()
 	{
-		// Set message
+		// Set message.
 		Message::set('msg', 'Hello world!');
 
-		// First read we get message
+		// First read we get message.
 		$this->assertEquals(Message::get('msg'), 'Hello world!');
 
-		// Second read message is no more
+		// Second read message is no more.
 		$this->assertEquals(Message::get('msg'), null);
 	}
 }

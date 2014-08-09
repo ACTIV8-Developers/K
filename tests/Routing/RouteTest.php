@@ -4,9 +4,9 @@ use \Core\Routing\Route;
 
 class RouteTest extends PHPUnit_Framework_TestCase
 {
-	public function testConstruct()
+	public function testConstructAndGet()
 	{
-		$route = new Route('foo/bar', ['foo', 'bar'], 'GET');
+		$route = new Route('foo/bar', ['foo', 'bar'], 'PUT');
 
 		// Did route URL set properly ?
 		$this->assertEquals('foo/bar', $route->getUrl());
@@ -15,12 +15,21 @@ class RouteTest extends PHPUnit_Framework_TestCase
 		$route->viaPost();
 
 		// Is array of methods good now ?
-		$this->assertEquals(['GET', 'POST'], $route->getHttpMethods());
+		$this->assertEquals(['PUT', 'POST'], $route->getHttpMethods());
+
+		// Add one more method.
+		$route->viaGet();
+
+		// Is array of methods good now ?
+		$this->assertEquals(['PUT', 'POST', 'GET'], $route->getHttpMethods());
+
+		// Test get callable.
+		$this->assertEquals(['foo', 'bar'], $route->getCallable());
 	}
 
 	public function testMatches()
 	{
-		/* Test common routing casses.
+		/* Test random routing casses.
 		* (callable parameter can be empty here since route wont be dispatched)
 		******************************/
 
@@ -86,12 +95,19 @@ class RouteTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($route9->matches('foo/22/bar/jar/','GET'));
 
 		$this->assertFalse($route9->matches('foo/44/bar/jara','GET'));
+
+		// Case 10
+		$route10 = new Route('foo/:id/bar/jar/bar/dar/:param', [], 'HEAD');
+
+		$this->assertTrue($route10->matches('foo/22/bar/jar/bar/dar/somevalue','HEAD'));
+
+		$this->assertFalse($route10->matches('foo//bar/jar/bar/dar/somevalue','HEAD'));
 	}
 
 	public function testMatchesWithCondition()
 	{
-		/* Test common routing regex conditions.
-		* (callable parameter can be empty here since route wont be dispatched)
+		/* Test random routing regex conditions.
+		* (callable parameter can be empty here since route won't be dispatched)
 		******************************/
 
 		// Case 1
@@ -135,5 +151,25 @@ class RouteTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse($route5->matches('foo/bar2.6','GET'));
 
 		$this->assertTrue($route5->matches('foo/3.5','GET'));
+
+		// Case 6 custom filter
+		$route6 = new Route('foo/:param', [], 'GET');
+		$route6->filter('param', 'a{3}');
+
+		$this->assertFalse($route6->matches('foo/aaab','GET'));
+
+		$this->assertTrue($route6->matches('foo/aaa','GET'));
+	}
+
+	public function testGetParams()
+	{
+		$route = new Route('foo/:param', [], 'GET');
+
+		$this->assertEmpty($route->getParams());
+
+		// Route must match in order to get params, before that it will be empty.
+		$this->assertTrue($route->matches('foo/bar','GET'));
+
+		$this->assertEquals(['param' => 'bar'], $route->getParams());
 	}
 }

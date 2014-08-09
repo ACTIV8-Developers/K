@@ -2,16 +2,7 @@
 
 class CoreTest extends PHPUnit_Framework_TestCase
 {
-	public function __construct()
-	{
-		// Mock random request.
-		$_SERVER['REQUEST_URI'] = '/public/foo/bar/2';
-		$_SERVER['SCRIPT_NAME'] = '/public/index.php';
-		$_SERVER['QUERY_STRING'] = '';
-		$_SERVER['REQUEST_METHOD'] = 'GET';
-	}
-
-	public function testGet()
+	public function testConstruct()
 	{
 		// Make instance of app.
 		$app = Core\Core\Core::getInstance();

@@ -27,7 +27,10 @@ class BaseModel
     */
     protected function library($library, array $params = [])
     {
-    	$library = '\\Core\\Libraries\\'.$library.'\\'.$library;
-		return new $library($params);
+        $library = '\\Core\\Libraries\\'.$library.'\\'.$library;
+        if (class_exists($library)) {
+            return new $library($params);
+        }
+        return null;
     }
 }

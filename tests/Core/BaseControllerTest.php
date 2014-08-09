@@ -1,6 +1,6 @@
 <?php
 
-class ControllerTest extends PHPUnit_Framework_TestCase
+class BaseControllerTest extends PHPUnit_Framework_TestCase
 {
 	public function __construct()
 	{
@@ -21,6 +21,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('Core\Http\Request', $con->getRequest());
 		$this->assertInstanceOf('Core\Http\Cookies', $con->getCookies());
 
+		$lib = $con->getLibrary('Library');
+		$this->assertInstanceOf('Core\Libraries\Library\Library', $lib);
 
 		$this->assertSame(\Core\Core\Core::getInstance()['request'], $con->getRequest());
 		$this->assertSame(\Core\Core\Core::getInstance()['input'], $con->getInput());
@@ -56,4 +58,9 @@ class MockController extends \Controller
 	{
 		return $this->cookies();
 	}
+
+    public function getLibrary($name)
+    {
+        return $this->library($name);
+    }
 }

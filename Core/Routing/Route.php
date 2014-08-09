@@ -14,7 +14,7 @@ class Route
     * The route pattern (The URL pattern (e.g. "article/:year/:category")).
 	* @var string 
 	*/
-	private $url;
+	private $url = '';
 
   	/**
     * List of supported HTTP methods for this route.
@@ -56,6 +56,7 @@ class Route
 
     /**
     * Regex used to parse routes.
+    * @var string
     */
     const MATCHES_REGEX = '@:([\w]+)@';
 
@@ -89,7 +90,7 @@ class Route
             $urlRegex = preg_replace_callback(self::MATCHES_REGEX, [$this, 'regexUrl'], $this->url);
 
             // Check if URI matches and if it matches put results in values array.
-            if (preg_match('@^'.$urlRegex.'/?$@', $uri, $paramValues)===1) {// There is a match.
+            if (preg_match('@^'.$urlRegex.'/?$@', $uri, $paramValues) === 1) {// There is a match.
                 // Extract parameter names.
                 $paramNames = []; 
                 preg_match_all(self::MATCHES_REGEX, $this->url, $paramNames, PREG_PATTERN_ORDER);
@@ -173,6 +174,16 @@ class Route
         // Create controller
         $controller = CONTROLERS.'\\'.$this->callable[0];
         call_user_func_array([new $controller(), $this->callable[1]], $this->params);
+    }
+
+    /**
+    * Get parameters passed with URI.
+    * (this array is empty if passed URI didn't match this one)
+    * @return array
+    */
+    public function getParams()
+    {
+        return $this->params;
     }
 
     /**
