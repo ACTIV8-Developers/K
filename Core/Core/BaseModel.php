@@ -2,12 +2,12 @@
 namespace Core\Core;
 
 /**
-* Base model class.
+* Base model abstract class.
 * Used with alias "Model".
 * 
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-class BaseModel
+abstract class BaseModel
 {
     /**
     * Get database object.

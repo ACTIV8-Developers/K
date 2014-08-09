@@ -2,13 +2,13 @@
 namespace Core\Core;
 
 /**
-* Base controller class.
+* Base controller abstract class.
 * Used with alias "Controller".
-* Extend to get access to app main container.
+* Extend to get access to app main container common functions.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-class BaseController
+abstract class BaseController
 {
     /**
 	* Load library.

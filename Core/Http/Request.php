@@ -46,7 +46,7 @@ class Request
         }
         $server['REQUEST_URI'] = trim($server['REQUEST_URI'], '/');
 
-        // Parse request headers and server enviroment variables
+        // Parse request headers and server enviroment variables.
         $specialHeaders = [
             'CONTENT_TYPE',
             'CONTENT_LENGTH',

@@ -87,7 +87,7 @@ class Database
     {
         // Execute query
         $stmt = $this->connection->prepare($query);
-        if($params) {
+        if ($params) {
             $stmt->execute($params);
         } else {
             $stmt->execute();
@@ -108,7 +108,7 @@ class Database
 	  	// execute query	
 	  	$stmt = $this->connection->prepare($query);
 	  	$stmt->execute($params);
-	  	if($fetch!=null) {
+	  	if ($fetch !== null) {
 			$stmt->setFetchMode($fetch);
 	  	}
 	  	return $stmt->fetchAll();
@@ -189,14 +189,14 @@ class Database
 	{
 		// Make query
 		$sql = "CREATE TABLE IF NOT EXISTS $name (";
-	    foreach($fields as $field => $type) {
+	    foreach ($fields as $field => $type) {
       		$sql.= "$field $type, ";
       		if (preg_match('/AUTO_INCREMENT/i', $type)) {
         		$pk = $field;
       		}
     	}
     	$sql = rtrim($sql,',') . ' PRIMARY KEY ('.$pk.')';
-    	if($options==null) {
+    	if ($options==null) {
     		$sql .= ") CHARACTER SET utf8 COLLATE utf8_general_ci";
         } else {
 			$sql .= $options;

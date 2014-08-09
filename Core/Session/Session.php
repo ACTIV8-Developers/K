@@ -40,12 +40,6 @@ class Session
 	private $name = 'PHPSESS';
 
 	/**
-	* Session storage system.
-	* @var string
-	*/
-	private $handler = 'file';
-
-	/**
 	* Match user agent across session requests.
 	* @var bool
 	*/

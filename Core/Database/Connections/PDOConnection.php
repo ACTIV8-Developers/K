@@ -48,7 +48,6 @@ abstract class PDOConnection
      */
     protected $collation = 'utf8_unicode_ci';
 
-
     /**
      * Connect to database and return PDO object connection variable
      * @return object \PDO

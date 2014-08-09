@@ -28,10 +28,10 @@ class Log
 	* Write log to text file.
 	* @param bool
 	*/
-	public static function write($clear = false)
+	public static function write($path = 'log.txt', $clear = false)
 	{
-		file_put_contents('log.txt', self::$log, FILE_APPEND | LOCK_EX);
-		if($clear) {
+		file_put_contents($path, self::$log, FILE_APPEND | LOCK_EX);
+		if ($clear) {
 			self::$log = [];
 		}
 	}
