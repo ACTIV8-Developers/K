@@ -3,7 +3,7 @@ use \Core\Http\Cookies;
 
 class CookiesTest extends PHPUnit_Framework_TestCase
 {
-	public function testGetSet()
+	public function testGetAndSet()
 	{
 		$cookies = new Cookies();
 

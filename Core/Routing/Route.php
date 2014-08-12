@@ -173,6 +173,8 @@ class Route
     {
         // Create controller
         $controller = CONTROLERS.'\\'.$this->callable[0];
+        // Put parsed params into $_GET array.
+        $_GET = $this->params;
         call_user_func_array([new $controller(), $this->callable[1]], $this->params);
     }
 

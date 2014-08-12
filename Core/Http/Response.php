@@ -14,7 +14,7 @@ use \Core\Util\Util;
 class Response
 {
      /**
-     * HTTP response codes and messages
+     * HTTP response codes and messages.
      * @var array 
      */
     private static $messages = [
@@ -253,7 +253,7 @@ class Response
         // Check if headers are sent already.
         if (headers_sent() === false) {
 
-            // Send status code
+            // Send status code.
             header(sprintf('%s %s', $this->protocolVersion, self::$messages[$this->statusCode]), true, $this->statusCode);
             
             // Send headers.

@@ -6,10 +6,28 @@ class InputTest extends PHPUnit_Framework_TestCase
 {
 	public function __construct()
 	{
-		$_SERVER['REQUEST_METHOD'] = 'POST';
-
 		// Create input class
 		$this->input = new Input();
+	}
+
+	public function testGet()
+	{	
+		// Simulate POST array
+		$_GET['foo'] = 'bar';
+		
+		// Test
+		$this->assertEquals($this->input->get('foo'), 'bar');
+
+		$_GET['bar'] = 'foo';
+
+		$this->assertEquals($this->input->get(), ['foo'=>'bar', 'bar'=>'foo']);
+
+		$this->assertNull($this->input->get('none'));
+
+		// Simulate invalid POST array
+		$_GET['foo2'] = "alert('Hacker')";
+
+		$this->assertNotEquals($this->input->get('foo2', true), "alert('Hacker')");
 	}
 
 	public function testPost()

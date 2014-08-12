@@ -6,12 +6,23 @@ use \Core\Util\Security;
 /**
 * Input class.
 * This class is used for fetching request input data from 
-* common sources such as POST, PUT, DELETE etc.
+* common sources such as GET, POST, PUT, DELETE etc.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Input
 {
+	/**
+	* Get an item or array from GET data.
+	* @param string
+	* @param bool
+	* @return array|mixed|null
+	*/
+	public function get($index = null, $xssClean = false)
+	{
+		return $this->getData($_GET, $index, $xssClean);
+	}
+
 	/**
 	* Get an item or array from POST data.
 	* @param string
