@@ -190,19 +190,25 @@ class Database
 		// Make query
 		$sql = "CREATE TABLE IF NOT EXISTS $name (";
 	    foreach ($fields as $field => $type) {
-      		$sql.= "$field $type, ";
-      		if (preg_match('/AUTO_INCREMENT/i', $type)) {
+      		if (preg_match('/PRIMARY KEY/i', $type)) {
         		$pk = $field;
+        		$type = str_replace('PRIMARY KEY', '', $type);
       		}
+      		$sql.= "$field $type, ";
+
     	}
-    	$sql = rtrim($sql,',') . ' PRIMARY KEY ('.$pk.')';
-    	if ($options==null) {
-    		$sql .= ") CHARACTER SET utf8 COLLATE utf8_general_ci";
+    	if (isset($pk)) {
+    		$sql = rtrim($sql, ",").' PRIMARY KEY ('.$pk.')';
+    	} else {
+    		$sql = substr($sql, 0, strlen($sql) - 2);
+    	}
+    	if ($options === null) {
+    		$sql .= ") CHARACTER SET utf8 COLLATE utf8_general_ci;";
         } else {
-			$sql .= $options;
+			$sql .= ")".$options;
         }
 
-		// execute query	
+		// execute query
 	  	$stmt = $this->connection->prepare($sql);
 	  	return $stmt->execute();
 	}
