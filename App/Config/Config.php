@@ -15,7 +15,7 @@ return [
 |--------------------------------------------------------------------------
 | Session handler
 |--------------------------------------------------------------------------
-| Currently supported file, database and null (native PHP sessions).
+| Currently supported file, null (native PHP sessions).
 */
 'sessionHandler' => null,
 /*

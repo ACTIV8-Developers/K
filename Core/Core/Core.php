@@ -37,7 +37,7 @@ class Core extends Container
     */
     private $hooks = [
         'before.routing' => null, 
-        'after.routing'=> null
+        'after.routing'  => null
     ];
 
     /**

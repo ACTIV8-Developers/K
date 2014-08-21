@@ -2,7 +2,7 @@
 namespace Core\Database\Connections;
 
 /**
- * Class MySQLConnection
+ * Class MySQLConnection.
  * @author Milos Kajnaco <miloskajnaco@gmail.com>
  */
 class MySQLConnection extends PDOConnection

@@ -56,7 +56,7 @@ class Database
     /**
     * Begin database transaction.
     */
-    public function beginTrans()
+    public function beginTransaction()
     {
     	$this->connection->beginTransaction();
     }
@@ -194,8 +194,7 @@ class Database
         		$pk = $field;
         		$type = str_replace('PRIMARY KEY', '', $type);
       		}
-      		$sql.= "$field $type, ";
-
+      		$sql .= "$field $type, ";
     	}
     	if (isset($pk)) {
     		$sql = rtrim($sql, ",").' PRIMARY KEY ('.$pk.')';
