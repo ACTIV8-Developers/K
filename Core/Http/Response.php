@@ -1,13 +1,12 @@
 <?php 
 namespace Core\Http;
 
-use \Core\Util\Util;
-
 /**
 * HTTP response class.
+*
 * This class provides simple abstraction over top an HTTP response. 
 * This class provides methods to set the HTTP status, the HTTP headers,
-* the HTTP body and also handles 'Views' rendering.
+* the HTTP cookies, the HTTP body and also handles 'Views' rendering.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -92,6 +91,12 @@ class Response
     * @var string 
     */
     private $body = '';
+
+    /**
+    * Array of cookies to be sent.
+    * @var array
+    */
+    private $cookies = [];
 
     /**
      * Nesting level of the output buffering mechanism.
@@ -191,6 +196,46 @@ class Response
     }
 
     /**
+    * Send cookie with response.
+    * @param string   
+    * @param string  
+    * @param int|string|\DateTime
+    * @param string
+    * @param string
+    * @param bool                    
+    * @param bool
+    * @throws \InvalidArgumentException
+    */
+    public function setCookie($name, $value = null, $expire = 7200, $path = '/', $domain = null, $secure = false, $httpOnly = true)
+    {
+        // As stated in PHP source code.
+        if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {
+            throw new \InvalidArgumentException(sprintf('The cookie name "%s" contains invalid characters.', $name));
+        }
+
+        // Convert expiration time to a Unix timestamp.
+        if ($expire instanceof \DateTime) {
+            $expire = $expire->format('U');
+        } elseif (!is_numeric($expire)) {
+            $expire = strtotime($expire);
+            if (false === $expire || -1 === $expire) {
+                throw new \InvalidArgumentException('The cookie expiration time is not valid.');
+            }
+        } else {
+            $expire = time() + $expire;
+        }
+
+        $this->cookies[] = ['name'     => $name, 
+                            'value'    => $value, 
+                            'expire'   => $expire, 
+                            'path'     => $path, 
+                            'domain'   => $domain, 
+                            'secure'   => (bool)$secure, 
+                            'httponly' => (bool)$httpOnly
+                            ];
+    }
+
+    /**
     * Buffer output for display or return it as string.
     * @param string
     * @param array
@@ -199,15 +244,17 @@ class Response
     */
     public function render($view, $data = [], $display = true)
     {
-        // Extract variables
+        // Extract variables.
         extract($data);
-        // Start buffering
+
+        // Start buffering.
         ob_start();
-        // Load view file (root location is declared in APPVIEW constant)
+
+        // Load view file (root location is declared in APPVIEW constant).
         include APPVIEW.$view.'.php';
-        // Append to output body or return string
-        // (depends on function parameter $display)
-        if ($display) {
+
+        // Append to output body or return string.
+        if (true === $display) {
             // Check output level to allow nested views
             if (ob_get_level() > $this->obLevel + 1) {
                 ob_end_flush();
@@ -241,12 +288,12 @@ class Response
     */
     public function redirect($url = '', $statusCode = 303)
     {
-        header('Location: '.Util::base($url), true, $statusCode);
+        header('Location: '.\Core\Util\Util::base($url), true, $statusCode);
         die();
     }
 
     /**
-    * Send final content and headers.
+    * Send final headers, cookies and content.
     */
     public function send()
     {
@@ -257,10 +304,14 @@ class Response
             header(sprintf('%s %s', $this->protocolVersion, self::$messages[$this->statusCode]), true, $this->statusCode);
             
             // Send headers.
-            if (count($this->headers) > 0) {
-                foreach ($this->headers as $header) {
-                    header($header[0], $header[1], $this->statusCode);
-                }
+            foreach ($this->headers as $header) {
+                header($header[0], $header[1], $this->statusCode);
+            }
+
+            // Send cookies.
+            foreach ($this->cookies as $cookie) {
+                setcookie($cookie['name'], $cookie['value'], $cookie['expire'], 
+                    $cookie['path'], $cookie['domain'], $cookie['secure'], $cookie['httponly']);
             }
 
             // Send body.

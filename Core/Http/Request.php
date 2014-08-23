@@ -3,6 +3,7 @@ namespace Core\Http;
 
 /**
 * HTTP request class.
+*
 * This class provides interface for common request parameters.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
@@ -127,7 +128,8 @@ class Request
     */
     public function isAjax()
     {
-        if (!empty($this->environment['HTTP_X_REQUESTED_WITH']) && strtolower($this->environment['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        if (!empty($this->environment['HTTP_X_REQUESTED_WITH']) 
+            && strtolower($this->environment['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
             return true;
         }
         return false;

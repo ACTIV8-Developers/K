@@ -35,19 +35,6 @@ return [
     ],
 /*
 |--------------------------------------------------------------------------
-| Cookies specific settings
-|--------------------------------------------------------------------------
-| All parameters are optional and default ones 
-| will be used if none is passed.
-*/
-'cookies' => [
-    'domain' => '',
-    'path' => '/',
-    'secure' => false,
-    'httponly' => true
-    ],
-/*
-|--------------------------------------------------------------------------
 | Encryption Key
 |--------------------------------------------------------------------------
 | Encryption key is needed for use in some classes.

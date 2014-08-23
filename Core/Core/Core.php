@@ -68,11 +68,6 @@ class Core extends Container
             return new Input();
         };
 
-        // Create cookies class closure.
-        $this['cookies'] = function($c) {
-            return new Cookies($c['config']['cookies']);
-        };
-
         // Create response class closure.
         $this['response'] = function($c) {
             $response = new Response();

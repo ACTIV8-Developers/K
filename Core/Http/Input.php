@@ -5,8 +5,9 @@ use \Core\Util\Security;
 
 /**
 * Input class.
-* This class is used for fetching request input data from 
-* common sources such as GET, POST, PUT, DELETE etc.
+*
+* This class is used for fetching common request 
+* input data from global PHP variables.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -88,6 +89,17 @@ class Input
     public function file($index = null, $xssClean = false)
     {      
 	    return $this->getData($_FILES, $index, $xssClean);
+    }
+
+    /**
+	* Get an item or array from $_COOKIES data.
+	* @param array
+	* @param bool
+	* @return array|mixed|null
+	*/
+    public function cookie($index = null, $xssClean = false)
+    {      
+	    return $this->getData($_COOKIE, $index, $xssClean);
     }
 
     /**

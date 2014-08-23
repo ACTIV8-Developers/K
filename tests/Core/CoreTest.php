@@ -11,8 +11,7 @@ class CoreTest extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('Core\Core\Core', $app);
 		$this->assertInstanceOf('Core\Http\Response', $app['response']);
 		$this->assertInstanceOf('Core\Http\Input', $app['input']);
-		$this->assertInstanceOf('Core\Http\Request', $app['request']);
-		$this->assertInstanceOf('Core\Http\Cookies', $app['cookies']);		
+		$this->assertInstanceOf('Core\Http\Request', $app['request']);		
 	}
 
 	public function testHooks()

@@ -6,17 +6,22 @@ namespace Controllers;
 */
 class ExampleController extends \Controller
 {
+	/**
+	* @var object
+	*/
+	private $model;
+
 	public function __construct()
 	{
-    	// Load model
+    	// Load model.
     	$this->model = $this->model('ExampleModel');
 	}
 
 	public function index()
 	{
-    	// Get data from model
+    	// Get data from model.
     	$data['content'] = $this->model->getData();
-    	// Load data into view and display it
+    	// Load data into view and display it.
     	$this->response()->render('ExampleView', $data);
 	}
 }

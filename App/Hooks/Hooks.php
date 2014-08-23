@@ -9,6 +9,7 @@ $app->hook('before.routing', function($app) {
 });
 
 /**
+* Example hook.
 * Extract language from given URI and put it into global variable,
 */
 function detectLanguage($app)

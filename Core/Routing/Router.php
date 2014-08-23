@@ -3,9 +3,10 @@ namespace Core\Routing;
 
 /**
 * Router class.
+*
 * This class contains list of application routes,
 * also here are methods for adding things to list and
-* finally here is defined run method for routing requests.
+* here is defined run method for routing requests.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */

@@ -3,7 +3,7 @@ namespace Core\Session\Handlers;
 
 /**
 * Session handler using database interface.
-* TO DO
+* @todo write class :)
 */
 class DatabaseSessionHandler implements \SessionHandlerInterface
 {
