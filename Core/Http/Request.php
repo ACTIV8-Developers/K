@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Core\Http;
 
 /**
@@ -23,23 +23,63 @@ class Request
 
     /**
     * Server and execution environment parameters (parsed from $_SERVER).
-    * @var array 
+    * @var object \Bag
     */
-    private $environment = [];
+    public $server;
 
     /**
     * Request headers (parsed from the $_SERVER).
-    * @var array
+    * @var object \Bag
     */
-    private $headers = [];
+    public $headers;
+
+    /**
+    * Request parameters (parsed from the $_GET).
+    * @var object \Bag
+    */
+    public $get;
+
+    /**
+    * Request parameters (parsed from the $_POST).
+    * @var object \Bag
+    */
+    public $post;
+
+    /**
+    * Request cookies (parsed from the $_COOKIE).
+    * @var object \Bag
+    */
+    public $cookies;
+
+    /**
+    * Request files (parsed from the $_FILES).
+    * @var object \Bag
+    */
+    public $files;
+
+    /**
+    * Raw request content.
+    * @var string
+    */
+    private $content = null;
+
+    /**
+    * Request method.
+    * @var string
+    */
+    private $method = null;
     
     /**
     * Class constructor.
     * @param array
+    * @param array
+    * @param array
+    * @param array
+    * @param array
     */
-    public function __construct(array $server = null)
+    public function __construct(array $server = [], array $get = [], array $post = [], array $cookies = [], array $files = [])
     {
-        // Fix URI if neeeded
+        // Fix URI if neeeded.
         if (strpos($server['REQUEST_URI'], $server['SCRIPT_NAME']) === 0) {
             $server['REQUEST_URI'] = substr($server['REQUEST_URI'], strlen($server['SCRIPT_NAME']));
         } elseif (strpos($server['REQUEST_URI'], dirname($server['SCRIPT_NAME'])) === 0) {
@@ -47,37 +87,49 @@ class Request
         }
         $server['REQUEST_URI'] = trim($server['REQUEST_URI'], '/');
 
-        // Parse request headers and server enviroment variables.
-        $specialHeaders = [
-            'CONTENT_TYPE',
-            'CONTENT_LENGTH',
-            'PHP_AUTH_USER',
-            'PHP_AUTH_PW',
-            'PHP_AUTH_DIGEST',
-            'AUTH_TYPE'
-        ];
-        
+        $this->method = $server['REQUEST_METHOD'];
+
+        $this->headers = new HttpBag();
+        $this->server = new HttpBag();
+
+        // Parse request headers and enviroment variables.
+        $specialHeaders = ['CONTENT_TYPE', 'CONTENT_LENGTH', 'PHP_AUTH_USER', 'PHP_AUTH_PW', 'PHP_AUTH_DIGEST', 'AUTH_TYPE'];
         foreach ($server as $key => $value) {
             $key = strtoupper($key);
             if (strpos($key, 'HTTP_') === 0 || in_array($key, $specialHeaders)) {
                 if ($key === 'HTTP_CONTENT_TYPE' || $key === 'HTTP_CONTENT_LENGTH') {
                     continue;
                 }
-                $this->headers[$key] = $value;
+                $this->headers->set($key, $value);
             } else {
-                $this->environment[$key] = $value;
+                $this->server->set($key, $value);
             }
         }
+
+        // Since PHP doesn't support PUT, DELETE, PATCH naturally we will parse data directly from source.
+        if (0 === strpos($this->headers->get('CONTENT_TYPE'), 'application/x-www-form-urlencoded')
+            && in_array($this->method, array('PUT', 'DELETE', 'PATCH'))) {
+            parse_str($this->getContent(), $data);
+            $this->post = new HttpBag($data);
+        } else {
+            $this->post = new HttpBag($post); 
+        }
+
+        $this->get = new HttpBag($get);
+        $this->cookies = new HttpBag($cookies); 
+        $this->files = new HttpBag($files); 
     }
 
     /**
-    * Get environment variable.
-    * @param string
-    * @return string|null
+    * Get raw request input.
+    * @return string
     */
-    public function getEnv($key)
+    public function getContent()
     {
-        return isset($this->environment[$key])?$this->environment[$key]:null;
+        if (null === $this->content) {
+            $this->content = file_get_contents('php://input');
+        }
+        return $this->content;
     }
 
     /**
@@ -86,7 +138,7 @@ class Request
     */
     public function getUri()
     {
-        return $this->environment['REQUEST_URI'];
+        return $this->server->get('REQUEST_URI');
     }
 
     /**
@@ -96,9 +148,31 @@ class Request
     */
     public function getUriSegment($num)
     {
-        $segments = explode('/', $this->environment['REQUEST_URI']);
+        $segments = explode('/', $this->server->get('REQUEST_URI'));
         if (isset($segments[$num])) {
             return $segments[$num];
+        }
+        return false;
+    }
+
+    /**
+     * Get server protocol (eg. HTTP/1.1.)
+     * @return string
+     */
+    public function getProtocolVersion()
+    {
+        return $this->server->get('SERVER_PROTOCOL');
+    }
+
+    /**
+    * Check if it is AJAX request.  
+    * @return bool
+    */
+    public function isAjax()
+    {
+        if (!empty($this->server->get('HTTP_X_REQUESTED_WITH')) 
+            && strtolower($this->server->get('HTTP_X_REQUESTED_WITH')) === 'xmlhttprequest') {
+            return true;
         }
         return false;
     }
@@ -110,29 +184,7 @@ class Request
     */
     public function getRequestMethod()
     {
-        return $this->environment['REQUEST_METHOD'];
-    }
-
-    /**
-     * Get server protocol (eg. HTTP/1.1.)
-     * @return string
-     */
-    public function getProtocolVersion()
-    {
-        return $this->environment['SERVER_PROTOCOL'];
-    }
-
-    /**
-    * Check if it is AJAX request.  
-    * @return bool
-    */
-    public function isAjax()
-    {
-        if (!empty($this->environment['HTTP_X_REQUESTED_WITH']) 
-            && strtolower($this->environment['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
-            return true;
-        }
-        return false;
+        return $this->method;
     }
 
     /**
@@ -141,7 +193,7 @@ class Request
     */
     public function isHead()
     {
-        return self::METHOD_HEAD === $this->environment['REQUEST_METHOD'];
+        return self::METHOD_HEAD === $this->method;
     }
 
     /**
@@ -150,7 +202,7 @@ class Request
     */
     public function isGet()
     {
-        return self::METHOD_GET === $this->environment['REQUEST_METHOD'];
+        return self::METHOD_GET === $this->method;
     }
 
     /**
@@ -159,7 +211,7 @@ class Request
     */
     public function isPost()
     {
-        return self::METHOD_POST === $this->environment['REQUEST_METHOD'];
+        return self::METHOD_POST === $this->method;
     }
 
     /**
@@ -168,7 +220,7 @@ class Request
     */
     public function isPut()
     {
-        return self::METHOD_PUT === $this->environment['REQUEST_METHOD'];
+        return self::METHOD_PUT === $this->method;
     }
 
     /**
@@ -177,7 +229,7 @@ class Request
     */
     public function isPatch()
     {
-        return self::METHOD_PATCH === $this->environment['REQUEST_METHOD'];
+        return self::METHOD_PATCH === $this->method;
     }
 
     /**
@@ -186,7 +238,7 @@ class Request
     */
     public function isDelete()
     {
-        return self::METHOD_DELETE === $this->environment['REQUEST_METHOD'];
+        return self::METHOD_DELETE === $this->method;
     }
 
     /**
@@ -195,26 +247,7 @@ class Request
     */
     public function isOptions()
     {
-        return self::METHOD_OPTIONS === $this->environment['REQUEST_METHOD'];
-    }
-
-    /**
-    * Get request headers.
-    * @return array
-    */
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-    * Get request header with give key.
-    * @param string
-    * @return string|null
-    */
-    public function getHeader($key)
-    {
-        return isset($this->headers[$key])?$this->headers[$key]:null;
+        return self::METHOD_OPTIONS === $this->method;
     }
 
     /**
@@ -223,7 +256,7 @@ class Request
     */
     public function getUserAgent()
     {
-        return $this->getHeader('HTTP_USER_AGENT');
+        return $this->header->get('HTTP_USER_AGENT');
     }
 
     /**
@@ -232,7 +265,7 @@ class Request
     */
     public function getReferer()
     {
-        return $this->getHeader('HTTP_REFERER');
+        return $this->header->get('HTTP_REFERER');
     }
 
     /**
@@ -241,7 +274,7 @@ class Request
     */
     public function getContentType()
     {
-        return $this->getHeader('CONTENT_TYPE');
+        return $this->header->get('CONTENT_TYPE');
     }
 
     /**
@@ -250,6 +283,6 @@ class Request
     */
     public function getContentLength()
     {
-        return $this->getHeader('CONTENT_LENGTH');
+        return $this->header->get('CONTENT_LENGTH');
     }
 }

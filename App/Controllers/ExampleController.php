@@ -1,13 +1,15 @@
 <?php
 namespace Controllers;
 
+use \Core\Http\Request as Request;
+
 /**
 * Example controller class.
 */
 class ExampleController extends \Controller
 {
 	/**
-	* @var object
+	* @var object \Models\ExampleModel
 	*/
 	private $model;
 
@@ -17,11 +19,12 @@ class ExampleController extends \Controller
     	$this->model = $this->model('ExampleModel');
 	}
 
-	public function index()
+	public function index(Request $request)
 	{
     	// Get data from model.
     	$data['content'] = $this->model->getData();
-    	// Load data into view and display it.
-    	$this->response()->render('ExampleView', $data);
+
+    	// Render view and write it to response body.
+    	$this->render('ExampleView', $data);
 	}
 }

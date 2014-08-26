@@ -26,7 +26,7 @@
 |
 | @author Milos Kajnaco <miloskajnaco@gmail.com>
 | @link http://kframework.info/
-| @version 1.2
+| @version 1.3
 */
 /*
 |--------------------------------------------------------------------------

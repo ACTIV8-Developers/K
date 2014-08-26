@@ -4,12 +4,41 @@ namespace Core\Core;
 /**
 * Base controller abstract class.
 * Used with alias "Controller".
-* Extend to get access to app main container common functions.
+* Extend to get access to app main container and common functions.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-abstract class BaseController
+class BaseController
 {
+    /**
+    * Buffer output for display or return it as string.
+    * @param string
+    * @param array
+    * @param bool
+    * @return string|null
+    */
+    protected function render($view, $data = [], $display = true)
+    {
+        // Extract variables.
+        extract($data);
+
+        // Start buffering.
+        ob_start();
+
+        // Load view file (root location is declared in APPVIEW constant).
+        include APPVIEW.$view.'.php';
+
+        // Append to output body or return string.
+        if (true === $display) {
+            Core::getInstance()['response']->writeBody(ob_get_contents());
+            ob_end_clean();
+        } else {          
+            $buffer = ob_get_contents();
+            ob_end_clean();
+            return $buffer;
+        }
+    }
+
     /**
 	* Load library.
     * @param string
@@ -46,30 +75,12 @@ abstract class BaseController
     }
 
     /**
-    * Get input object.
-    * @return object \Core\Http\Input
-    */
-    protected function input()
-    {
-        return Core::getInstance()['input'];
-    }
-
-    /**
     * Get response object.
     * @return object \Core\Http\Response
     */
     protected function response()
     {
         return Core::getInstance()['response'];
-    }
-
-    /**
-    * Get response object.
-    * @return object \Core\Http\Cookies
-    */
-    protected function cookies()
-    {
-        return Core::getInstance()['cookies'];
     }
 
     /**
@@ -107,5 +118,16 @@ abstract class BaseController
     protected function db($dbName = 'default')
     {
         return Core::getInstance()['db'.$dbName ];
+    }
+
+    /**
+    * Redirect helper function.
+    * @var string
+    * @var int 
+    */
+    protected function redirect($url = '', $statusCode = 303)
+    {
+        header('Location: '.\Core\Util\Util::base($url), true, $statusCode);
+        die();
     }
 }

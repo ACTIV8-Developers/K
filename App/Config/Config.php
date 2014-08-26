@@ -45,5 +45,5 @@ return [
 | Display benchmarking.
 |--------------------------------------------------------------------------
 */
-'benchmark' => false
+'benchmark' => true
 ];

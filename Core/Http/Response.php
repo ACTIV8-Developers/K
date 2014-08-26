@@ -6,7 +6,7 @@ namespace Core\Http;
 *
 * This class provides simple abstraction over top an HTTP response. 
 * This class provides methods to set the HTTP status, the HTTP headers,
-* the HTTP cookies, the HTTP body and also handles 'Views' rendering.
+* the HTTP cookies, the HTTP body.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -16,7 +16,7 @@ class Response
      * HTTP response codes and messages.
      * @var array 
      */
-    private static $messages = [
+    protected static $messages = [
         //Informational 1xx
         100 => '100 Continue',
         101 => '101 Switching Protocols',
@@ -72,45 +72,31 @@ class Response
     * HTTP response protocol version
     * @var string
     */
-    private $protocolVersion = 'HTTP/1.1';
+    protected $protocolVersion = 'HTTP/1.1';
 
     /**
     * HTTP response code.
     * @var int
     */
-    private $statusCode = 200;
+    protected $statusCode = 200;
 
     /**
      * List of HTTP headers to be sent.
      * @var array
      */
-    private $headers = [];
+    protected $headers = [];
 
     /**
     * HTTP response body.
     * @var string 
     */
-    private $body = '';
+    protected $body = '';
 
     /**
     * Array of cookies to be sent.
     * @var array
     */
-    private $cookies = [];
-
-    /**
-     * Nesting level of the output buffering mechanism.
-     * @var int
-     */
-    private $obLevel;
-
-    /**
-    * Class constructor.
-    */
-    public function __construct()
-    {
-        $this->obLevel = ob_get_level();
-    }
+    protected $cookies = [];
 
     /**
     * Add or replace header.
@@ -145,7 +131,7 @@ class Response
     * Append to HTTP response body.
     * @var string
     */
-    public function appendBody($part)
+    public function writeBody($part)
     {
         $this->body .= $part;
     }
@@ -236,40 +222,6 @@ class Response
     }
 
     /**
-    * Buffer output for display or return it as string.
-    * @param string
-    * @param array
-    * @param bool
-    * @return string|null
-    */
-    public function render($view, $data = [], $display = true)
-    {
-        // Extract variables.
-        extract($data);
-
-        // Start buffering.
-        ob_start();
-
-        // Load view file (root location is declared in APPVIEW constant).
-        include APPVIEW.$view.'.php';
-
-        // Append to output body or return string.
-        if (true === $display) {
-            // Check output level to allow nested views
-            if (ob_get_level() > $this->obLevel + 1) {
-                ob_end_flush();
-            } else {
-                $this->body .= ob_get_contents();
-                ob_end_clean();
-            }
-        } else {          
-            $buffer = ob_get_contents();
-            ob_end_clean();
-            return $buffer;
-        }
-    }
-
-    /**
      * Set response type to JSON.
      * @param array
      * @param int
@@ -279,17 +231,6 @@ class Response
     {
         $this->headers[] = ['Content-Type: application/json', true];
         $this->body = json_encode($value, $options);
-    }
-
-    /**
-    * Redirect helper function.
-    * @var string
-    * @var int 
-    */
-    public function redirect($url = '', $statusCode = 303)
-    {
-        header('Location: '.\Core\Util\Util::base($url), true, $statusCode);
-        die();
     }
 
     /**

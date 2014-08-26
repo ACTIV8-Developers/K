@@ -19,18 +19,17 @@ class Router
 	private static $routes = [];
 
 	/**
-	* Check routes and dispatch matching one if found.
+	* Check routes and return matching one.
 	* @var string
     * @var string
-	* @return bool
+	* @return bool|object \Core\Routing\Route
 	*/
 	public function run($uri, $requestMethod)
 	{
-		// Dispatch correct route
+		// Find correct route.
 	    foreach (self::$routes as $route) {
 	    	if (true === $route->matches($uri, $requestMethod)) {
-	        	$route->dispatch();
-	        	return true;
+	        	return $route;
 	      	}
 	    }
 	    return false;

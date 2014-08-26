@@ -9,7 +9,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
 		$route = new Route('foo/bar', ['foo', 'bar'], 'PUT');
 
 		// Did route URL set properly ?
-		$this->assertEquals('foo/bar', $route->getUrl());
+		$this->assertEquals('foo/bar', $route->url);
 
 		// Add one more method.
 		$route->viaPost();
@@ -24,7 +24,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(['PUT', 'POST', 'GET'], $route->getHttpMethods());
 
 		// Test get callable.
-		$this->assertEquals(['foo', 'bar'], $route->getCallable());
+		$this->assertEquals(['foo', 'bar'], $route->callable);
 	}
 
 	public function testMatches()
@@ -165,11 +165,11 @@ class RouteTest extends PHPUnit_Framework_TestCase
 	{
 		$route = new Route('foo/:param', [], 'GET');
 
-		$this->assertEmpty($route->getParams());
+		$this->assertEmpty($route->params);
 
 		// Route must match in order to get params, before that it will be empty.
 		$this->assertTrue($route->matches('foo/bar','GET'));
 
-		$this->assertEquals(['param' => 'bar'], $route->getParams());
+		$this->assertEquals(['param' => 'bar'], $route->params);
 	}
 }

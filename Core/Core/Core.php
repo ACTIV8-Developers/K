@@ -23,7 +23,7 @@ class Core extends Container
     * Core version.
     * @var string
     */
-    const VERSION = '1.2';
+    const VERSION = '1.3';
 
     /**
     * Singleton instance of Core.
@@ -55,18 +55,13 @@ class Core extends Container
 
         // Create request class closure.
         $this['request'] = function() {
-            return new Request($_SERVER);
+            return new Request($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
         };
 
         // Create router class closure.
         $this['router'] = function() { 
             return new Router();
         };  
-
-        // Create input class closure.
-        $this['input'] = function() {
-            return new Input();
-        };
 
         // Create response class closure.
         $this['response'] = function($c) {
@@ -132,9 +127,43 @@ class Core extends Container
         }
 
         // Route requests
-        if (!$this['router']->run($this['request']->getUri(), $this['request']->getRequestMethod())) {
-            // If no route found send and show 404.
+        $route = $this['router']->run($this['request']->getUri(), $this['request']->getRequestMethod());
+
+        // If no route found send and show 404.
+        if ($route === false) {
             $this->show404();
+        } else {
+            // Resolve controller using reflection.
+            $route->callable[0] = CONTROLERS.'\\'.$route->callable[0];
+
+            $classMethod = new \ReflectionMethod($route->callable[0], $route->callable[1]);
+
+            $methods = $classMethod->getParameters();
+
+            $params = [];
+
+            $num = 0;
+
+            foreach ($methods as $key => $value) {
+                $export = \ReflectionParameter::export(
+                   [
+                      $value->getDeclaringClass()->name,
+                      $value->getDeclaringFunction()->name
+                   ], 
+                   $value->name, 
+                   true
+                );
+
+                $type = strtolower(preg_replace('/.*?(\w+)\s+\$'.$value->name.'.*/', '\\1', $export));
+
+                if (isset($this[$type])) {
+                    $params[] = $this[$type];
+                } else {
+                    $params[] = $route->params[$num++];
+                }
+            }
+
+            call_user_func_array([new $route->callable[0], $route->callable[1]], $params);
         }
 
         // Post routing/controller hooks.

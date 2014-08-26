@@ -126,10 +126,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
 		$_SERVER['CONTENT_LENGTH'] = 100;
 
         $req = new Request($_SERVER);
-        $this->assertEquals('gzip', $req->getHeader('HTTP_ACCEPT_ENCODING'));
+        $this->assertEquals('gzip', $req->headers->get('HTTP_ACCEPT_ENCODING'));
 
-        $this->assertEquals(100, $req->getContentLength());
         $this->assertEquals('application/x-www-form-urlencoded', $req->getContentType());
-        $this->assertNull($req->getHeader('foo'));
 	}
 }

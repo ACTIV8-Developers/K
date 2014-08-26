@@ -3,8 +3,7 @@ namespace Core\Routing;
 
 /**
 * Route class. 
-* This class represents single route and contains method
-* for self dispatching if passed parameters are matched.
+* This class represents single route.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -14,38 +13,38 @@ class Route
     * The route pattern (The URL pattern (e.g. "article/:year/:category")).
 	* @var string 
 	*/
-	private $url = '';
-
-  	/**
-    * List of supported HTTP methods for this route.
-	* @var array
-	*/
-	private $methods = [];
+	public $url = '';
 
     /**
     * The route callable 
     * (name of controller and function to execute e.g ['ExampleController', 'index']).
 	* @var array
 	*/
-    private $callable = [];
+    public $callable = [];
 
     /**
     * List of parameters to be passed if URL is matched.
     * @var array
     */
-    private $params = [];
+    public $params = [];
 
+    /**
+    * List of supported HTTP methods for this route.
+    * @var array
+    */
+    protected $methods = [];
+    
     /**
     * List of parameters conditions.
     * @var array
     */
-    private $conditions = [];
+    protected $conditions = [];
 
     /**
     * List of regex to use when matching conditions.
     * @param array
     */
-    private static $conditionRegex = [
+    protected static $conditionRegex = [
                         'default'           => '[a-zA-Z0-9_\-]+', // Default allows letters, numbers, underscores and dashes.
                         'alpha-numeric'     => '[a-zA-Z0-9]+', // Numbers and letters.
                         'numeric'           => '[0-9]+', // Numbers only.
@@ -112,7 +111,7 @@ class Route
     * @param string
     * @return string
     **/
-    private function regexUrl($matches) 
+    protected function regexUrl($matches) 
     {
         $key = substr($matches[0], 1);
         if (isset($this->conditions[$key])) {
@@ -167,52 +166,11 @@ class Route
     }
 
     /**
-    * Dispatch route to assigned controller/function.
-    */
-    public function dispatch()
-    {
-        // Create controller
-        $controller = CONTROLERS.'\\'.$this->callable[0];
-        // Put parsed params into $_GET array.
-        $_GET = $this->params;
-        // Create designated class and call it's function.
-        call_user_func_array([new $controller(), $this->callable[1]], $this->params);
-    }
-
-    /**
-    * Get parameters passed with URI.
-    * (this array is empty if passed URI didn't match this one)
-    * @return array
-    */
-    public function getParams()
-    {
-        return $this->params;
-    }
-
-    /**
     * Get supported HTTP method(s).
     * @return array
     */
     public function getHttpMethods()
     {
         return $this->methods;
-    }
-
-    /**
-    * Get route URL.
-    * @return string
-    */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * Get name of controller and method to call.
-     * @return array
-     */
-    public function getCallable()
-    {
-        return $this->callable;
     }
 }
