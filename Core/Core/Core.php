@@ -133,6 +133,8 @@ class Core extends Container
         if ($route === false) {
             $this->show404();
         } else {
+            $this['request']->get->replace($route->params);
+
             // Resolve controller using reflection.
             $route->callable[0] = CONTROLERS.'\\'.$route->callable[0];
 
