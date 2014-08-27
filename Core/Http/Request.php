@@ -76,9 +76,14 @@ class Request
     * @param array
     * @param array
     * @param array
+    * @throws \InvalidArgumentException
     */
     public function __construct(array $server = [], array $get = [], array $post = [], array $cookies = [], array $files = [])
     {
+        // Check if request is valid.
+        if (!isset($server['REQUEST_URI']) || !isset($server['REQUEST_METHOD'])) {
+            throw new \InvalidArgumentException('HTTP request must have associated URI and method.');
+        }
         // Fix URI if neeeded.
         if (strpos($server['REQUEST_URI'], $server['SCRIPT_NAME']) === 0) {
             $server['REQUEST_URI'] = substr($server['REQUEST_URI'], strlen($server['SCRIPT_NAME']));
@@ -87,6 +92,7 @@ class Request
         }
         $server['REQUEST_URI'] = trim($server['REQUEST_URI'], '/');
 
+        // Get request method.
         $this->method = $server['REQUEST_METHOD'];
 
         $this->headers = new HttpBag();
@@ -106,7 +112,7 @@ class Request
             }
         }
 
-        // Since PHP doesn't support PUT, DELETE, PATCH naturally we will parse data directly from source.
+        // Since PHP doesn't support PUT, DELETE, PATCH naturally for these methods we will parse data directly from source.
         if (0 === strpos($this->headers->get('CONTENT_TYPE'), 'application/x-www-form-urlencoded')
             && in_array($this->method, array('PUT', 'DELETE', 'PATCH'))) {
             parse_str($this->getContent(), $data);
@@ -256,7 +262,7 @@ class Request
     */
     public function getUserAgent()
     {
-        return $this->header->get('HTTP_USER_AGENT');
+        return $this->headers->get('HTTP_USER_AGENT');
     }
 
     /**
@@ -265,7 +271,7 @@ class Request
     */
     public function getReferer()
     {
-        return $this->header->get('HTTP_REFERER');
+        return $this->headers->get('HTTP_REFERER');
     }
 
     /**
@@ -274,7 +280,7 @@ class Request
     */
     public function getContentType()
     {
-        return $this->header->get('CONTENT_TYPE');
+        return $this->headers->get('CONTENT_TYPE');
     }
 
     /**
@@ -283,6 +289,6 @@ class Request
     */
     public function getContentLength()
     {
-        return $this->header->get('CONTENT_LENGTH');
+        return $this->headers->get('CONTENT_LENGTH');
     }
 }

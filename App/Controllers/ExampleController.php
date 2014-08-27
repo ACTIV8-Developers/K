@@ -13,12 +13,18 @@ class ExampleController extends \Controller
 	*/
 	private $model;
 
+	/**
+	* Class constructor.
+	*/
 	public function __construct()
 	{
     	// Load model.
     	$this->model = $this->model('ExampleModel');
 	}
 
+	/**
+	* Example method.
+	*/
 	public function index(Request $request)
 	{
     	// Get data from model.

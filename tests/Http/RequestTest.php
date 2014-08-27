@@ -39,9 +39,9 @@ class RequestTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($request1->getUserAgent(), 'RandomAgent');
 
 		// Test get random variables
-		$this->assertEquals($request1->getHeader('HTTP_HOST'), 'localhost');
-		$this->assertEquals($request1->getEnv('SERVER_NAME'), 'localhost');
-		$this->assertEquals($request1->getEnv('SERVER_PORT'), 80);
+		$this->assertEquals($request1->headers->get('HTTP_HOST'), 'localhost');
+		$this->assertEquals($request1->server->get('SERVER_NAME'), 'localhost');
+		$this->assertEquals($request1->server->get('SERVER_PORT'), 80);
 
 	}
 

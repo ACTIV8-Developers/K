@@ -4,13 +4,16 @@ class CoreTest extends PHPUnit_Framework_TestCase
 {
 	public function testConstruct()
 	{
+		// Minimal request needed information.
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['REQUEST_URI'] = '';
+
 		// Make instance of app.
 		$app = Core\Core\Core::getInstance();
 
 		// Check if construct made all required things.
 		$this->assertInstanceOf('Core\Core\Core', $app);
 		$this->assertInstanceOf('Core\Http\Response', $app['response']);
-		$this->assertInstanceOf('Core\Http\Input', $app['input']);
 		$this->assertInstanceOf('Core\Http\Request', $app['request']);		
 	}
 

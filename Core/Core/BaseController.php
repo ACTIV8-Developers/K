@@ -11,6 +11,26 @@ namespace Core\Core;
 class BaseController
 {
     /**
+    * Set value in container.
+    * @param string
+    * @param mixed
+    */
+    protected function set($key, $value)
+    {
+        Core::getInstance()[$key] = $value;
+    }
+
+    /**
+    * Get value from container.
+    * @param string
+    * @return mixed
+    */
+    protected function get($key)
+    {
+        return Core::getInstance()[$key];
+    }
+
+    /**
     * Buffer output for display or return it as string.
     * @param string
     * @param array
@@ -41,6 +61,7 @@ class BaseController
 
     /**
 	* Load library.
+    * @deprecated As of 1.3 use get/set in Container and Dependecy injection.
     * @param string
     * @param array
     * @return object|null

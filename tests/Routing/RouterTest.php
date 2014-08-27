@@ -1,6 +1,7 @@
 <?php
 
 use \Core\Routing\Router;
+use \Core\Routing\Route;
 
 class RouterTest extends PHPUnit_Framework_TestCase
 {
@@ -11,15 +12,13 @@ class RouterTest extends PHPUnit_Framework_TestCase
 	{
 		// Create router object
 		$router = new Router();
-
+		$route = new Route('foo/bar', [], 'GET');
 		// Create mock route and add it to router
-		Router::addRoute(new MockRoute('foo/bar', [], 'GET'));
+		Router::addRoute($route);
 
 		// Inject request and run test
-		$this->assertTrue($router->run('foo/bar', 'GET'));
+		$this->assertEquals($router->run('foo/bar', 'GET'), $route);
 
-        // Mock route should output name of passed url.
-        $this->expectOutputString('foo/bar');
 	}
 
 	public function testRouteAdd()
@@ -44,24 +43,4 @@ class RouterTest extends PHPUnit_Framework_TestCase
 
 		$this->assertContains($route5, Router::getRoutes());
 	}
-}
-
-class MockRoute extends \Core\Routing\Route
-{
-	public function __construct($url, $callable, $requestMethod = 'ANY')
-	{
-        $this->url = $url;
-        $this->callable = $callable;
-        $this->methods[] = $requestMethod;
-	}
-
-    public function matches($uri, $method)
-    {
-        return true;
-    }
-
-    public function dispatch()
-    {
-    	echo $this->url;
-    }
 }

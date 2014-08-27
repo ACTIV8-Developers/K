@@ -2,8 +2,6 @@
 namespace Core\Core;
 
 use \Core\Http\Request;
-use \Core\Http\Cookies;
-use \Core\Http\Input;
 use \Core\Http\Response;
 use \Core\Routing\Router;
 use \Core\Session\Session;
@@ -13,7 +11,7 @@ use \Core\Database\Database;
 * Core class.
 * This is the heart of whole framework. It is a singleton container for all main 
 * objects of application. This class containes main 
-* run method which executes all functions in life cycle of application.
+* run method which handles life cycle of application.
 * 
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -52,16 +50,11 @@ class Core extends Container
 
         // Load configuration.
         $this['config'] = require APP.'Config/Config.php';
-
+        
         // Create request class closure.
         $this['request'] = function() {
             return new Request($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
-        };
-
-        // Create router class closure.
-        $this['router'] = function() { 
-            return new Router();
-        };  
+        }; 
 
         // Create response class closure.
         $this['response'] = function($c) {
@@ -69,6 +62,11 @@ class Core extends Container
             $response->setProtocolVersion($c['request']->getProtocolVersion());
             return $response;
         }; 
+
+        // Create router class closure.
+        $this['router'] = function() { 
+            return new Router();
+        };
 
         // Load database settings.
         $databaseList = require APP.'Config/Database.php';
@@ -158,6 +156,8 @@ class Core extends Container
 
                 $type = strtolower(preg_replace('/.*?(\w+)\s+\$'.$value->name.'.*/', '\\1', $export));
 
+                $controller = new $route->callable[0];
+
                 if (isset($this[$type])) {
                     $params[] = $this[$type];
                 } else {
@@ -165,7 +165,7 @@ class Core extends Container
                 }
             }
 
-            call_user_func_array([new $route->callable[0], $route->callable[1]], $params);
+            call_user_func_array([$controller, $route->callable[1]], $params);
         }
 
         // Post routing/controller hooks.
