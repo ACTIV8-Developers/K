@@ -39,11 +39,11 @@ class Core extends Container
     ];
 
     /**
-	* Class constructor.
+    * Class constructor.
     * Loads all needed classes as closures into container.
     * @throws \InvalidArgumentException
-	*/
-   	protected function __construct()
+    */
+    protected function __construct()
     {
         // Call parent container constructor.
         parent::__construct();
@@ -136,6 +136,8 @@ class Core extends Container
             // Resolve controller using reflection.
             $route->callable[0] = CONTROLERS.'\\'.$route->callable[0];
 
+            $controller = new $route->callable[0];
+            
             $classMethod = new \ReflectionMethod($route->callable[0], $route->callable[1]);
 
             $methods = $classMethod->getParameters();
@@ -155,8 +157,6 @@ class Core extends Container
                 );
 
                 $type = strtolower(preg_replace('/.*?(\w+)\s+\$'.$value->name.'.*/', '\\1', $export));
-
-                $controller = new $route->callable[0];
 
                 if (isset($this[$type])) {
                     $params[] = $this[$type];

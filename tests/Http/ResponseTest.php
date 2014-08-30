@@ -19,10 +19,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 		// Append body
 		$response->writeBody($append);
 
-		// Display and send headers
-		$response->send();
-
-		$this->expectOutputString($test.$append);
+		$this->assertEquals($response->getBody(), $test.$append);
 	}
 
 	public function testSetHeader()
