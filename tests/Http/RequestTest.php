@@ -42,7 +42,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($request1->headers->get('HTTP_HOST'), 'localhost');
 		$this->assertEquals($request1->server->get('SERVER_NAME'), 'localhost');
 		$this->assertEquals($request1->server->get('SERVER_PORT'), 80);
-
 	}
 
 	public function testGetAndIs()
@@ -88,7 +87,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
 		$this->assertFalse($request3->isOptions());
 
-				// Mock random request
+		// Mock random request
 		$server['REQUEST_URI'] = '/public/foo/bar/';
 		$server['SCRIPT_NAME'] = '/public/index.php';
 		$server['QUERY_STRING'] = '?foo=2&bar=3';
@@ -98,6 +97,25 @@ class RequestTest extends PHPUnit_Framework_TestCase
 		$request3 = new Request($server);
 
 		$this->assertTrue($request3->isDelete());
+	}
+
+	public function testPostAndGet()
+	{
+		$_SERVER['REQUEST_URI'] = '/public/foo/bar/';
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+
+		$_POST['foo'] = 'bar';
+		$_POST['bar'] = 'foo';
+
+		$_GET['goo'] = 'gar';
+
+		$request = new Request($_SERVER, $_GET, $_POST);
+	
+		$this->assertEquals($request->post->get('foo'), 'bar');
+
+		$this->assertEquals($request->post->all(), ['foo'=>'bar','bar'=>'foo']);
+
+		$this->assertEquals($request->get->get('goo'), 'gar');
 	}
 
 	public function testSegment()
@@ -118,8 +136,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
 	public function testGetHeaders()
 	{
 		$_SERVER['REQUEST_URI'] = '/public/foo/bar/2';
-		$_SERVER['SCRIPT_NAME'] = '/public/index.php';
-		$_SERVER['QUERY_STRING'] = '';
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip';
 		$_SERVER['CONTENT_TYPE'] = 'application/x-www-form-urlencoded';
@@ -127,7 +143,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
         $req = new Request($_SERVER);
         $this->assertEquals('gzip', $req->headers->get('HTTP_ACCEPT_ENCODING'));
-
+        $this->assertEquals(100, $req->headers->get('CONTENT_LENGTH'));
         $this->assertEquals('application/x-www-form-urlencoded', $req->getContentType());
 	}
 }

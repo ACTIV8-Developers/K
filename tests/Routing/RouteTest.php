@@ -154,7 +154,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
 
 		// Case 6 custom filter
 		$route6 = new Route('foo/:param', [], 'GET');
-		$route6->filter('param', 'a{3}');
+		$route6->whereRegex('param', 'a{3}');
 
 		$this->assertFalse($route6->matches('foo/aaab','GET'));
 

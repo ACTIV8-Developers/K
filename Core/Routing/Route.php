@@ -134,12 +134,12 @@ class Route
     }
 
     /**
-    * Set route custom matching pattern.
+    * Set route custom parameter condition.
     * @param string
     * @param string
     * @return object \Core\Core\Route (for method chaining)
     */
-    public function filter($key, $pattern)
+    public function whereRegex($key, $pattern)
     {
         $this->conditions[$key] = $pattern;
         return $this;

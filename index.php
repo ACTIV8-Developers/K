@@ -26,7 +26,7 @@
 |
 | @author Milos Kajnaco <miloskajnaco@gmail.com>
 | @link http://kframework.info/
-| @version 1.3
+| @version 1.3b
 */
 /*
 |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ date_default_timezone_set('Europe/Belgrade');
 require __DIR__.'/vendor/autoload.php';
 /*
 |--------------------------------------------------------------------------
-| Set error reporting
+| Set error reporting.
 |--------------------------------------------------------------------------
 | Two supported methods native PHP and Whoops error reporting.
 */
@@ -131,7 +131,7 @@ $app = Core\Core\Core::getInstance();
 include APP.'Hooks/Hooks.php';
 /*
 |--------------------------------------------------------------------------
-| RUN! 
+| Start request process lifecycle! 
 |-------------------------------------------------------------------------- 
 */
 $app->run();

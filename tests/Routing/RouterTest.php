@@ -12,12 +12,15 @@ class RouterTest extends PHPUnit_Framework_TestCase
 	{
 		// Create router object
 		$router = new Router();
+
 		$route = new Route('foo/bar', [], 'GET');
 		// Create mock route and add it to router
 		Router::addRoute($route);
 
 		// Inject request and run test
 		$this->assertEquals($router->run('foo/bar', 'GET'), $route);
+
+		$this->assertEquals($router->run('foo/bar', 'POST'), false);
 
 	}
 

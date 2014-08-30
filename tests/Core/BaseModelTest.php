@@ -5,7 +5,7 @@ class BaseModelTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException InvalidArgumentException
      */
-	public function testGetDb() // Will throw exception since it cant connect to db at this momment.
+	public function testDb() // Will throw exception since it cant connect to db at this momment.
 	{
 		$mod = new MockModel();
 
@@ -14,7 +14,7 @@ class BaseModelTest extends PHPUnit_Framework_TestCase
 		$this->assertSame(\Core\Core\Core::getInstance()['dbdefault'], $mod->getDatabase());
 	}
 
-	public function testGetLibrary()
+	public function testLibrary()
 	{
 		$mod = new MockModel();
 

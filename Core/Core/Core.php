@@ -21,7 +21,7 @@ class Core extends Container
     * Core version.
     * @var string
     */
-    const VERSION = '1.3';
+    const VERSION = '1.3b';
 
     /**
     * Singleton instance of Core.
@@ -106,7 +106,7 @@ class Core extends Container
     
     /**
     * Core main executive function.
-    * Function will start session, connect to database, apply hooks,
+    * Function will start session, apply hooks,
     * route requests, execute controllers and display response.
     */        
     public function run()
@@ -128,7 +128,7 @@ class Core extends Container
         $route = $this['router']->run($this['request']->getUri(), $this['request']->getRequestMethod());
 
         // If no route found send and show 404.
-        if ($route === false) {
+        if (false === $route) {
             $this->show404();
         } else {
             $this['request']->get->replace($route->params);
