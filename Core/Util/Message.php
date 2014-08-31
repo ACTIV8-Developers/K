@@ -25,7 +25,7 @@ class Message
      * @param bool
      * @return mixed
      */
-    public static function get($key, $preserve = false)
+    public static function get($key = '', $preserve = false)
     {
         $value = null;
         if (isset($_SESSION['flashmessage'][$key])) {
