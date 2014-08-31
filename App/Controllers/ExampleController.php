@@ -24,13 +24,14 @@ class ExampleController extends \Controller
 
 	/**
 	* Example method.
+	* @param object \Core\Http\Request
 	*/
 	public function index(Request $request)
 	{
     	// Get data from model.
     	$data['content'] = $this->model->getData();
 
-    	// Render view and write it to response body.
+    	// Render view with data and write it to response body.
     	$this->render('ExampleView', $data);
 	}
 }

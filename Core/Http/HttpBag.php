@@ -2,7 +2,7 @@
 namespace Core\Http;
 
 /**
-* Simple container for storing request data.
+* Simple container for storing HTTP request data.
 *
 * @author miloskajnaco@gmail.com
 */
