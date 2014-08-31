@@ -126,12 +126,13 @@ class Core extends Container
 
         // Route requests
         $route = $this['router']->run($this['request']->getUri(), $this['request']->getRequestMethod());
-
+        
         // If no route found send and show 404.
         if (false === $route) {
             $this->show404();
         } else {
             $this['request']->get->replace($route->params);
+            $route->params = array_values($route->params);
 
             // Resolve controller using reflection.
             $route->callable[0] = CONTROLERS.'\\'.$route->callable[0];
