@@ -19,7 +19,7 @@ namespace Core\Libraries\Auth;
  * It is suggested that you leave the main version number intact, but indicate
  * your project name (after the slash) and add your own revision information.
  *
- * Please do not change the "private" password hashing method implemented in
+ * Please do not change the "protected" password hashing method implemented in
  * here, thereby making your hashes incompatible.  However, if you must, please
  * change the hash type identifier (the "$P$") to something different.
  *
@@ -30,10 +30,10 @@ namespace Core\Libraries\Auth;
  */
 class PasswordHash
 {
-    private $itoa64;
-    private $iteration_count_log2;
-    private $portable_hashes;
-    private $random_state;
+    protected $itoa64;
+    protected $iteration_count_log2;
+    protected $portable_hashes;
+    protected $random_state;
 
     /**
      * Constructor
@@ -121,7 +121,7 @@ class PasswordHash
      * @param  String $input
      * @return String
      */
-    public function gensalt_private($input)
+    public function gensalt_protected($input)
     {
         $output = '$P$';
         $output .= $this->itoa64[min($this->iteration_count_log2 +
@@ -136,7 +136,7 @@ class PasswordHash
      * @param  String $setting
      * @return String
      */
-    public function crypt_private($password, $setting)
+    public function crypt_protected($password, $setting)
     {
         $output = '*0';
         if (substr($setting, 0, 2) == $output) {
@@ -284,8 +284,8 @@ class PasswordHash
         }
 
         $hash =
-            $this->crypt_private($password,
-            $this->gensalt_private($random));
+            $this->crypt_protected($password,
+            $this->gensalt_protected($random));
         if (strlen($hash) == 34) {
             return $hash;
         }
@@ -303,7 +303,7 @@ class PasswordHash
      */
     public function CheckPassword($password, $stored_hash)
     {
-        $hash = $this->crypt_private($password, $stored_hash);
+        $hash = $this->crypt_protected($password, $stored_hash);
         if ($hash[0] == '*') {
             $hash = crypt($password, $stored_hash);
         }

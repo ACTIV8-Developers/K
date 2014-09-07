@@ -18,7 +18,7 @@ class Transliterate
 	* Lookup table for self closing tags
 	* @param array
 	*/
-	private $tags = [
+	protected $tags = [
 		'img', 'hr', 'br', 'col', 'embed', 'input', 'meta', 'source', 'area', 'link', 'param'
 	];
 
@@ -26,7 +26,7 @@ class Transliterate
 	* Lookup table for switching chars
 	* @param array
 	*/
-	private $lookup = [
+	protected $lookup = [
 		'a' => 'а',
 		'A' => 'А',
 		'b' => 'б',
@@ -101,27 +101,27 @@ class Transliterate
 	* Final output buffer.
 	* @var string
 	*/
-	private $output = '';
+	protected $output = '';
 
 	/**
 	* Status tells to what part of HTML tag character belongs
 	* (if character is not part of tag NO_TAG flag is set)
 	* @var int
 	*/
-	private $tagStatus = self::NO_TAG;
+	protected $tagStatus = self::NO_TAG;
 
 	/**
 	* Status tells does character need to be
 	* transliterated or not.
 	* @var int
 	*/
-	private $textStatus = self::OFF;
+	protected $textStatus = self::OFF;
 
 	/**
 	* Buffer keeps current tag name.
 	* @var string
 	*/
-	private $tagBuffer = '';
+	protected $tagBuffer = '';
 
 	/**
 	* Convert input string from Latin to Cyrilic.
@@ -202,7 +202,7 @@ class Transliterate
 	* @param char|string
 	* @return char
 	*/
-	private function trans($char)
+	protected function trans($char)
 	{
 		if (array_key_exists($char, $this->lookup)) {
 			return $this->lookup[$char];
@@ -215,7 +215,7 @@ class Transliterate
 	* @param string
 	* @return array
 	*/
-	private function mb_str_split( $string ) { 
+	protected function mb_str_split( $string ) { 
 	    // Split at all position not after the start: ^ and not before the end: $
 	    return preg_split('/(?<!^)(?!$)/u', $string); 
 	} 

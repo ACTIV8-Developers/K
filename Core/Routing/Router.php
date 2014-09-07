@@ -16,7 +16,7 @@ class Router
 	* Collection of routes.
 	* @var array
 	**/
-	private static $routes = [];
+	protected static $routes = [];
 
 	/**
 	* Check routes and return matching one.

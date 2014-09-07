@@ -11,45 +11,45 @@ class Session
      * Encryption key.
      * @var string
      */
-    private $hashKey = 'super_secret';
+    protected $hashKey = 'super_secret';
 
 	/**
 	* Lifetime of the session cookie and session duration, defined in seconds.
 	* @var int
 	*/
-	private $expiration = 7200;
+	protected $expiration = 7200;
 
 	/**
 	* Cookie domain, for example 'www.php.net'. 
 	* To make cookies visible on all sub domains then the domain must be prefixed with a dot like '.php.net'.
 	* @var string|null
 	*/
-	private $domain = '';
+	protected $domain = '';
 
 	/**
 	* If true the browser only sends the cookie over HTTPS.
 	* Null denotes class will decide.
 	* @var bool|null
 	*/
-	private $secure = null;
+	protected $secure = null;
 
 	/**
 	* Session name.
 	* @var string
 	*/
-	private $name = 'PHPSESS';
+	protected $name = 'PHPSESS';
 
 	/**
 	* Match user agent across session requests.
 	* @var bool
 	*/
-	private $matchUserAgent = true;
+	protected $matchUserAgent = true;
 
 	/**
 	* Period of refreshing session ID.
 	* @var int
 	*/
-	private $updateFrequency = 10;
+	protected $updateFrequency = 10;
 
 	/**
 	* Class construct.
@@ -111,7 +111,7 @@ class Session
 	* Validate session.
 	* @return bool
 	*/
-	private function validate()
+	protected function validate()
 	{
 		// Are needed session variables set ?
 		if (!isset($_SESSION['s3ss10nCr3at3d']) || !isset($_SESSION['n3k0t'])) {

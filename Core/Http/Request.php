@@ -61,13 +61,13 @@ class Request
     * Raw request content.
     * @var string
     */
-    private $content = null;
+    protected $content = null;
 
     /**
     * Request method.
     * @var string
     */
-    private $method = null;
+    protected $method = null;
     
     /**
     * Class constructor.

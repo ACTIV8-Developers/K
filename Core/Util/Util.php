@@ -12,7 +12,7 @@ class Util
 	* Variable for caching baseUrl() call, since often it is called multiple times.
 	* @var string
 	*/
-	private static $base = null;
+	protected static $base = null;
 
 	/**
      * Deprecated, left for backward compatibility.

@@ -9,27 +9,57 @@ namespace Core\Libraries\Image;
  class Image
  {
  	/**
+ 	* @var int
+ 	*/
+ 	protected $width = 0;
+
+ 	/**
+ 	* @var int
+ 	*/
+ 	protected $height = 0;
+
+ 	/**
+ 	* Possible values exact, portrait, landscape, auto, crop.
  	* @var string
  	*/
- 	private $image = null;
+ 	protected $option = 'exact';
+
+ 	/**
+ 	* @var int
+ 	*/
+ 	protected $imageQuality = "100";
+ 	
+ 	/**
+ 	* @var string
+ 	*/
+ 	protected $image = null;
 
  	/**
  	* @var string
  	*/
- 	private $imageResized = null;
+ 	protected $imageResized = null;
 
  	/**
  	* @var string
  	*/
- 	private $library = 'gd';
+ 	protected $library = 'gd';
+
+ 	/**
+ 	* @var string
+ 	*/
+ 	protected $filepath = '';
 
  	/**
 	* Class constructor.
-	* @param string (input file path)
+	* @param array
  	*/
- 	public function __construct($filepath)
+ 	public function __construct(array $params)
  	{
-		$this->filepath = $filepath;
+        foreach ($params as $key => $val) {
+            if (isset($this->$key)) {
+                $this->$key = $val;
+            }
+        }
  	}
 
  	/**
@@ -38,26 +68,24 @@ namespace Core\Libraries\Image;
  	* (array params are height, width, option, keepOriginal)
  	* @param array
  	* @return bool
+ 	* @throws InvalidArgumentException
  	*/
  	public function resize($params = [])
  	{
  		// Check input
- 		if ($params['height'] <= 0 || $params['width'] <= 0) 
+ 		if ($params['height'] <= 0 || $params['width'] <= 0
+ 			|| !isset($params['option'])) {
  			return false;
+ 		}
 
- 		switch($this->library) {
-			case 'imageGimick':
- 				if (extension_loaded('imagick')) {
- 					// TO DO
-	 				break;
- 				}
+ 		switch ($this->library) {
  			case 'gd':
  				if (extension_loaded('gd')) {
  					return $this->resizeGD($params);
 	 				break;
  				}
 			default:
-				return false;
+				throw new InvalidArgumentException('Invalid extension type.');		
  		}
  	}
 
@@ -66,13 +94,17 @@ namespace Core\Libraries\Image;
  	* @param array
  	* @return bool
  	*/
- 	private function resizeGD($params = [])
+ 	protected function resizeGD($params = [])
  	{	 			
-	    // Get extension
+ 		if (!is_file($this->filepath) {
+ 			return false;
+ 		}
+
+	    // Get extension.
 	    $extension = strtolower(strrchr($this->filepath, '.'));
 
-	    // Open image
-	    switch($extension) {
+	    // Open image.
+	    switch ($extension) {
 	        case '.jpg':
 	        case '.jpeg':
 	            $this->image = @imagecreatefromjpeg($this->filepath);
@@ -88,26 +120,27 @@ namespace Core\Libraries\Image;
 	            break;
 	    }
 
-	    // If opening failed return false
-	    if(!$this->image) {
+	    // If opening failed return false.
+	    if (!$this->image) {
 	    	return false;
 	    }
 	    
-	    // Get image original dimensions
+	    // Get image original dimensions.
         $this->width  = imagesx($this->image);
         $this->height = imagesy($this->image);
 
-	    // Get optimal width and height - based on option
+	    // Get optimal width and height - based on option.
 	    $optionArray = $this->getDimensions($params['width'], $params['height'], strtolower($params['option']));
 	 
 	    $optimalWidth  = $optionArray['optimalWidth'];
 	    $optimalHeight = $optionArray['optimalHeight'];
 	 
-	    // Resample - create image canvas of x, y size
+	    // Resample - create image canvas of x, y size.
 	    $this->imageResized = imagecreatetruecolor($optimalWidth, $optimalHeight);
-	    imagecopyresampled($this->imageResized, $this->image, 0, 0, 0, 0, $optimalWidth, $optimalHeight, $this->width, $this->height);
+	    imagecopyresampled($this->imageResized, $this->image, 0, 0, 0, 0, $optimalWidth, $optimalHeight, 
+	    	$this->width, $this->height);
 
-	    // If option is 'crop', then crop too
+	    // If option is 'crop', then crop too.
 	    if ($params['option'] == 'crop') {
 	        $this->crop($optimalWidth, $optimalHeight, $params['width'], $params['height']);
 	    }
@@ -116,13 +149,13 @@ namespace Core\Libraries\Image;
  	}
 
  	/**
- 	* Calculate optimal new dimensions
+ 	* Calculate optimal new dimensions.
  	* @param int
  	* @param int
  	* @param string
  	* @return array (optimalWidth and optimalHeight)
  	*/
- 	private function getDimensions($newWidth, $newHeight, $option)
+ 	protected function getDimensions($newWidth, $newHeight, $option)
 	{
 	   switch ($option) {
 	        case 'exact':
@@ -152,10 +185,10 @@ namespace Core\Libraries\Image;
 	}
 
 	/**
-	* Helper function to calculate dimensions
+	* Helper function to calculate dimensions.
 	* @param int
 	*/
-	private function getSizeByFixedHeight($newHeight)
+	protected function getSizeByFixedHeight($newHeight)
 	{
 	    $ratio = $this->width / $this->height;
 	    $newWidth = $newHeight * $ratio;
@@ -163,10 +196,10 @@ namespace Core\Libraries\Image;
 	}
 	
 	/**
-	* Helper function to calculate dimensions
+	* Helper function to calculate dimensions.
 	* @param int
 	*/ 
-	private function getSizeByFixedWidth($newWidth)
+	protected function getSizeByFixedWidth($newWidth)
 	{
 	    $ratio = $this->height / $this->width;
 	    $newHeight = $newWidth * $ratio;
@@ -174,27 +207,27 @@ namespace Core\Libraries\Image;
 	}
 	
 	/**
-	* Helper function to calculate dimensions
+	* Helper function to calculate dimensions.
 	* @param int
 	* @param int
 	* @return array (optimalWidth and optimalHeight)
 	*/
-	private function getSizeByAuto($newWidth, $newHeight)
+	protected function getSizeByAuto($newWidth, $newHeight)
 	{
 	    if ($this->height < $this->width)
-	    // Image to be resized is wider (landscape)
+	    // Image to be resized is wider (landscape).
 	    {
 	        $optimalWidth = $newWidth;
 	        $optimalHeight= $this->getSizeByFixedWidth($newWidth);
 	    }
 	    elseif ($this->height > $this->width)
-	    // Image to be resized is taller (portrait)
+	    // Image to be resized is taller (portrait).
 	    {
 	        $optimalWidth = $this->getSizeByFixedHeight($newHeight);
 	        $optimalHeight= $newHeight;
 	    }
 	    else
-	    // Image to be resizerd is a square
+	    // Image to be resizerd is a square.
 	    {
 	        if ($newHeight < $newWidth) {
 	            $optimalWidth = $newWidth;
@@ -203,7 +236,7 @@ namespace Core\Libraries\Image;
 	            $optimalWidth = $this->getSizeByFixedHeight($newHeight);
 	            $optimalHeight= $newHeight;
 	        } else {
-	            // *** Sqaure being resized to a square
+	            // Sqaure being resized to a square.
 	            $optimalWidth = $newWidth;
 	            $optimalHeight= $newHeight;
 	        }
@@ -212,16 +245,16 @@ namespace Core\Libraries\Image;
 	}
  
  	/**
-	* Helper function to calculate dimensions
+	* Helper function to calculate dimensions.
 	* @param int
 	* @param int
 	* @return array (optimalWidth and optimalHeight)
 	*/
-	private function getOptimalCrop($newWidth, $newHeight)
+	protected function getOptimalCrop($newWidth, $newHeight)
 	{
 	 
-	    $heightRatio = $this->height/$newHeight;
-	    $widthRatio  = $this->width/$newWidth;
+	    $heightRatio = $this->height / $newHeight;
+	    $widthRatio  = $this->width / $newWidth;
 	 
 	    if ($heightRatio < $widthRatio) {
 	        $optimalRatio = $heightRatio;
@@ -234,17 +267,18 @@ namespace Core\Libraries\Image;
 	    return ['optimalWidth' => $optimalWidth, 'optimalHeight' => $optimalHeight];
 	}
 
-	private function crop($optimalWidth, $optimalHeight, $newWidth, $newHeight)
+	protected function crop($optimalWidth, $optimalHeight, $newWidth, $newHeight)
 	{
-	    // Find center - this will be used for the crop
-	    $cropStartX = ($optimalWidth/2) - ($newWidth/2);
-	    $cropStartY = ($optimalHeight/2) - ($newHeight/2);
+	    // Find center - this will be used for the crop.
+	    $cropStartX = ($optimalWidth / 2) - ($newWidth / 2);
+	    $cropStartY = ($optimalHeight / 2) - ($newHeight / 2);
 	 
 	    $crop = $this->imageResized;
 	 
-	    // Now crop from center to exact requested size
+	    // Now crop from center to exact requested size.
 	    $this->imageResized = imagecreatetruecolor($newWidth , $newHeight);
-	    imagecopyresampled($this->imageResized, $crop , 0, 0, $cropStartX, $cropStartY, $newWidth, $newHeight , $newWidth, $newHeight);
+	    imagecopyresampled($this->imageResized, $crop , 0, 0, $cropStartX, $cropStartY, 
+	    	$newWidth, $newHeight , $newWidth, $newHeight);
 	}
 
 	/**
@@ -254,20 +288,21 @@ namespace Core\Libraries\Image;
 	* @param int
 	* @param bool
 	*/
-	public function saveImage($savePath, $imageQuality = "100")
+	public function saveImage($savePath)
 	{
-		if($this->imageResized == null)
+		if ($this->imageResized === null) {
 			return false;
-	    // Get extension
+		}
+
+	    // Get extension.
 	    $extension = strrchr($savePath, '.');
 	    $extension = strtolower($extension);
 	 
-	    switch($extension)
-	    {
+	    switch ($extension) {
 	        case '.jpg':
 	        case '.jpeg':
 	            if (imagetypes() & IMG_JPG) {
-	                imagejpeg($this->imageResized, $savePath, $imageQuality);
+	                imagejpeg($this->imageResized, $savePath, $this->imageQuality);
 	            }
 	            break;
 	        case '.gif':
@@ -276,9 +311,9 @@ namespace Core\Libraries\Image;
 	            }
 	            break;
 	        case '.png':
-	            // Scale quality from 0-100 to 0-9
-	            $scaleQuality = round(($imageQuality/100) * 9);
-	            // Invert quality setting as 0 is best, not 9
+	            // Scale quality from 0-100 to 0-9.
+	            $scaleQuality = round(($this->imageQuality / 100) * 9);
+	            // Invert quality setting as 0 is best, not 9.
 	            $invertScaleQuality = 9 - $scaleQuality;
 	            if (imagetypes() & IMG_PNG) {
 	                imagepng($this->imageResized, $savePath, $invertScaleQuality);
@@ -299,5 +334,13 @@ namespace Core\Libraries\Image;
 	public function deleteOriginal()
 	{
 		return @unlink($this->filename);
+	}
+
+	/**
+	* @param int
+	*/
+	public function setQuality($q)
+	{
+		$this->quality = $q;
 	}
  }

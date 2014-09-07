@@ -12,7 +12,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface
      * Table name if storage system is database
      * @var string
      */
-    private $tableName = 'sessions';
+    protected $tableName = 'sessions';
 
 	/**
 	* @return bool

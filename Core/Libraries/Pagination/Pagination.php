@@ -9,49 +9,47 @@ namespace Core\Libraries\Pagination;
 */
 class Pagination
 {
-    // ------------------------------------------------------------------------
-
     /**
     * Number of products to display per page.
     * @var int
     */
-    private $perPage = 12;
+    protected $perPage = 12;
     /**
     * Total number of rows.
     * @var int
     */
-    private $totalRows = 0; 
+    protected $totalRows = 0; 
 
     /**
     * Current displaying offset.
     * @var int
     */
-    private $curOffset = 0;
+    protected $curOffset = 0;
     
     /**
     * Number of links to display at once.
     * NumLinks must be odd number in order to class function properly.
     * @var int
     */
-    private $numLinks = 9;
+    protected $numLinks = 9;
 
     /**
     * Class to add to <li> tag.
     * @var string
     */
-    private $liClass = 'pagi';
+    protected $liClass = 'pagi';
 
     /**
     * Base added to all links.
     * @var string
     */
-    private $baseUrl = '';
+    protected $baseUrl = '';
 
     /**
     * Added at end of every link.
     * @var string
     */
-    private $extraParams = '';
+    protected $extraParams = '';
     
     /**
     * Class constructor

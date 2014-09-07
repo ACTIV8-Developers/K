@@ -12,73 +12,73 @@ class Upload
     * Allowed file types
     * @var array
     */
-    private $allowedTypes = ['png', 'jpg', 'jpeg', 'bmp'];
+    protected $allowedTypes = ['png', 'jpg', 'jpeg', 'bmp'];
 
     /**
     * Path of upload dir
     * @var string
     */
-    private $uploadPath = PUBLIC_PATH;
+    protected $uploadPath = PUBLIC_PATH;
 
     /**
     * Maximum allowed upload size
     * @var int
     */
-    private $maxSize = 1024;
+    protected $maxSize = 1024;
 
     /**
     * Maximum allowed image width
     * @var int
     */
-    private $maxWidth = 0;
+    protected $maxWidth = 0;
 
     /**
     *  Maximum allowed image height
     * @var int
     */
-    private $maxHeight = 0;
+    protected $maxHeight = 0;
 
     /**
     * Error message
     * @var string
     */
-    private $error = '';
+    protected $error = '';
 
     /**
     * File extension
     * @var string
     */
-    private $fileExt = '';
+    protected $fileExt = '';
 
     /**
     * File name override
     * @var string
     */
-    private $nameOverride = false;
+    protected $nameOverride = false;
 
     /**
     * File name override
     * @var string
     */
-    private $overwrite = false;
+    protected $overwrite = false;
 
     /**
     * Remove spaces from name
     * @var bool
     */
-    private $removeSpaces = true;
+    protected $removeSpaces = true;
     
     /**
     * Default field name
     * @var string
     */
-    private $field = 'file';
+    protected $field = 'file';
 
     /**
     * List of PHP upload errors
     * @var array
     */
-    private $uploadError = [
+    protected $uploadError = [
         'There is no error, the file uploaded with success.',
         'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
         'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
@@ -247,7 +247,7 @@ class Upload
     * @param string
     * @return string
     */
-    private function prepFilename($filename)
+    protected function prepFilename($filename)
     {
         if (strpos($filename, '.') === FALSE || $this->allowedTypes == '*') {
             return $filename;
@@ -271,7 +271,7 @@ class Upload
     * @param string
     * @return string
     */
-    private function getExtension($filename)
+    protected function getExtension($filename)
     {
         $x = explode('.', $filename);
         return '.'.end($x);

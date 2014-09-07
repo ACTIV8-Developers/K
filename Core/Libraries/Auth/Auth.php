@@ -14,21 +14,21 @@ class Auth
 	 * User table.
 	 * @var string
 	 */
-	private $table = 'users';
+	protected $table = 'users';
 
 	/**
 	 * Connections variable to use work with database,
 	 * loaded in class constructor.
 	 * @var object \PDO
 	 */
-	private $conn = null;
+	protected $conn = null;
 
 	/**
 	 * PasswordHash object, used for
 	 * password hashing.
 	 * @var object
 	 */
-	private $hasher = null;
+	protected $hasher = null;
 
 	/**
 	 * Class constructor.
@@ -57,7 +57,7 @@ class Auth
 	* Get PDO connection object.
 	* @return object \PDO
 	*/
-	private function getDbConnection()
+	protected function getDbConnection()
 	{
 		return Core::getInstance()['dbdefault']->getConnection();
 	}
