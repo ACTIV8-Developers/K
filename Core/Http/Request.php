@@ -176,8 +176,8 @@ class Request
     */
     public function isAjax()
     {
-        if ($this->server->get('HTTP_X_REQUESTED_WITH') !== null
-            && strtolower($this->server->get('HTTP_X_REQUESTED_WITH')) === 'xmlhttprequest') {
+        if ($this->headers->get('HTTP_X_REQUESTED_WITH') !== null
+            && strtolower($this->headers->get('HTTP_X_REQUESTED_WITH')) === 'xmlhttprequest') {
             return true;
         }
         return false;
