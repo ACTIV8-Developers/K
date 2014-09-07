@@ -323,7 +323,10 @@ class Upload
     */
     public function deleteFile($path)
     {
-        return unlink($path);
+        if (is_file($path)) {
+            return @unlink($path);
+        }
+        return false;
     }
 
     /**

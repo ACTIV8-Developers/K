@@ -85,7 +85,7 @@ namespace Core\Libraries\Image;
 	 				break;
  				}
 			default:
-				throw new InvalidArgumentException('Invalid extension type.');		
+				throw new \InvalidArgumentException('Invalid extension type.');		
  		}
  	}
 
@@ -96,7 +96,7 @@ namespace Core\Libraries\Image;
  	*/
  	protected function resizeGD($params = [])
  	{	 			
- 		if (!is_file($this->filepath) {
+ 		if (!is_file($this->filepath)) {
  			return false;
  		}
 
@@ -333,7 +333,10 @@ namespace Core\Libraries\Image;
 	*/
 	public function deleteOriginal()
 	{
-		return @unlink($this->filename);
+		if (is_file($this->filename)) {
+			return @unlink($this->filename);
+		}
+		return false;
 	}
 
 	/**
