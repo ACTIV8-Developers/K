@@ -11,7 +11,7 @@ class ExampleController extends \Controller
 	/**
 	* @var object \Models\ExampleModel
 	*/
-	private $model;
+	protected $model;
 
 	/**
 	* Class constructor.

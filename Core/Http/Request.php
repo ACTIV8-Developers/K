@@ -80,10 +80,11 @@ class Request
     */
     public function __construct(array $server = [], array $get = [], array $post = [], array $cookies = [], array $files = [])
     {
-        // Check if request is valid.
+        // Check if request is valid, need URI and method set minimum.
         if (!isset($server['REQUEST_URI']) || !isset($server['REQUEST_METHOD'])) {
             throw new \InvalidArgumentException('HTTP request must have associated URI and method.');
         }
+        
         // Fix URI if neeeded.
         if (strpos($server['REQUEST_URI'], $server['SCRIPT_NAME']) === 0) {
             $server['REQUEST_URI'] = substr($server['REQUEST_URI'], strlen($server['SCRIPT_NAME']));

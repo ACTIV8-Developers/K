@@ -34,8 +34,10 @@ class Core extends Container
     * @var array
     */
     private $hooks = [
+        'before.system' => null, 
         'before.routing' => null, 
-        'after.routing'  => null
+        'after.routing'  => null,
+        'after.system'   => null
     ];
 
     /**
@@ -99,7 +101,6 @@ class Core extends Container
                     $handler = new \Core\Session\Handlers\DatabaseSessionHandler();
                     break;
             }
-
             return new Session($c['config']['session'], $handler);
         };
     }
@@ -111,6 +112,11 @@ class Core extends Container
     */        
     public function run()
     {
+        // Pre routing/controller hooks.
+        if (isset($this->hooks['before.system'])) {
+            call_user_func($this->hooks['before.system'], $this);
+        }
+
         // Load and start session if enabled in configuration.
         if ($this['config']['sessionStart']) {
             $this['session']->start();
@@ -120,7 +126,7 @@ class Core extends Container
         require ROUTES;
 
         // Pre routing/controller hooks.
-        if (is_callable($this->hooks['before.routing'])) {
+        if (isset($this->hooks['before.routing'])) {
             call_user_func($this->hooks['before.routing'], $this);
         }
 
@@ -139,38 +145,42 @@ class Core extends Container
 
             $controller = new $route->callable[0];
             
-            $classMethod = new \ReflectionMethod($route->callable[0], $route->callable[1]);
+            // Try to resolve controller dependecies if enabled.
+            if ($this['config']['injectDependecies'] === true) {
+                $classMethod = new \ReflectionMethod($route->callable[0], $route->callable[1]);
 
-            $methods = $classMethod->getParameters();
+                $methods = $classMethod->getParameters();
 
-            $params = [];
+                $params = [];
 
-            $num = 0;
+                $num = 0;
 
-            foreach ($methods as $key => $value) {
-                $export = \ReflectionParameter::export(
-                   [
-                      $value->getDeclaringClass()->name,
-                      $value->getDeclaringFunction()->name
-                   ], 
-                   $value->name, 
-                   true
-                );
+                foreach ($methods as $key => $value) {
+                    $export = \ReflectionParameter::export(
+                       [
+                          $value->getDeclaringClass()->name,
+                          $value->getDeclaringFunction()->name
+                       ], 
+                       $value->name, 
+                       true
+                    );
 
-                $type = strtolower(preg_replace('/.*?(\w+)\s+\$'.$value->name.'.*/', '\\1', $export));
+                    $type = strtolower(preg_replace('/.*?(\w+)\s+\$'.$value->name.'.*/', '\\1', $export));
 
-                if (isset($this[$type])) {
-                    $params[] = $this[$type];
-                } else {
-                    $params[] = $route->params[$num++];
+                    if (isset($this[$type])) {
+                        $params[] = $this[$type];
+                    } else {
+                        $params[] = $route->params[$num++];
+                    }
                 }
+                call_user_func_array([$controller, $route->callable[1]], $params);
+            } else {
+                call_user_func_array([$controller, $route->callable[1]], $route->params);
             }
-
-            call_user_func_array([$controller, $route->callable[1]], $params);
         }
 
         // Post routing/controller hooks.
-        if (is_callable($this->hooks['after.routing'])) {
+        if (isset($this->hooks['after.routing'])) {
             call_user_func($this->hooks['after.routing'], $this);
         }
 
@@ -180,6 +190,11 @@ class Core extends Container
         // Display benchmark time if enabled.
         if ($this['config']['benchmark']) {
             print \PHP_Timer::resourceUsage();
+        }
+
+        // Post response hooks.
+        if (isset($this->hooks['after.system'])) {
+            call_user_func($this->hooks['after.system'], $this);
         }
     }  
 

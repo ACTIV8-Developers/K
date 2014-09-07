@@ -6,7 +6,7 @@ namespace Core\Http;
 *
 * This class provides simple abstraction over top an HTTP response. 
 * This class provides methods to set the HTTP status, the HTTP headers,
-* the HTTP cookies, the HTTP body.
+* the HTTP cookies and the HTTP body.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
@@ -17,10 +17,10 @@ class Response
      * @var array 
      */
     protected static $messages = [
-        //Informational 1xx
+        // Informational 1xx.
         100 => '100 Continue',
         101 => '101 Switching Protocols',
-        //Successful 2xx
+        // Successful 2xx.
         200 => '200 OK',
         201 => '201 Created',
         202 => '202 Accepted',
@@ -28,7 +28,7 @@ class Response
         204 => '204 No Content',
         205 => '205 Reset Content',
         206 => '206 Partial Content',
-        //Redirection 3xx
+        // Redirection 3xx.
         300 => '300 Multiple Choices',
         301 => '301 Moved Permanently',
         302 => '302 Found',
@@ -37,7 +37,7 @@ class Response
         305 => '305 Use Proxy',
         306 => '306 (Unused)',
         307 => '307 Temporary Redirect',
-        //Client Error 4xx
+        // Client Error 4xx.
         400 => '400 Bad Request',
         401 => '401 Unauthorized',
         402 => '402 Payment Required',
@@ -59,7 +59,7 @@ class Response
         418 => '418 I\'m a teapot',
         422 => '422 Unprocessable Entity',
         423 => '423 Locked',
-        //Server Error 5xx
+        // Server Error 5xx.
         500 => '500 Internal Server Error',
         501 => '501 Not Implemented',
         502 => '502 Bad Gateway',
@@ -69,7 +69,7 @@ class Response
     ];
     
     /**
-    * HTTP response protocol version
+    * HTTP response protocol version.
     * @var string
     */
     protected $protocolVersion = 'HTTP/1.1';
