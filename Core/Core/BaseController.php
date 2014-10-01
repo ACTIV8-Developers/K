@@ -13,6 +13,7 @@ class BaseController
 {
     /**
     * Set value in container.
+    *
     * @param string
     * @param mixed
     */
@@ -23,6 +24,7 @@ class BaseController
 
     /**
     * Get value from container.
+    *
     * @param string
     * @return mixed
     */
@@ -33,6 +35,7 @@ class BaseController
 
     /**
     * Buffer output for display or return it as string.
+    *
     * @param string
     * @param array
     * @param bool
@@ -61,7 +64,26 @@ class BaseController
     }
 
     /**
+    * Display page with not found code.
+    *
+    * @param string
+    */
+    protected function NotFound($message = 'Not Found', $view = null)
+    {
+        Core::getInstance()['response']->setStatusCode(404);
+        if ($view === null) {
+            Core::getInstance()['response']->setBody($message);
+        } else {
+            ob_start();
+            include APPVIEW.$view.'.php';
+            Core::getInstance()['response']->setBody(ob_get_contents());
+            ob_end_clean();
+        }
+    }
+
+    /**
 	* Load library.
+    *
     * @deprecated As of 1.3 use get/set in Container and Dependecy injection.
     * @param string
     * @param array
@@ -78,6 +100,7 @@ class BaseController
 
     /**
     * Load model.
+    *
     * @param string
     * @return object
     */
@@ -89,6 +112,7 @@ class BaseController
 
     /**
     * Get request object.
+    *
     * @return object \Core\Http\Request
     */
     protected function request()
@@ -98,6 +122,7 @@ class BaseController
 
     /**
     * Get response object.
+    *
     * @return object \Core\Http\Response
     */
     protected function response()
@@ -107,6 +132,7 @@ class BaseController
 
     /**
     * Get session object.
+    *
     * @return object \Core\Session\Session
     */
     protected function session()
@@ -116,6 +142,7 @@ class BaseController
 
     /**
     * Get configuration.
+    *
     * @return array
     */
     protected function config()
@@ -125,6 +152,7 @@ class BaseController
 
     /**
     * Load language file with defined constants.
+    *
     * @param string
     */
     protected function language($lang)
@@ -134,6 +162,7 @@ class BaseController
 
     /**
     * Get database object.
+    *
     * @param string
     * @return object \Core\Database\Database
     */
@@ -144,12 +173,25 @@ class BaseController
 
     /**
     * Redirect helper function.
+    *
     * @var string
     * @var int 
     */
     protected function redirect($url = '', $statusCode = 303)
     {
         header('Location: '.\Core\Util\Util::base($url), true, $statusCode);
+        die();
+    }
+
+    /**
+    * Redirect helper function.
+    *
+    * @var string
+    * @var int 
+    */
+    protected function redirectToUrl($url = '', $statusCode = 303)
+    {
+        header('Location: '.$url, true, $statusCode);
         die();
     }
 }

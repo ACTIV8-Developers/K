@@ -10,6 +10,7 @@ class Util
 {
 	/**
 	* Variable for caching baseUrl() call, since often it is called multiple times.
+	*
 	* @var string
 	*/
 	protected static $base = null;
@@ -17,6 +18,7 @@ class Util
 	/**
      * Deprecated, left for backward compatibility.
 	 * Get site base url. (Alias of base)
+	 *
 	 * @param  string
 	 * @return string
 	 */
@@ -32,6 +34,7 @@ class Util
 
     /**
      * Get site base url.
+     *
      * @param  string
      * @return string
      */
@@ -54,6 +57,7 @@ class Util
 
 	/**
 	 * Get CSS file path.
+	 *
 	 * @param  string
 	 * @return string
 	 */
@@ -64,6 +68,7 @@ class Util
 
 	/**
 	 * Get JavaScript file path.
+	 *
 	 * @param  string
 	 * @return string
 	 */
@@ -74,6 +79,7 @@ class Util
 
 	/**
 	 * Get image file path.
+	 *
 	 * @param  string
 	 * @return string
 	 */
@@ -84,6 +90,7 @@ class Util
 
 	/**
 	 * Converts from ISO 8601 (yy-mm-dd) to dd-mm-yy format and vice-versa.
+	 *
 	 * @param  string
 	 * @param char
 	 * @return string
@@ -95,7 +102,8 @@ class Util
 	}
 
 	/**
-	 * Converts from ISO 8601 (yy-mm-dd) to serbian display date
+	 * Converts from ISO 8601 (yy-mm-dd) to serbian display date.
+	 *
 	 * @param  string
 	 * @param char
 	 * @return string

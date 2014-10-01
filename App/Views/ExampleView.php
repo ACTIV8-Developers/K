@@ -7,7 +7,7 @@
           body {
               width: 100%;
               height: 100%;
-              font-family: "Courier New", Courier, monospace;
+              font-family: sans-serif;
           }
           #page {
               position: relative;
@@ -19,7 +19,7 @@
   <body id="page">
         <div>
             <h1>Welcome to home of K</h1>
-            <h3>Framework that lets you write PHP code</h3>
+            <h3></h3>
         </div>
         <hr>
         <article>
@@ -78,7 +78,6 @@
 
         <p>Author of framework is Milos Kajnaco 
         <a href="mailto:miloskajnaco@gmail.com">miloskajnaco@gmail.com</a></p>
-        <p>Member of <a target="blank" href="http://codejam.co/">Codejam</a></p>
 
         <h2>
         <a><span></span></a>Licence</h2>

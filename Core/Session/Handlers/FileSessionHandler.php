@@ -13,43 +13,50 @@ namespace Core\Session\Handlers;
 class FileSessionHandler implements \SessionHandlerInterface
 {
     /**
-     * Encryption algorithm
+     * Encryption algorithm.
+     *
      * @var string
      */
     protected $_algo = MCRYPT_RIJNDAEL_128;
 
     /**
-     * Key for encryption/decryption
+     * Key for encryption/decryption.
+     *
      * @var string
      */
     protected $_key;
 
     /**
-     * Key for HMAC authentication
+     * Key for HMAC authentication.
+     *
      * @var string
      */
     protected $_auth;
 
     /**
      * Path of the session file
+     *
      * @var string
      */
     protected $_path;
 
     /**
-     * Session name (optional)
+     * Session name (optional).
+     *
      * @var string
      */
     protected $_name;
 
     /**
-     * Size of the IV vector for encryption
+     * Size of the IV vector for encryption.
+     *
      * @var integer
      */
     protected $_ivSize;
 
     /**
-     * Cookie variable name of the encryption + auth key
+     * Cookie variable name of the encryption + auth key.
+     *
      * @var string
      */
     protected $_keyName;
@@ -62,8 +69,9 @@ class FileSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * Generate a random key using openssl
-     * fallback to mcrypt_create_iv
+     * Generate a random key using openssl,
+     * fallback to mcrypt_create_iv.
+     *
      * @param int
      * @return string
      * @throws Exception
@@ -83,7 +91,8 @@ class FileSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * Open the session
+     * Open the session.
+     *
      * @param  string
      * @param  string
      * @return bool
@@ -120,7 +129,8 @@ class FileSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * Close the session
+     * Close the session.
+     *
      * @return bool
      */
     public function close()
@@ -129,7 +139,8 @@ class FileSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * Read and decrypt the session
+     * Read and decrypt the session.
+     *
      * @param  string
      * @return string
      */
@@ -158,7 +169,8 @@ class FileSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * Encrypt and write the session
+     * Encrypt and write the session.
+     *
      * @param string
      * @param string
      * @return bool
@@ -180,7 +192,8 @@ class FileSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * Destroy the session
+     * Destroy the session.
+     *
      * @param int
      * @return bool
      */
@@ -192,7 +205,8 @@ class FileSessionHandler implements \SessionHandlerInterface
     }
 
     /**
-     * Garbage collector
+     * Garbage collector.
+     *
      * @param int
      * @return bool
      */

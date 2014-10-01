@@ -11,6 +11,7 @@ abstract class BaseModel
 {
     /**
     * Get database object.
+    *
     * @param string
     * @return object \Core\Database\Database
     */
@@ -21,6 +22,7 @@ abstract class BaseModel
 
     /**
 	* Load library.
+    *
     * @param string
     * @param array
     * @return object

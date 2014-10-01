@@ -15,26 +15,29 @@ use \Core\Database\Database;
 * 
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-class Core extends Container
+class Core extends \Pimple\Container
 {
     /**
     * Core version.
+    *
     * @var string
     */
     const VERSION = '1.3b';
 
     /**
     * Singleton instance of Core.
+    *
     * @var object
     */
-    private static $instance = null;
+    protected static $instance = null;
 
     /**
     * Array of hooks to be applied.
+    *
     * @var array
     */
-    private $hooks = [
-        'before.system' => null, 
+    protected $hooks = [
+        'before.system'  => null, 
         'before.routing' => null, 
         'after.routing'  => null,
         'after.system'   => null
@@ -43,9 +46,10 @@ class Core extends Container
     /**
     * Class constructor.
     * Loads all needed classes as closures into container.
+    *
     * @throws \InvalidArgumentException
     */
-    protected function __construct()
+    public  function __construct()
     {
         // Call parent container constructor.
         parent::__construct();
@@ -200,6 +204,7 @@ class Core extends Container
 
     /**
     * Get singleton instance of Core class.
+    *
     * @return object \Core\Core\Core
     */
     public static function getInstance()
@@ -213,7 +218,7 @@ class Core extends Container
     /*
     * Display 404 page.
     */
-    private function show404()
+    protected function show404()
     {
         $this['response']->setStatusCode(404);
         $this['response']->setBody('<h1>404 Not Found</h1>The page that you have requested could not be found.');
@@ -221,6 +226,7 @@ class Core extends Container
 
     /**
     * Add hook.
+    *
     * @param string
     * @param callable
     */
@@ -231,6 +237,7 @@ class Core extends Container
 
     /**
     * Get hook.
+    *
     * @param string
     * @return callable
     */

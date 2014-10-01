@@ -14,6 +14,7 @@ class Response
 {
      /**
      * HTTP response codes and messages.
+     *
      * @var array 
      */
     protected static $messages = [
@@ -70,36 +71,42 @@ class Response
     
     /**
     * HTTP response protocol version.
+    *
     * @var string
     */
     protected $protocolVersion = 'HTTP/1.1';
 
     /**
     * HTTP response code.
+    *
     * @var int
     */
     protected $statusCode = 200;
 
     /**
      * List of HTTP headers to be sent.
+     *
      * @var array
      */
     protected $headers = [];
 
     /**
     * HTTP response body.
+    *
     * @var string 
     */
     protected $body = '';
 
     /**
     * Array of cookies to be sent.
+    *
     * @var array
     */
     protected $cookies = [];
 
     /**
     * Add or replace header.
+    *
     * @var string
     * @var string
     * @var bool
@@ -111,6 +118,7 @@ class Response
 
     /**
     * Return array of headers.
+    *
     * @return array
     */
     public function getHeaders()
@@ -120,6 +128,7 @@ class Response
 
     /**
     * Set HTTP response body.
+    *
     * @var string
     */
     public function setBody($body)
@@ -129,6 +138,7 @@ class Response
 
     /**
     * Append to HTTP response body.
+    *
     * @var string
     */
     public function writeBody($part)
@@ -138,6 +148,7 @@ class Response
 
     /**
     * Get HTTP response body.
+    *
     * @return string
     */
     public function getBody()
@@ -147,6 +158,7 @@ class Response
 
     /**
     * Set HTTP response code to be sent with headers.
+    *
     * @var int
     */
     public function setStatusCode($code)
@@ -156,6 +168,7 @@ class Response
 
     /**
     * Get HTTP response code.
+    *
     * @return int
     */
     public function getStatusCode()
@@ -165,6 +178,7 @@ class Response
 
     /**
     * Get HTTP protocol version.
+    *
     * @return string
     */
     public function getProtocolVersion()
@@ -174,6 +188,7 @@ class Response
 
     /**
     * Set HTTP protocol version ("HTTP/1.1" or "HTTP/1.0").
+    *
     * @param string 
     */
     public function setProtocolVersion($version)
@@ -183,6 +198,7 @@ class Response
 
     /**
     * Send cookie with response.
+    *
     * @param string   
     * @param string  
     * @param int|string|\DateTime
@@ -223,6 +239,7 @@ class Response
 
     /**
      * Set response type to JSON.
+     *
      * @param array
      * @param int
      * @param int

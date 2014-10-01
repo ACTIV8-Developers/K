@@ -11,6 +11,7 @@ class Message
 {
     /**
      * Set message. 
+     *
      * @param string
      * @param mixed
      */
@@ -21,6 +22,7 @@ class Message
 
     /**
      * Get message and destroy upon reading unless stated otherwise. 
+     *
      * @param string
      * @param bool
      * @return mixed

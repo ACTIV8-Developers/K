@@ -24,6 +24,7 @@ class ExampleController extends \Controller
 
 	/**
 	* Example method.
+	*
 	* @param object \Core\Http\Request
 	*/
 	public function index(Request $request)

@@ -11,24 +11,28 @@ class AliasLoader
 {
 	/**
 	 * The array of class aliases.
+	 *
 	 * @var array
 	 */
 	protected $aliases;
 
 	/**
 	 * Indicates if a loader has been registered.
+	 *
 	 * @var bool
 	 */
 	protected $registered = false;
 
 	/**
 	 * The singleton instance of the loader.
+	 *
 	 * @var object \Core\Util\AliasLoader
 	 */
 	protected static $instance;
 
 	/**
 	 * Create a new class alias loader instance.
+	 *
 	 * @param array
 	 */
 	public function __construct(array $aliases = [])
@@ -99,7 +103,8 @@ class AliasLoader
 	}
 
 	/**
-	 * Get the registered aliases
+	 * Get the registered aliases.
+	 *
 	 * @return array
 	 */
 	public function getAliases()
@@ -109,6 +114,7 @@ class AliasLoader
 
 	/**
 	 * Set the registered aliases.
+	 *
 	 * @param  array  $aliases
 	 * @return void
 	 */
@@ -127,6 +133,7 @@ class AliasLoader
 
 	/**
 	 * Set the "registered" state of the loader.
+	 *
 	 * @param  bool
 	 */
 	public function setRegistered($value)

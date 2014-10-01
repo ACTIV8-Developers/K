@@ -9,13 +9,15 @@ namespace Core\Http;
 class HttpBag implements \IteratorAggregate, \Countable
 {
     /**
-     * element storage.
+     * Elements storage.
+     *
      * @var array
      */
     protected $elements;
 
     /**
      * Constructor.
+     *
      * @param array
      */
     public function __construct(array $elements = [])
@@ -25,6 +27,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Returns the elements.
+     *
      * @return array
      */
     public function all()
@@ -34,6 +37,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Returns the element keys.
+     *
      * @return array
      */
     public function keys()
@@ -43,6 +47,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Replaces the current elements by a new set.
+     *
      * @param array
      */
     public function replace(array $elements = [])
@@ -52,6 +57,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Adds elements.
+     *
      * @param array
      */
     public function add(array $elements = [])
@@ -61,6 +67,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Returns a element by name.
+     *
      * @param string
      * @return mixed
      */
@@ -71,6 +78,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Sets a element by name.
+     *
      * @param string
      * @param mixed
      */
@@ -81,6 +89,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Returns true if the element is defined.
+     *
      * @param string
      * @return bool
      */
@@ -91,6 +100,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Removes a element.
+     *
      * @param string
      */
     public function remove($key)
@@ -100,6 +110,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Filter key.
+     *
      * @param string
      * @param int   FILTER_* constant.
      * @param mixed Filter options.
@@ -125,6 +136,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Returns an iterator for elements.
+     *
      * @return \ArrayIterator
      */
     public function getIterator()
@@ -134,6 +146,7 @@ class HttpBag implements \IteratorAggregate, \Countable
 
     /**
      * Returns the number of elements.
+     *
      * @return int
      */
     public function count()

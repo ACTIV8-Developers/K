@@ -5,18 +5,21 @@ use \Core\Database\Connections\PDOConnection as PDOConn;
 
 /**
 * Basic database class used for common CRUD operations.
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Database
 {
     /**
      * Database connection.
+     *
      * @var object \PDO
      */
     protected $connection = null;
 
 	/**
 	* Class constructor.
+	*
     * @var object \PDO
 	*/
     public function __construct(\PDO $PDOConn)
@@ -26,6 +29,7 @@ class Database
 
     /**
      * Set connection variable.
+     *
      * @var object \PDO
      */
     public function setConnection(\PDO $PDOConn)
@@ -35,6 +39,7 @@ class Database
 
     /**
      * Get connection variable.
+     *
      * @return object \PDO
      */
     public function getConnection()
@@ -44,6 +49,7 @@ class Database
 
     /**
     * Sets PDO attribute.
+    *
     * @param int
     * @param mixed (attribute value)
     * @return bool
@@ -79,6 +85,7 @@ class Database
 
     /**
      * Classic query method using prepared statements.
+     *
      * @param string
      * @param array
      * @return resource
@@ -98,6 +105,7 @@ class Database
 
 	/**
 	* Select query.
+	*
 	* @param string
 	* @param array
 	* @param string
@@ -116,6 +124,7 @@ class Database
 
 	/**
 	* Insert query.
+	*
 	* @param string
 	* @param array
 	* @return int
@@ -129,6 +138,7 @@ class Database
 
 	/**
 	* Wrapper for PDO last insert id.
+	*
 	* @param string
 	* @return int
 	*/
@@ -139,6 +149,7 @@ class Database
 
 	/**
 	* Update query.
+	*
 	* @param string
 	* @param array
 	* @return int
@@ -152,6 +163,7 @@ class Database
 
 	/**
 	* Delete query.
+	*
 	* @param string
 	* @param array
 	* @return int
@@ -165,6 +177,7 @@ class Database
 
 	/**
 	* Count query.
+	*
 	* @param string
 	* @param array
 	* @return int
@@ -178,6 +191,7 @@ class Database
 
 	/**
 	* Create table in database.
+	*
 	* @param $name (table name)
 	* @param $fields (fields array to insert)
 	* @param $options (additional options for table like engine, UTF etc)

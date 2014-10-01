@@ -11,6 +11,7 @@ class Route
 {
   	/**
     * The route pattern (The URL pattern (e.g. "article/:year/:category")).
+    *
 	* @var string 
 	*/
 	public $url = '';
@@ -18,30 +19,35 @@ class Route
     /**
     * The route callable 
     * (name of controller and function to execute e.g ['ExampleController', 'index']).
+    *
 	* @var array
 	*/
     public $callable = [];
 
     /**
     * List of parameters to be passed if URL is matched.
+    *
     * @var array
     */
     public $params = [];
 
     /**
     * List of supported HTTP methods for this route.
+    *
     * @var array
     */
     protected $methods = [];
     
     /**
     * List of parameters conditions.
+    *
     * @var array
     */
     protected $conditions = [];
 
     /**
     * List of regex to use when matching conditions.
+    *
     * @param array
     */
     protected static $conditionRegex = [
@@ -55,12 +61,14 @@ class Route
 
     /**
     * Regex used to parse routes.
+    *
     * @var string
     */
     const MATCHES_REGEX = '@:([\w]+)@';
 
     /**
 	* Class constructor.
+    *
 	* @param string
     * @param array
 	* @param string
@@ -75,6 +83,7 @@ class Route
     /**
     * Check if requested URI matches this route.
     * Inspired by: http://blog.sosedoff.com/2009/09/20/rails-like-php-url-router/
+    *
     * @param string
     * @param string
     * @return bool
@@ -108,6 +117,7 @@ class Route
 
     /**
     * Helper regex for matches function.
+    *
     * @param string
     * @return string
     **/
@@ -123,6 +133,7 @@ class Route
 
     /**
     * Set route parameter condition.
+    *
     * @param string
     * @param string
     * @return object \Core\Core\Route (for method chaining)
@@ -135,6 +146,7 @@ class Route
 
     /**
     * Set route custom parameter condition.
+    *
     * @param string
     * @param string
     * @return object \Core\Core\Route (for method chaining)
@@ -147,6 +159,7 @@ class Route
 
     /**
     * Add GET as acceptable method.
+    *
     * @return object \Core\Core\Route (for method chaining)
     */
     public function viaGet()
@@ -157,6 +170,7 @@ class Route
 
     /**
     * Add POST as acceptable method.
+    *
     * @return object \Core\Core\Route (for method chaining)
     */
     public function viaPost()
@@ -167,6 +181,7 @@ class Route
 
     /**
     * Get supported HTTP method(s).
+    *
     * @return array
     */
     public function getHttpMethods()

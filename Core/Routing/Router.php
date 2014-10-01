@@ -14,12 +14,14 @@ class Router
 {
 	/**
 	* Collection of routes.
+    *
 	* @var array
 	**/
 	protected static $routes = [];
 
 	/**
 	* Check routes and return matching one.
+    *
 	* @var string
     * @var string
 	* @return bool|object \Core\Routing\Route
@@ -37,6 +39,7 @@ class Router
 
     /**
 	* Add a route object to the router accepting any request method.
+    *
 	* @param string
 	* @param array
     * @return object \Core\Routing\Route
@@ -50,6 +53,7 @@ class Router
 
     /**
 	* Add a route object to the router accepting GET request method.
+    *
 	* @param string 
 	* @param array
     * @return object \Core\Routing\Route
@@ -63,6 +67,7 @@ class Router
 
     /**
 	* Add a route object to the router accepting POST request method.
+    *
 	* @param string
 	* @param array
     * @return object \Core\Routing\Route
@@ -76,6 +81,7 @@ class Router
 
     /**
 	* Add a route object to the router accepting PUT request method.
+    *
 	* @param string
 	* @param array
     * @return object \Core\Core\Route
@@ -89,6 +95,7 @@ class Router
 
     /**
 	* Add a route object to the router accepting DELETE request method.
+    *
 	* @param string
 	* @param array
     * @return object \Core\Core\Route
@@ -102,6 +109,7 @@ class Router
 
     /**
     * Add custom route object to routes array.
+    *
     * @var object \Core\Core\Route
     */
     public static function addRoute(Route $route)
@@ -111,6 +119,7 @@ class Router
 
     /**
      * Get list of routes.
+     *
      * @return array
      */
     public static function getRoutes()

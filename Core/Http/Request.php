@@ -23,54 +23,63 @@ class Request
 
     /**
     * Server and execution environment parameters (parsed from $_SERVER).
+    *
     * @var object \Bag
     */
     public $server;
 
     /**
     * Request headers (parsed from the $_SERVER).
+    *
     * @var object \Bag
     */
     public $headers;
 
     /**
     * Request parameters (parsed from the $_GET).
+    *
     * @var object \Bag
     */
     public $get;
 
     /**
     * Request parameters (parsed from the $_POST).
+    *
     * @var object \Bag
     */
     public $post;
 
     /**
     * Request cookies (parsed from the $_COOKIE).
+    *
     * @var object \Bag
     */
     public $cookies;
 
     /**
     * Request files (parsed from the $_FILES).
+    *
     * @var object \Bag
     */
     public $files;
 
     /**
     * Raw request content.
+    *
     * @var string
     */
     protected $content = null;
 
     /**
     * Request method.
+    *
     * @var string
     */
     protected $method = null;
     
     /**
     * Class constructor.
+    *
     * @param array
     * @param array
     * @param array
@@ -129,6 +138,7 @@ class Request
 
     /**
     * Get raw request input.
+    *
     * @return string
     */
     public function getContent()
@@ -141,6 +151,7 @@ class Request
 
     /**
     * Get request uri.
+    *
     * @return string
     */
     public function getUri()
@@ -150,6 +161,7 @@ class Request
 
     /**
     * Get request URI segment.
+    *
     * @param int
     * @return string|bool
     */
@@ -164,6 +176,7 @@ class Request
 
     /**
      * Get server protocol (eg. HTTP/1.1.)
+     *
      * @return string
      */
     public function getProtocolVersion()
@@ -172,7 +185,8 @@ class Request
     }
 
     /**
-    * Check if it is AJAX request.  
+    * Check if it is AJAX request.
+    *  
     * @return bool
     */
     public function isAjax()
@@ -187,6 +201,7 @@ class Request
     /**
     * Get request method.
     * (GET, POST, PUT, DELETE etc.)
+    *
     * @return string
     */
     public function getRequestMethod()
@@ -195,7 +210,8 @@ class Request
     }
 
     /**
-    * Check if it is HEAD request.  
+    * Check if it is HEAD request.
+    *
     * @return bool
     */
     public function isHead()
@@ -204,7 +220,8 @@ class Request
     }
 
     /**
-    * Check if it is GET request.  
+    * Check if it is GET request.
+    *
     * @return bool
     */
     public function isGet()
@@ -214,6 +231,7 @@ class Request
 
     /**
     * Check if it is POST request.  
+    *
     * @return bool
     */
     public function isPost()
@@ -222,7 +240,8 @@ class Request
     }
 
     /**
-    * Check if it is PUT request.  
+    * Check if it is PUT request.
+    *  
     * @return bool
     */
     public function isPut()
@@ -231,7 +250,8 @@ class Request
     }
 
     /**
-    * Check if it is PATCH request.  
+    * Check if it is PATCH request. 
+    * 
     * @return bool
     */
     public function isPatch()
@@ -241,6 +261,7 @@ class Request
 
     /**
     * Check if it is PUT request.  
+    *
     * @return bool
     */
     public function isDelete()
@@ -249,7 +270,8 @@ class Request
     }
 
     /**
-    * Check if it is OPTIONS request.  
+    * Check if it is OPTIONS request. 
+    * 
     * @return bool
     */
     public function isOptions()
@@ -259,6 +281,7 @@ class Request
 
     /**
     * Get user agent.
+    *
     * @return string|null
     */
     public function getUserAgent()
@@ -268,6 +291,7 @@ class Request
 
     /**
     * Get referer.
+    *
     * @return string|null
     */
     public function getReferer()
@@ -277,6 +301,7 @@ class Request
 
     /**
     * Get content type.
+    *
     * @return string|null
     */
     public function getContentType()
@@ -286,6 +311,7 @@ class Request
 
     /**
     * Get content length.
+    *
     * @return string|null
     */
     public function getContentLength()

@@ -3,6 +3,7 @@ namespace Core\Database\Connections;
 
 /**
 * Database abstract PDO connection.
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 abstract class PDOConnection
@@ -50,6 +51,7 @@ abstract class PDOConnection
 
     /**
      * Connect to database and return PDO object connection variable
+     *
      * @return object \PDO
      */
     abstract public function connect();

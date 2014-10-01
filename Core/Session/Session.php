@@ -3,18 +3,21 @@ namespace Core\Session;
 
 /**
 * Session manager class.
+*
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
 class Session
 {
     /**
      * Encryption key.
+     *
      * @var string
      */
     protected $hashKey = 'super_secret';
 
 	/**
 	* Lifetime of the session cookie and session duration, defined in seconds.
+	*
 	* @var int
 	*/
 	protected $expiration = 7200;
@@ -22,6 +25,7 @@ class Session
 	/**
 	* Cookie domain, for example 'www.php.net'. 
 	* To make cookies visible on all sub domains then the domain must be prefixed with a dot like '.php.net'.
+	*
 	* @var string|null
 	*/
 	protected $domain = '';
@@ -29,24 +33,28 @@ class Session
 	/**
 	* If true the browser only sends the cookie over HTTPS.
 	* Null denotes class will decide.
+	*
 	* @var bool|null
 	*/
 	protected $secure = null;
 
 	/**
 	* Session name.
+	*
 	* @var string
 	*/
 	protected $name = 'PHPSESS';
 
 	/**
 	* Match user agent across session requests.
+	*
 	* @var bool
 	*/
 	protected $matchUserAgent = true;
 
 	/**
 	* Period of refreshing session ID.
+	*
 	* @var int
 	*/
 	protected $updateFrequency = 10;
@@ -54,6 +62,7 @@ class Session
 	/**
 	* Class construct.
 	* Register handler and start session here.
+	*
 	* @param array
 	* @param object \SessionHandlerInterface
 	*/
@@ -109,6 +118,7 @@ class Session
 
 	/**
 	* Validate session.
+	*
 	* @return bool
 	*/
 	protected function validate()

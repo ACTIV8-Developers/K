@@ -3,12 +3,14 @@ namespace Core\Database\Connections;
 
 /**
  * Class MySQLConnection.
+ *
  * @author Milos Kajnaco <miloskajnaco@gmail.com>
  */
 class MySQLConnection extends PDOConnection
 {
     /**
     * Class constructor.
+    *
     * @param array
     */
     public function __construct(array $params)
@@ -23,6 +25,7 @@ class MySQLConnection extends PDOConnection
 
     /**
     * Connect to database with passed settings.
+    *
     * @return object \PDO
     * @throws \PDOException
     * @throws \InvalidArgumentException
