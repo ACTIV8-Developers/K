@@ -6,7 +6,7 @@ namespace Core\Util;
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-class Datte
+class Date
 {
 	/**
 	 * Converts from ISO 8601 (yy-mm-dd) to dd-mm-yy format and vice-versa.
