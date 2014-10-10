@@ -168,17 +168,17 @@ class Core extends \Pimple\Container
 
                 $num = 0;
 
-                foreach ($methods as $key => $value) {
+                foreach ($methods as $m) {
                     $export = \ReflectionParameter::export(
                        [
-                          $value->getDeclaringClass()->name,
-                          $value->getDeclaringFunction()->name
+                          $m->getDeclaringClass()->name,
+                          $m->getDeclaringFunction()->name
                        ], 
-                       $value->name, 
+                       $m->name, 
                        true
                     );
 
-                    $type = strtolower(preg_replace('/.*?(\w+)\s+\$'.$value->name.'.*/', '\\1', $export));
+                    $type = strtolower(preg_replace('/.*?(\w+)\s+\$'.$m->name.'.*/', '\\1', $export));
 
                     if (isset($this[$type])) {
                         $params[] = $this[$type];

@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>K framework</title>
-      <style>
-          body {
-              width: 100%;
-              height: 100%;
-              font-family: sans-serif;
-          }
-          #page {
-              position: relative;
-              width: 960px;
-              margin: 0 auto;
-          }
-      </style>
-  </head>
-  <body id="page">
+    <head>
+        <meta charset="utf-8">
+        <title>K framework</title>
+          <style>
+              body {
+                  width: 100%;
+                  height: 100%;
+                  font-family: sans-serif;
+              }
+              #page {
+                  position: relative;
+                  width: 960px;
+                  margin: 0 auto;
+              }
+          </style>
+    </head>
+    <body id="page">
         <a target="blank" href="https://github.com/Kajna/K"><img style="position: absolute; top: -30px; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
         <div>
             <h1>Welcome to home of K</h1>
@@ -85,5 +85,5 @@
 
         <p>The K Framework is released under the <a href="http://opensource.org/licenses/MIT">MIT</a> public license.</p></article>
         </div>
-  </body>
+    </body>
 </html>

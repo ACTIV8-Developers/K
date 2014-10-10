@@ -1,6 +1,7 @@
 <?php
 
 use \Core\Util\Util;
+use \Core\Util\Date;
 
 class UtilTest extends PHPUnit_Framework_TestCase
 {
@@ -21,9 +22,9 @@ class UtilTest extends PHPUnit_Framework_TestCase
 	public function testDateConvert()
 	{
     	// Test conversion
-    	$this->assertEquals(Util::convertDate('2014-06-08'), '08-06-2014');
-    	$this->assertEquals(Util::convertSrbDate('2014-06-08'), '08.06.2014.');
+    	$this->assertEquals(Date::convertDate('2014-06-08'), '08-06-2014');
+    	$this->assertEquals(Date::convertSrbDate('2014-06-08'), '08.06.2014.');
         // Test with custom delimiter
-        $this->assertEquals(Util::convertSrbDate('2014.06.08', '.'), '08.06.2014.');
+        $this->assertEquals(Date::convertSrbDate('2014.06.08', '.'), '08.06.2014.');
 	}
 }
