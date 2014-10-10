@@ -15,7 +15,8 @@ return [
 |--------------------------------------------------------------------------
 | Session handler
 |--------------------------------------------------------------------------
-| Currently supported file, null (native PHP sessions).
+| Currently supported redis, database, file, null (native PHP sessions).
+| (Redis requires PredisClient installed, database requires active PDO)
 */
 'sessionHandler' => null,
 /*
@@ -44,7 +45,7 @@ return [
 |--------------------------------------------------------------------------
 | Inject dependecies
 |--------------------------------------------------------------------------
-| If enabled framework will try to inject hinter classes into controllers.
+| If enabled framework will try to inject hinted classes into controllers.
 */
 'injectDependecies' => true,
 /*

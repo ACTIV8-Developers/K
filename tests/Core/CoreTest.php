@@ -34,8 +34,8 @@ class CoreTest extends PHPUnit_Framework_TestCase
         };
 
         // Make hooks.
-        $app->hook('before.routing', $function1);
-        $app->hook('after.routing', $function2);
+        $app->setHook('before.routing', $function1);
+        $app->setHook('after.routing', $function2);
 
         // Test hooks.
         $this->assertEquals($app->getHook('before.routing'), $function1);

@@ -190,7 +190,7 @@ class Database
 	}
 
 	/**
-	* Create table in database.
+	* Create table in database(MySQL specific).
 	*
 	* @param $name (table name)
 	* @param $fields (fields array to insert)

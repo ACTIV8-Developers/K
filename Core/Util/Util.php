@@ -9,28 +9,11 @@ namespace Core\Util;
 class Util
 {
 	/**
-	* Variable for caching baseUrl() call, since often it is called multiple times.
+	* Variable for caching base() call, since often it is called multiple times.
 	*
 	* @var string
 	*/
 	protected static $base = null;
-
-	/**
-     * Deprecated, left for backward compatibility.
-	 * Get site base url. (Alias of base)
-	 *
-	 * @param  string
-	 * @return string
-	 */
-	public static function baseUrl($path = '')
-	{
-		// Check for cached version of base path
-		if (null !== self::$base) {
-			return self::$base.$path;
-		}
-
-        return self::base($path);
-	}
 
     /**
      * Get site base url.
@@ -86,31 +69,5 @@ class Util
 	public static function img($img)
 	{
 		return self::$base.PUBLIC_DIR.'/images/'.$img;
-	}
-
-	/**
-	 * Converts from ISO 8601 (yy-mm-dd) to dd-mm-yy format and vice-versa.
-	 *
-	 * @param  string
-	 * @param char
-	 * @return string
-	 */
-	public static function convertDate($date, $delimiter = '-')
-	{
-		$date = explode($delimiter, $date);
-		return $date[2].'-'.$date[1].'-'.$date[0];
-	}
-
-	/**
-	 * Converts from ISO 8601 (yy-mm-dd) to serbian display date.
-	 *
-	 * @param  string
-	 * @param char
-	 * @return string
-	 */
-	public static function convertSrbDate($date, $delimiter = '-')
-	{
-		$date = explode($delimiter, $date);
-		return $date[2].'.'.$date[1].'.'.$date[0].'.';
 	}
 }

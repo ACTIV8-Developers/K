@@ -26,7 +26,7 @@
 |
 | @author Milos Kajnaco <miloskajnaco@gmail.com>
 | @link http://kframework.info/
-| @version 1.3b
+| @version 1.3
 */
 /*
 |--------------------------------------------------------------------------
@@ -131,7 +131,7 @@ $app = Core\Core\Core::getInstance();
 include APP.'Hooks/Hooks.php';
 /*
 |--------------------------------------------------------------------------
-| Start request process lifecycle! 
+| Start request process lifecycle.
 |-------------------------------------------------------------------------- 
 */
 $app->run();

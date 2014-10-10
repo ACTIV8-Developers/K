@@ -3,7 +3,6 @@ namespace Core\Http;
 
 /**
 * HTTP request class.
-*
 * This class provides interface for common request parameters.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
@@ -89,7 +88,7 @@ class Request
     */
     public function __construct(array $server = [], array $get = [], array $post = [], array $cookies = [], array $files = [])
     {
-        // Check if request is valid, need URI and method set minimum.
+        // Check if request is valid, need URI and method set at least.
         if (!isset($server['REQUEST_URI']) || !isset($server['REQUEST_METHOD'])) {
             throw new \InvalidArgumentException('HTTP request must have associated URI and method.');
         }
@@ -105,10 +104,10 @@ class Request
         // Get request method.
         $this->method = $server['REQUEST_METHOD'];
 
+        // Parse request headers and enviroment variables.
         $this->headers = new HttpBag();
         $this->server = new HttpBag();
 
-        // Parse request headers and enviroment variables.
         $specialHeaders = ['CONTENT_TYPE', 'CONTENT_LENGTH', 'PHP_AUTH_USER', 'PHP_AUTH_PW', 'PHP_AUTH_DIGEST', 'AUTH_TYPE'];
         foreach ($server as $key => $value) {
             $key = strtoupper($key);
@@ -130,7 +129,8 @@ class Request
         } else {
             $this->post = new HttpBag($post); 
         }
-
+        
+        // Set GET parameters, cookies and files.
         $this->get = new HttpBag($get);
         $this->cookies = new HttpBag($cookies); 
         $this->files = new HttpBag($files); 
@@ -175,7 +175,7 @@ class Request
     }
 
     /**
-     * Get server protocol (eg. HTTP/1.1.)
+     * Get server protocol (eg. HTTP/1.1.).
      *
      * @return string
      */

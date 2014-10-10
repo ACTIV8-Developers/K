@@ -2,6 +2,7 @@
 namespace Core\Core;
 
 use Core\Core\Core as Core;
+
 /**
 * Base controller abstract class.
 * Used with alias "Controller".

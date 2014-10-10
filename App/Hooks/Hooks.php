@@ -4,13 +4,13 @@
 | Definitions of all hooks comes here.
 |--------------------------------------------------------------------------
 */
-$app->hook('before.routing', function($app) {
+$app->setHook('before.routing', function($app) {
 	detectLanguage($app);
 });
 
 /**
 * Example hook.
-* Extract language from given URI and put it into global variable,
+* Extract language from given URI and put it into constant,
 */
 function detectLanguage($app)
 {

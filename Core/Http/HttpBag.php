@@ -62,7 +62,7 @@ class HttpBag implements \IteratorAggregate, \Countable
      */
     public function add(array $elements = [])
     {
-        $this->elements = array_replace($this->elements, $elements);
+        $this->elements = array_merge($this->elements, $elements);
     }
 
     /**

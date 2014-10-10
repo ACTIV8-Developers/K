@@ -22,7 +22,7 @@ class Core extends \Pimple\Container
     *
     * @var string
     */
-    const VERSION = '1.3b';
+    const VERSION = '1.3';
 
     /**
     * Singleton instance of Core.
@@ -49,7 +49,7 @@ class Core extends \Pimple\Container
     *
     * @throws \InvalidArgumentException
     */
-    public  function __construct()
+    public function __construct()
     {
         // Call parent container constructor.
         parent::__construct();
@@ -102,7 +102,16 @@ class Core extends \Pimple\Container
                     $handler = new \Core\Session\Handlers\FileSessionHandler();
                     break;
                 case 'database':
+                    $conn = $this['dbdefault']->getConnection();
                     $handler = new \Core\Session\Handlers\DatabaseSessionHandler();
+                    break;
+                case 'redis':
+                    $db = new \PredisClient();
+                    $handler = new \Core\Session\Handlers\RedisSessionHandler($db);
+                    $handler->prefix = $c['session']['name'];
+                    $handler->expire = $c['session']['expiration'];
+                    break;
+                default:
                     break;
             }
             return new Session($c['config']['session'], $handler);
@@ -230,7 +239,7 @@ class Core extends \Pimple\Container
     * @param string
     * @param callable
     */
-    public function hook($key, $callable) 
+    public function setHook($key, $callable) 
     {
         $this->hooks[$key] = $callable;
     }

@@ -126,4 +126,13 @@ class Router
     {
         return self::$routes;
     }
+
+    /**
+    * Clear all routes.
+    */
+    public static function clearRoutes()
+    {
+        unset(self::$routes);
+        self::$routes = [];
+    }
 }

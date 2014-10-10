@@ -17,6 +17,7 @@
       </style>
   </head>
   <body id="page">
+        <a target="blank" href="https://github.com/Kajna/K"><img style="position: absolute; top: -30px; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
         <div>
             <h1>Welcome to home of K</h1>
             <h3></h3>
@@ -37,9 +38,9 @@
         <h3>
         <a><span></span></a>Install</h3>
 
-        <p>K requires PHP <strong>&gt;=5.4</strong> and <a href="https://getcomposer.org/">Composer</a> to run.</p>
+        <p>K requires PHP <strong>&gt;=5.4</strong> and <a href="https://getcomposer.org/">Composer</a>  dependency manager to run.</p>
 
-        <p>To install K <a href="https://github.com/Kajna/K" target="_blank"><strong>download</strong></a> and extract files in working directory then run <em>composer update</em> command.</p>
+        <p>To install K <a href="https://github.com/Kajna/K/archive/master.zip" target="_blank"><strong>download</strong></a> and extract files in working directory then run <em>composer install</em> command.</p>
 
         <h3>
         <a><span></span></a>Setup web server</h3>

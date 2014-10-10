@@ -3,7 +3,7 @@ namespace Core\Routing;
 
 /**
 * Route class. 
-* This class represents single route.
+* This class represents single application route.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
