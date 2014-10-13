@@ -98,8 +98,8 @@ class Core extends \Pimple\Container
             // Select session handler.
             $handler = null;
             switch ($c['config']['sessionHandler']) {
-                case 'file':
-                    $handler = new \Core\Session\Handlers\FileSessionHandler();
+                case 'encrypted-file':
+                    $handler = new \Core\Session\Handlers\EncryptedFileSessionHandler();
                     break;
                 case 'database':
                     $conn = $this['dbdefault']->getConnection();

@@ -63,13 +63,13 @@ define('APPVIEW', APP.'Views/');
 define('ROUTES', APP.'routes.php');
 /*
 |--------------------------------------------------------------------------
-| Set name of the public directory.
+| Set name of the public/web directory.
 |--------------------------------------------------------------------------
 */
 define('PUBLIC_DIR', 'public');
 /*
 |--------------------------------------------------------------------------
-| Set path to the public directory.
+| Set path to the public/web directory.
 |--------------------------------------------------------------------------
 */
 define('PUBLIC_PATH', __DIR__.'/'.PUBLIC_DIR.'/');

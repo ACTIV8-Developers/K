@@ -155,10 +155,12 @@ class BaseController
     * Load language file with defined constants.
     *
     * @param string
+    * @param string
+    * @return array
     */
-    protected function language($lang)
+    protected function language($lang, $file = 'default')
     {
-        include APP.'Languages/'.$lang.'.php';
+        return APP.'Languages/'.$lang.'/'.$file'.php';
     }
 
     /**

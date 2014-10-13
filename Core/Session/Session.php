@@ -50,7 +50,7 @@ class Session
 	*
 	* @var bool
 	*/
-	protected $matchUserAgent = true;
+	protected $matchUserAgent = false;
 
 	/**
 	* Period of refreshing session ID.
@@ -110,7 +110,7 @@ class Session
         }
 
 		// Regenerate session ID cycle
-		if (mt_rand(1, 100)<$this->updateFrequency) {
+		if ($this->updateFrequency && mt_rand(1, 100)<$this->updateFrequency) {
 			// Regenerate session
 			session_regenerate_id();
 		}
@@ -130,10 +130,10 @@ class Session
 
 		// Check if session token match ?
 		if ($this->matchUserAgent) {
-			if ($_SESSION['n3k0t'] != hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], $this->hashKey)) {
+			if ($_SESSION['n3k0t'] !== hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], $this->hashKey)) {
 				return false;
 			}
-		} elseif ($_SESSION['n3k0t'] != hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], $this->hashKey)) {
+		} elseif ($_SESSION['n3k0t'] !== hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], $this->hashKey)) {
 				return false;
         }
 
@@ -214,4 +214,13 @@ class Session
     {
     	return isset($_SESSION[$key]);
     }
+
+    /**
+    * @param string
+    */
+    public function setHashKey($hashKey)
+    {
+    	$this->hashKey = $hashKey;
+    }
+
 }

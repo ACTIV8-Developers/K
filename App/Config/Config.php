@@ -9,13 +9,14 @@ return [
 |--------------------------------------------------------------------------
 | Start session
 |--------------------------------------------------------------------------
+| Automatic session start on every request.
 */
 'sessionStart' => false,
 /*
 |--------------------------------------------------------------------------
 | Session handler
 |--------------------------------------------------------------------------
-| Currently supported redis, database, file, null (native PHP sessions).
+| Currently supported redis, database, encrypted-file, file (native PHP sessions).
 | (Redis requires PredisClient installed, database requires active PDO)
 */
 'sessionHandler' => null,
@@ -23,15 +24,18 @@ return [
 |--------------------------------------------------------------------------
 | Session specific settings
 |--------------------------------------------------------------------------
-| All parameters are optional and default ones 
-| will be used if none is passed.
+| All parameters are optional and default ones will be used if none is passed.
 */
 'session' => [
+	// Session Cookie Name
     'name' => 'K',
-    'tableName' => 'sessions', // Needed only if handler is database
+    // Session table name (Needed only if handler is database)
+    'tableName' => 'sessions',
+    // Session Lifetime
     'expiration' => 7200,
+    // Match user agents on session requests
     'matchUserAgent' => true,
-    'hashKey' => 'super_secret',
+    // Session regeneration frequency (0 to turn off)
     'updateFrequency' => 10
     ],
 /*
@@ -40,7 +44,7 @@ return [
 |--------------------------------------------------------------------------
 | Encryption key is needed for use in some classes.
 */
-'encryption_key' => 'super_secret',
+'key' => 'super_secret',
 /*
 |--------------------------------------------------------------------------
 | Inject dependecies

@@ -64,6 +64,6 @@ class RedisSessionHandler implements \SessionHandlerInterface
  
     public function gc($maxLifetime) 
     {
-        // no action necessary because using EXPIRE
+        // No action necessary because using expire Redis option.
     }
 }
