@@ -9,7 +9,7 @@ class RedisSessionHandler implements \SessionHandlerInterface
     /**
     * @var int
     */
-    public $expire = 1800; // 30 minutes default
+    public $expire = 7200;
 
     /**
     * @var string
@@ -17,15 +17,15 @@ class RedisSessionHandler implements \SessionHandlerInterface
     public $prefix = 'PHPSESSID:';
 
     /**
-    * @var object \PredisClient
+    * @var object \Predis\Client
     */
     protected $db;
 
     /**
-    * @param object \PredisClient
+    * @param object \Predis\Client
     * @param string
     */
-    public function __construct(PredisClient $db) 
+    public function __construct(\Predis\Client $db) 
     {
         $this->db = $db;
     }

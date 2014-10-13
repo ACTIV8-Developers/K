@@ -19,7 +19,7 @@ return [
 | Currently supported redis, database, encrypted-file, file (native PHP sessions).
 | (Redis requires PredisClient installed, database requires active PDO)
 */
-'sessionHandler' => null,
+'sessionHandler' => 'file',
 /*
 |--------------------------------------------------------------------------
 | Session specific settings
@@ -29,14 +29,28 @@ return [
 'session' => [
 	// Session Cookie Name
     'name' => 'K',
-    // Session table name (Needed only if handler is database)
+    // Connection name (needed only if handler is database).
+    'connName' => 'default',
+    // Session table name (needed only if handler is database).
     'tableName' => 'sessions',
-    // Session Lifetime
+    // Session Lifetime.
     'expiration' => 7200,
-    // Match user agents on session requests
+    // Match user agents on session requests.
     'matchUserAgent' => true,
-    // Session regeneration frequency (0 to turn off)
+    // Hashing algorithm used for creating security tokens.
+    'hashAlgo' => 'md5',
+    // Session regeneration frequency (0 to turn off).
     'updateFrequency' => 10
+    ],
+/*
+|--------------------------------------------------------------------------
+| Redis configuration.
+|--------------------------------------------------------------------------
+*/
+'redis' => [
+    'scheme' => 'tcp',
+    'host' => '127.0.0.1',
+    'port' => 6379
     ],
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +63,7 @@ return [
 |--------------------------------------------------------------------------
 | Inject dependecies
 |--------------------------------------------------------------------------
-| If enabled framework will try to inject hinted classes into controllers.
+| If enabled application will try to inject hinted classes into controllers.
 */
 'injectDependecies' => true,
 /*

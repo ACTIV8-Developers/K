@@ -102,19 +102,26 @@ class Core extends \Pimple\Container
                     $handler = new \Core\Session\Handlers\EncryptedFileSessionHandler();
                     break;
                 case 'database':
-                    $conn = $this['dbdefault']->getConnection();
+                    $name = $c['config']['session']['connName'];
+                    $conn = $this['db'.$name]->getConnection();
                     $handler = new \Core\Session\Handlers\DatabaseSessionHandler();
                     break;
                 case 'redis':
-                    $db = new \PredisClient();
-                    $handler = new \Core\Session\Handlers\RedisSessionHandler($db);
-                    $handler->prefix = $c['session']['name'];
-                    $handler->expire = $c['session']['expiration'];
+                    try {
+                        $db = new \Predis\Client($c['config']['redis']);
+                        $handler = new \Core\Session\Handlers\RedisSessionHandler($db);
+                        $handler->prefix = $c['config']['session']['name'];
+                        $handler->expire = $c['config']['session']['expiration'];
+                    } catch(\Exception $e) {
+                        throw new \InvalidArgumentException('Error! Cannot connect to Redis server. '.$e->getMessage());
+                    }
                     break;
                 default:
                     break;
             }
-            return new Session($c['config']['session'], $handler);
+            $session = new Session($c['config']['session'], $handler);
+            $session->setHashKey($c['config']['key']);
+            return $session;
         };
     }
     

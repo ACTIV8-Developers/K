@@ -60,6 +60,13 @@ class Session
 	protected $updateFrequency = 10;
 
 	/**
+	* Hashing algorithm used for creating security tokens.
+	*
+	* @var string
+	*/
+	protected $hashAlgo = 'md5';
+	
+	/**
 	* Class construct.
 	* Register handler and start session here.
 	*
@@ -109,8 +116,8 @@ class Session
 			$this->regenerate();
         }
 
-		// Regenerate session ID cycle
-		if ($this->updateFrequency && mt_rand(1, 100)<$this->updateFrequency) {
+		// Regenerate session ID cycle.
+		if ($this->updateFrequency !== 0 && mt_rand(1, 100) < $this->updateFrequency) {
 			// Regenerate session
 			session_regenerate_id();
 		}
@@ -130,15 +137,15 @@ class Session
 
 		// Check if session token match ?
 		if ($this->matchUserAgent) {
-			if ($_SESSION['n3k0t'] !== hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], $this->hashKey)) {
+			if ($_SESSION['n3k0t'] !== hash_hmac($this->hashAlgo, $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], $this->hashKey)) {
 				return false;
 			}
-		} elseif ($_SESSION['n3k0t'] !== hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], $this->hashKey)) {
+		} elseif ($_SESSION['n3k0t'] !== hash_hmac($this->hashAlgo, $_SESSION['s3ss10nCr3at3d'], $this->hashKey)) {
 				return false;
         }
 
 		// Is session expired ?
-		if ((time() > ($_SESSION['s3ss10nCr3at3d'])+$this->expiration)) {
+		if ((time() > ($_SESSION['s3ss10nCr3at3d']) + $this->expiration)) {
 			return false;
 		}
 
@@ -157,9 +164,9 @@ class Session
         $_SESSION['s3ss10nCr3at3d'] = time();
 		// Set new session token
 		if ($this->matchUserAgent) {
-            $_SESSION['n3k0t'] = hash_hmac('sha256', $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], $this->hashKey);
+            $_SESSION['n3k0t'] = hash_hmac($this->hashAlgo, $_SERVER['HTTP_USER_AGENT'].$_SESSION['s3ss10nCr3at3d'], $this->hashKey);
 		} else {
-            $_SESSION['n3k0t'] = hash_hmac('sha256', $_SESSION['s3ss10nCr3at3d'], $this->hashKey);
+            $_SESSION['n3k0t'] = hash_hmac($this->hashAlgo, $_SESSION['s3ss10nCr3at3d'], $this->hashKey);
 		}
         // Regenerate session
         session_regenerate_id();
@@ -171,7 +178,7 @@ class Session
     */
     public function get($key)
     {
-    	return $_SESSION[$key];
+    	return isset($_SESSION[$key])?$_SESSION[$key]:null;
     }
 
     /**

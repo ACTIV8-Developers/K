@@ -5,7 +5,6 @@ namespace Core\Util;
 * Additional class autoloader for prettier class names.
 *
 * @see https://github.com/laravel/framework/blob/master/src/Illuminate/Foundation/AliasLoader.php
-* @see laravel.com
 */
 class AliasLoader 
 {

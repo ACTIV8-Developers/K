@@ -5,6 +5,7 @@ namespace Core\Util;
 /**
  * Class Message.
  * Used for sending flash messages between requests.
+ *
  * @author miloskajnaco@gmail.com
  */
 class Message 
