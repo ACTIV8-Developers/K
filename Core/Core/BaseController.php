@@ -55,7 +55,7 @@ class BaseController
 
         // Append to output body or return string.
         if (true === $display) {
-            Core::getInstance()['response']->writeBody(ob_get_contents());
+            Core::getInstance()['Response']->writeBody(ob_get_contents());
             ob_end_clean();
         } else {          
             $buffer = ob_get_contents();
@@ -71,13 +71,13 @@ class BaseController
     */
     protected function NotFound($message = 'Not Found', $view = null)
     {
-        Core::getInstance()['response']->setStatusCode(404);
+        Core::getInstance()['Response']->setStatusCode(404);
         if ($view === null) {
-            Core::getInstance()['response']->setBody($message);
+            Core::getInstance()['Response']->setBody($message);
         } else {
             ob_start();
             include APPVIEW.$view.'.php';
-            Core::getInstance()['response']->setBody(ob_get_contents());
+            Core::getInstance()['Response']->setBody(ob_get_contents());
             ob_end_clean();
         }
     }
@@ -118,7 +118,7 @@ class BaseController
     */
     protected function request()
     {
-        return Core::getInstance()['request'];
+        return Core::getInstance()['Request'];
     }
 
     /**
@@ -128,7 +128,7 @@ class BaseController
     */
     protected function response()
     {
-        return Core::getInstance()['response'];
+        return Core::getInstance()['Response'];
     }
 
     /**
@@ -138,7 +138,7 @@ class BaseController
     */
     protected function session()
     {
-        return Core::getInstance()['session'];
+        return Core::getInstance()['Session'];
     }
 
     /**

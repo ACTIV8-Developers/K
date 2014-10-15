@@ -14,9 +14,9 @@ class BaseControllerTest extends PHPUnit_Framework_TestCase
 
 		$con = new MockController();
 
-		$this->assertSame(\Core\Core\Core::getInstance()['request'], $con->getRequest());
-		$this->assertSame(\Core\Core\Core::getInstance()['response'], $con->getResponse());
-		$this->assertSame(\Core\Core\Core::getInstance()['session'], $con->getSession());
+		$this->assertSame(\Core\Core\Core::getInstance()['Request'], $con->getRequest());
+		$this->assertSame(\Core\Core\Core::getInstance()['Response'], $con->getResponse());
+		$this->assertSame(\Core\Core\Core::getInstance()['Session'], $con->getSession());
 	}
 
 	public function testRender()

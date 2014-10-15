@@ -73,7 +73,7 @@ class Route
     * @param array
 	* @param string
 	*/
-	public function __construct($url, $callable, $requestMethod = 'ANY')
+	public function __construct($url, $callable, $requestMethod = 'GET')
 	{
         $this->url = $url;
         $this->callable = $callable;
@@ -91,7 +91,7 @@ class Route
     public function matches($uri, $method)
     {
         // Check if request method matches.
-        if (in_array($method, $this->methods) || in_array('ANY', $this->methods)) {        
+        if (in_array($method, $this->methods)) {        
             $paramValues = [];
 
             // Replace parameters with proper regex patterns.

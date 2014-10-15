@@ -12,7 +12,10 @@
         "pimple/pimple": "3.0.*@dev",
         "phpunit/php-timer": "dev-master",
         "filp/whoops": "1.2.*@dev",
-        "predis/predis": "1.1.*@dev"
+        "predis/predis": "1.1.*@dev",
+        "swiftmailer/swiftmailer": "~5.1",
+        "monolog/monolog": "~1.6",
+
     },
     "autoload": {
         "psr-4": {

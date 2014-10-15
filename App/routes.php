@@ -5,4 +5,4 @@
 |--------------------------------------------------------------------------
 | All application routes are defined here.
 */
-Route::get('', ["ExampleController", "index"]);
+$route->get('', ["ExampleController", "index"]);

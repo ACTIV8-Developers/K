@@ -15,9 +15,9 @@ class Router
 	/**
 	* Collection of routes.
     *
-	* @var array
+	* @var array (\Core\Routing\Route)
 	**/
-	protected static $routes = [];
+	protected $routes = [];
 
 	/**
 	* Check routes and return matching one.
@@ -29,7 +29,7 @@ class Router
 	public function run($uri, $requestMethod)
 	{
 		// Find correct route.
-	    foreach (self::$routes as $route) {
+	    foreach ($this->routes as $route) {
 	    	if (true === $route->matches($uri, $requestMethod)) {
 	        	return $route;
 	      	}
@@ -38,30 +38,16 @@ class Router
 	}
 
     /**
-	* Add a route object to the router accepting any request method.
-    *
-	* @param string
-	* @param array
-    * @return object \Core\Routing\Route
-	*/
-    public static function any($url, $callable)
-    {
-    	$route = new Route($url, $callable);
-		self::$routes[] = $route;
-        return $route;
-    }
-
-    /**
 	* Add a route object to the router accepting GET request method.
     *
 	* @param string 
 	* @param array
     * @return object \Core\Routing\Route
     */
-    public static function get($url, $callable)
+    public function get($url, $callable)
     {
     	$route = new Route($url, $callable, 'GET');
-		self::$routes[] = $route;
+		$this->routes[] = $route;
         return $route;
     }
 
@@ -72,10 +58,10 @@ class Router
 	* @param array
     * @return object \Core\Routing\Route
     */
-    public static function post($url, $callable)
+    public function post($url, $callable)
     {
     	$route = new Route($url, $callable, 'POST');
-		self::$routes[] = $route;
+		$this->routes[] = $route;
         return $route;
     }
 
@@ -86,10 +72,10 @@ class Router
 	* @param array
     * @return object \Core\Core\Route
 	*/
-    public static function put($url, $callable)
+    public function put($url, $callable)
     {
     	$route = new Route($url, $callable, 'PUT');
-		self::$routes[] = $route;
+		$this->routes[] = $route;
         return $route;
     }
 
@@ -100,10 +86,10 @@ class Router
 	* @param array
     * @return object \Core\Core\Route
 	*/
-    public static function delete($url, $callable)
+    public function delete($url, $callable)
     {
     	$route = new Route($url, $callable, 'DELETE');
-		self::$routes[] = $route;
+		$this->routes[] = $route;
         return $route;
     }
 
@@ -112,9 +98,9 @@ class Router
     *
     * @var object \Core\Core\Route
     */
-    public static function addRoute(Route $route)
+    public function addRoute(Route $route)
     {
-    	self::$routes[] = $route;
+    	$this->routes[] = $route;
     }
 
     /**
@@ -122,17 +108,17 @@ class Router
      *
      * @return array
      */
-    public static function getRoutes()
+    public function getRoutes()
     {
-        return self::$routes;
+        return $this->routes;
     }
 
     /**
     * Clear all routes.
     */
-    public static function clearRoutes()
+    public function clearRoutes()
     {
-        unset(self::$routes);
-        self::$routes = [];
+        unset($this->routes);
+        $this->routes = [];
     }
 }

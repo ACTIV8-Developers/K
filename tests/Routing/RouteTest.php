@@ -30,7 +30,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
 	public function testMatches()
 	{
 		/* Test random routing casses.
-		* (callable parameter can be empty here since route wont be dispatched)
+		* (callable parameter can be empty here since route won't be dispatched)
 		******************************/
 
 		// Case 1
@@ -62,11 +62,11 @@ class RouteTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse($route4->matches('foo/bar/foo/bar','GET'));
 
 		// Case 5
-		$route5 = new Route('foo/bar', [], 'ANY');
+		$route5 = new Route('foo/bar', [], 'GET');
 
 		$this->assertTrue($route5->matches('foo/bar','GET'));
 
-		$this->assertTrue($route5->matches('foo/bar/','POST'));
+		$this->assertTrue($route5->matches('foo/bar/','GET'));
 
 		// Case 6
 		$route6 = new Route('foo', [], 'PUT');

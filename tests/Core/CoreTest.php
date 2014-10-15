@@ -13,10 +13,9 @@ class CoreTest extends PHPUnit_Framework_TestCase
 
         // Check if construct made all required things.
         $this->assertInstanceOf('Core\Core\Core', $app);
-        $this->assertInstanceOf('Core\Http\Response', $app['response']);
-        $this->assertInstanceOf('Core\Http\Request', $app['request']);
-        $this->assertInstanceOf('Core\Routing\Router', $app['router']);
-        $this->assertInstanceOf('Core\Session\Session', $app['session']);
+        $this->assertInstanceOf('Core\Http\Response', $app['Response']);
+        $this->assertInstanceOf('Core\Http\Request', $app['Request']);
+        $this->assertInstanceOf('Core\Session\Session', $app['Session']);
     }
 
     public function testHooks()

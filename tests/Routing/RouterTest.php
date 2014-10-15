@@ -15,7 +15,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
 
 		$route = new Route('foo/bar', [], 'GET');
 		// Create mock route and add it to router
-		Router::addRoute($route);
+		$router->addRoute($route);
 
 		// Inject request and run test
 		$this->assertEquals($router->run('foo/bar', 'GET'), $route);
@@ -26,24 +26,27 @@ class RouterTest extends PHPUnit_Framework_TestCase
 
 	public function testRouteAdd()
 	{
-		$route1 = \Route::get('foo/bar', ['', '']);
+		// Create router object
+		$router = new Router();
+		
+		$route1 = $router->get('foo/bar', ['', '']);
 
-		$route2 = \Route::post('bar/foo', ['', '']);
+		$route2 = $router->post('bar/foo', ['', '']);
 
-		$route3 = \Route::put('bar/foo2', ['', '']);
+		$route3 = $router->put('bar/foo2', ['', '']);
 
-		$route4 = \Route::delete('bar/foo3', ['', '']);
+		$route4 = $router->delete('bar/foo3', ['', '']);
 
-		$route5 = \Route::any('bar/foo4', ['', '']);
+		$route5 = $router->get('bar/foo4', ['', '']);
 
-		$this->assertContains($route1, Router::getRoutes());
+		$this->assertContains($route1, $router->getRoutes());
 
-		$this->assertContains($route2, Router::getRoutes());
+		$this->assertContains($route2, $router->getRoutes());
 
-		$this->assertContains($route3, Router::getRoutes());
+		$this->assertContains($route3, $router->getRoutes());
 
-		$this->assertContains($route4, Router::getRoutes());
+		$this->assertContains($route4, $router->getRoutes());
 
-		$this->assertContains($route5, Router::getRoutes());
+		$this->assertContains($route5, $router->getRoutes());
 	}
 }

@@ -40,12 +40,13 @@ class Core extends \Pimple\Container
         'before.system'  => null, 
         'before.routing' => null, 
         'after.routing'  => null,
-        'after.system'   => null
+        'after.system'   => null,
+        'not.found'      => null
     ];
 
     /**
     * Class constructor.
-    * Loads all needed classes as closures into container.
+    * Prepares all needed classes.
     *
     * @throws \InvalidArgumentException
     */
@@ -54,32 +55,27 @@ class Core extends \Pimple\Container
         // Call parent container constructor.
         parent::__construct();
 
-        // Load configuration.
+        // Load application configuration.
         $this['config'] = require APP.'Config/Config.php';
         
         // Create request class closure.
-        $this['request'] = function() {
+        $this['Request'] = function() {
             return new Request($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
         }; 
 
         // Create response class closure.
-        $this['response'] = function($c) {
+        $this['Response'] = function($c) {
             $response = new Response();
-            $response->setProtocolVersion($c['request']->getProtocolVersion());
+            $response->setProtocolVersion($c['Request']->getProtocolVersion());
             return $response;
-        }; 
-
-        // Create router class closure.
-        $this['router'] = function() { 
-            return new Router();
         };
 
-        // Load database settings.
-        $databaseList = require APP.'Config/Database.php';
+        // Load database configuration.
+        $this['config.database'] = require APP.'Config/Database.php';
 
         // For each needed database create database class closure.
-        foreach ($databaseList as $name => $dbConfig) {
-            $this['db'.$name] = function() use ($dbConfig) {
+        foreach ($this['config.database'] as $name => $dbConfig) {
+            $this['db'.$name] = function($c) use ($dbConfig) {
                 $db = null;
                 switch ($dbConfig['driver']) { // Choose connection and create it.
                     case 'mysql':               
@@ -94,7 +90,7 @@ class Core extends \Pimple\Container
         }
 
         // Create session class closure.
-        $this['session'] = function($c) {
+        $this['Session'] = function($c) {
             // Select session handler.
             $handler = null;
             switch ($c['config']['sessionHandler']) {
@@ -116,8 +112,6 @@ class Core extends \Pimple\Container
                         throw new \InvalidArgumentException('Error! Cannot connect to Redis server. '.$e->getMessage());
                     }
                     break;
-                default:
-                    break;
             }
             $session = new Session($c['config']['session'], $handler);
             $session->setHashKey($c['config']['key']);
@@ -126,97 +120,125 @@ class Core extends \Pimple\Container
     }
     
     /**
-    * Core main executive function.
-    * Function will start session, apply hooks,
-    * route requests, execute controllers and display response.
+    * Application main executive function.
     */        
     public function run()
     {
-        // Pre routing/controller hooks.
-        if (isset($this->hooks['before.system'])) {
-            call_user_func($this->hooks['before.system'], $this);
-        }
-
-        // Load and start session if enabled in configuration.
-        if ($this['config']['sessionStart']) {
-            $this['session']->start();
-        }
-
-        // Collect routes list from file.
-        require ROUTES;
-
-        // Pre routing/controller hooks.
-        if (isset($this->hooks['before.routing'])) {
-            call_user_func($this->hooks['before.routing'], $this);
-        }
-
-        // Route requests
-        $route = $this['router']->run($this['request']->getUri(), $this['request']->getRequestMethod());
-        
-        // If no route found send and show 404.
-        if (false === $route) {
-            $this->show404();
-        } else {
-            $this['request']->get->replace($route->params);
-            $route->params = array_values($route->params);
-
-            // Resolve controller using reflection.
-            $route->callable[0] = CONTROLERS.'\\'.$route->callable[0];
-
-            $controller = new $route->callable[0];
-            
-            // Try to resolve controller dependecies if enabled.
-            if ($this['config']['injectDependecies'] === true) {
-                $classMethod = new \ReflectionMethod($route->callable[0], $route->callable[1]);
-
-                $methods = $classMethod->getParameters();
-
-                $params = [];
-
-                $num = 0;
-
-                foreach ($methods as $m) {
-                    $export = \ReflectionParameter::export(
-                       [
-                          $m->getDeclaringClass()->name,
-                          $m->getDeclaringFunction()->name
-                       ], 
-                       $m->name, 
-                       true
-                    );
-
-                    $type = strtolower(preg_replace('/.*?(\w+)\s+\$'.$m->name.'.*/', '\\1', $export));
-
-                    if (isset($this[$type])) {
-                        $params[] = $this[$type];
-                    } else {
-                        $params[] = $route->params[$num++];
-                    }
-                }
-                call_user_func_array([$controller, $route->callable[1]], $params);
-            } else {
-                call_user_func_array([$controller, $route->callable[1]], $route->params);
+        try {    
+            // Pre routing/controller hook.
+            if (isset($this->hooks['before.system'])) {
+                call_user_func($this->hooks['before.system'], $this);
             }
+
+            // Load and start session if enabled in configuration.
+            if ($this['config']['sessionStart']) {
+                $this['Session']->start();
+            }
+
+            // Execute routing.
+            $this->routeRequest();
+        } catch (\Exception $e) {
+
         }
 
-        // Post routing/controller hooks.
+        // Post routing/controller hook.
         if (isset($this->hooks['after.routing'])) {
             call_user_func($this->hooks['after.routing'], $this);
         }
 
         // Send final response.
-        $this['response']->send();
+        $this['Response']->send();
 
         // Display benchmark time if enabled.
         if ($this['config']['benchmark']) {
             print \PHP_Timer::resourceUsage();
         }
 
-        // Post response hooks.
+        // Post response hook.
         if (isset($this->hooks['after.system'])) {
             call_user_func($this->hooks['after.system'], $this);
         }
     }  
+
+    /**
+    * Route request and execute proper controller if route found.
+    */
+    protected function routeRequest()
+    {
+        // Create router instance.
+        $route = new Router();
+
+        // Collect routes list from file.
+        include ROUTES;
+
+        // Pre routing/controller hook.
+        if (isset($this->hooks['before.routing'])) {
+            call_user_func($this->hooks['before.routing'], $this);
+        }
+
+        // Route requests
+        $matchedRoute = $route->run($this['Request']->getUri(), $this['Request']->getRequestMethod());
+        
+        // Execute route if found.
+        if (false !== $matchedRoute) {
+            $this['Request']->get->replace($matchedRoute->params);
+            $matchedRoute->params = array_values($matchedRoute->params);
+
+            // Get controller name with namespace prefix.
+            $matchedRoute->callable[0] = CONTROLERS.'\\'.$matchedRoute->callable[0];
+
+            // Create instance of controller to be called.
+            $controller = new $matchedRoute->callable[0];
+            
+            // Try to resolve controller dependecies if enabled.
+            if ($this['config']['injectDependecies'] === true) {
+                // Get controller methods using reflection.
+                $classMethod = new \ReflectionMethod($matchedRoute->callable[0], $matchedRoute->callable[1]);
+
+                $methods = $classMethod->getParameters();
+
+                $num = 0;
+
+                foreach ($methods as $method) {
+                    $export = \ReflectionParameter::export(
+                       [
+                          $method->getDeclaringClass()->name,
+                          $method->getDeclaringFunction()->name
+                       ], 
+                       $method->name, 
+                       true
+                    );
+
+                    $type = preg_replace('/.*?(\w+)\s+\$'.$method->name.'.*/', '\\1', $export);
+
+                    if (isset($this[$type])) {
+                        $params[] = $this[$type];
+                    } else {
+                        $params[] = $matchedRoute->params[$num++];
+                    }
+                }
+                call_user_func_array([$controller, $matchedRoute->callable[1]], $params);
+            } else {
+                call_user_func_array([$controller, $matchedRoute->callable[1]], $matchedRoute->params);
+            }
+        } else {
+            // If page not found display 404 error.
+            if (isset($this->hooks['not.found'])) {
+                call_user_func($this->hooks['not.found'], $this);
+            } else {
+                $this->defaultNotFound();
+            }
+        }
+    }
+
+    /**
+    * Default handler for 404 error.
+    */
+    protected function defaultNotFound()
+    {
+        $this['Response']->setStatusCode(404);
+        $this['Response']->setBody('<h1>404 Not Found</h1>The page that you have requested could not be found.');
+    }
 
     /**
     * Get singleton instance of Core class.
@@ -229,15 +251,6 @@ class Core extends \Pimple\Container
             self::$instance = new Core();
         }
         return self::$instance;
-    }
-
-    /*
-    * Display 404 page.
-    */
-    protected function show404()
-    {
-        $this['response']->setStatusCode(404);
-        $this['response']->setBody('<h1>404 Not Found</h1>The page that you have requested could not be found.');
     }
 
     /**
