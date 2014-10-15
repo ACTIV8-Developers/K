@@ -1,6 +1,6 @@
 {
     "name": "Kajna/K",
-    "description": "Simple solution for full featured MVC framework",
+    "description": "Simple and Lightweight but powerfull MVC framework",
     "authors": [
         {
         "name": "Milos Kajnaco",
@@ -12,9 +12,11 @@
         "pimple/pimple": "3.0.*@dev",
         "phpunit/php-timer": "dev-master",
         "filp/whoops": "1.2.*@dev",
-        "predis/predis": "1.1.*@dev",
-        "swiftmailer/swiftmailer": "~5.1",
-        "monolog/monolog": "~1.6"
+        "predis/predis": "1.1.*@dev"
+    },
+    "suggest": {
+        "monolog/monolog": "Allows more advanced logging of the application flow",
+        "swiftmailer/swiftmailer": "Great mailer library"
     },
     "autoload": {
         "psr-4": {
