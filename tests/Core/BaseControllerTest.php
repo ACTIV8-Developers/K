@@ -27,7 +27,7 @@ class BaseControllerTest extends PHPUnit_Framework_TestCase
 
 		// Try rendering view with no passed data
 		$view = 'MockView';
-		$result = $con->renderIt($view);
+		$result = $con->bufferIt($view);
 
 		// Output string should be same as content of MockView.php file
 		echo $result;
@@ -46,7 +46,7 @@ class BaseControllerTest extends PHPUnit_Framework_TestCase
 		$data['content'] = '<div>Test</div>';
 
 		// Output main and nested view
-		$res = $con->renderIt($view, $data);
+		$res = $con->bufferIt($view, $data);
 
 		echo $res;
 
@@ -64,7 +64,7 @@ class MockController extends Controller
 
 	public function getRequest()
 	{
-		return $this->get('Request');
+		return $this->app['Request'];
 	}
 
 	public function getResponse()
@@ -72,8 +72,8 @@ class MockController extends Controller
 		return $this->get('Response');
 	}
 
-    public function renderIt($view, $data = [])
+    public function bufferIt($view, $data = [])
     {
-    	return $this->render($view, $data, false);
+    	return $this->buffer($view, $data);
     }
 }

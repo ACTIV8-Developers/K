@@ -111,13 +111,6 @@ if (SHOW_ERRORS) {
 }
 /*
 |--------------------------------------------------------------------------
-| Register aliases auto loader.
-|--------------------------------------------------------------------------
-| Additional auto loader for prettier class names.
-*/
-\Core\Util\AliasLoader::getInstance(require(APP.'Config/Aliases.php'))->register();
-/*
-|--------------------------------------------------------------------------
 | Create main Core class.
 |--------------------------------------------------------------------------
 | Load core class and load all dependencies.

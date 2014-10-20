@@ -58,6 +58,11 @@ class Core extends \Pimple\Container
         // Load application configuration.
         $this['config'] = require APP.'Config/Config.php';
         
+        // Register class aliases autoloader if enabled.
+        if ($this['config']['aliases']) {
+            \Core\Util\AliasLoader::getInstance(require(APP.'Config/Aliases.php'))->register();
+        }
+
         // Create request class closure.
         $this['Request'] = function() {
             return new Request($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
@@ -138,7 +143,7 @@ class Core extends \Pimple\Container
             // Execute routing.
             $this->routeRequest();
         } catch (\Exception $e) {
-
+            
         }
 
         // Post routing/controller hook.
@@ -191,7 +196,7 @@ class Core extends \Pimple\Container
             $controller = new $matchedRoute->callable[0];
             
             // Inject container into controller.
-            $controller->setContainer($this);
+            $controller->setContainer(self::$instance);
 
             // Try to resolve controller dependecies if enabled.
             if ($this['config']['injectDependecies'] === true) {
@@ -199,6 +204,8 @@ class Core extends \Pimple\Container
                 $classMethod = new \ReflectionMethod($matchedRoute->callable[0], $matchedRoute->callable[1]);
 
                 $methods = $classMethod->getParameters();
+
+                $params = [];
 
                 $num = 0;
 

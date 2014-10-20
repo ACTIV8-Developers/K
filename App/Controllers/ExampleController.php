@@ -25,16 +25,33 @@ class ExampleController extends Controller
 	}
 
 	/**
-	* Example method.
+	* Example method I.
 	*
 	* @param object \Core\Http\Request
 	*/
-	public function index(Request $request)
+	public function indexAction()
 	{
     	// Get data from model.
     	$data['content'] = $this->model->getData();
-    	
+
     	// Render view with data and write it to response body.
+    	$this->render('ExampleView', $data);
+	}
+
+	/**
+	* Example method II.
+	*
+	* @param object \Core\Http\Request
+	*/
+	public function contactAction(Request $request)
+	{
+        // Get request variables.
+        // Do something, call service, go to database, create form, send emails, etc...
+
+    	// Get data from model.
+    	$data['content'] = 'Contact me at miloskajnaco@gmail.com';
+
+        // Render method will buffer view and write it to Response class for final output.
     	$this->render('ExampleView', $data);
 	}
 }

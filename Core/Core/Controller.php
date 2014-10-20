@@ -7,11 +7,8 @@ namespace Core\Core;
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-abstract class Controller
+abstract class Controller extends ContainerAware
 {
-    // This trait alows use of reference to Core class instance.
-    use CoreTrait;
-
     /**
     * Set value in container.
     *
@@ -38,14 +35,12 @@ abstract class Controller
     }
 
     /**
-    * Buffer output for display or return it as string.
+    * Render output for display.
     *
     * @param string
     * @param array
-    * @param bool
-    * @return string|null
     */
-    protected function render($view, $data = [], $display = true)
+    protected function render($view, $data = [])
     {
         // Extract variables.
         extract($data);
@@ -56,15 +51,33 @@ abstract class Controller
         // Load view file (root location is declared in APPVIEW constant).
         include APPVIEW.$view.'.php';
 
-        // Append to output body or return string.
-        if (true === $display) {
-            $this->$app['Response']->writeBody(ob_get_contents());
-            ob_end_clean();
-        } else {          
-            $buffer = ob_get_contents();
-            ob_end_clean();
-            return $buffer;
-        }
+        // Append to output body.
+        $this->app['Response']->writeBody(ob_get_contents());
+        ob_end_clean();
+    }
+
+    /**
+    * Buffer output and return it as string.
+    *
+    * @param string
+    * @param array
+    * @return string
+    */
+    protected function buffer($view, $data = [])
+    {
+        // Extract variables.
+        extract($data);
+
+        // Start buffering.
+        ob_start();
+
+        // Load view file (root location is declared in APPVIEW constant).
+        include APPVIEW.$view.'.php';
+
+        // Return string.       
+        $buffer = ob_get_contents();
+        ob_end_clean();
+        return $buffer;
     }
 
     /**
@@ -74,13 +87,13 @@ abstract class Controller
     */
     protected function NotFound($message = 'Not Found', $view = null)
     {
-        $this->$app['Response']->setStatusCode(404);
+        $this->app['Response']->setStatusCode(404);
         if ($view === null) {
-            $this->$app['Response']->setBody($message);
+            $this->app['Response']->setBody($message);
         } else {
             ob_start();
             include APPVIEW.$view.'.php';
-            $this->$app['Response']->setBody(ob_get_contents());
+            $this->app['Response']->setBody(ob_get_contents());
             ob_end_clean();
         }
     }
@@ -105,7 +118,7 @@ abstract class Controller
     */
     protected function db($dbName = 'default')
     {
-        return $this->$app['db'.$dbName ];
+        return $this->app['db'.$dbName ];
     }
 
     /**
