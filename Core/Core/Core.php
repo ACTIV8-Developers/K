@@ -190,6 +190,9 @@ class Core extends \Pimple\Container
             // Create instance of controller to be called.
             $controller = new $matchedRoute->callable[0];
             
+            // Inject container into controller.
+            $controller->setContainer($this);
+
             // Try to resolve controller dependecies if enabled.
             if ($this['config']['injectDependecies'] === true) {
                 // Get controller methods using reflection.

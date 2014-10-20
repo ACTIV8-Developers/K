@@ -1,4 +1,5 @@
 <?php
+use \Core\Core\Model;
 
 class BaseModelTest extends PHPUnit_Framework_TestCase
 {
@@ -29,7 +30,7 @@ class BaseModelTest extends PHPUnit_Framework_TestCase
 }
 
 
-class MockModel extends \Model
+class MockModel extends Model
 {
     public function getDatabase()
     {

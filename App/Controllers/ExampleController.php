@@ -1,12 +1,14 @@
 <?php
 namespace Controllers;
 
-use \Core\Http\Request as Request;
+
+use \Core\Http\Request;
+use \Core\Core\Controller;
 
 /**
 * Example controller class.
 */
-class ExampleController extends \Controller
+class ExampleController extends Controller
 {
 	/**
 	* @var object \Models\ExampleModel

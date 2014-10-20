@@ -1,5 +1,6 @@
 <?php
 use \Core\Http\Response;
+use \Core\Core\Controller;
 
 // Define location of mock views to this dir
 define('APPVIEW', __DIR__.'/MockViews/');
@@ -13,6 +14,7 @@ class BaseControllerTest extends PHPUnit_Framework_TestCase
 		$_SERVER['REQUEST_URI'] = '';
 
 		$con = new MockController();
+		$con->setContainer(\Core\Core\Core::getInstance());
 
 		$this->assertSame(\Core\Core\Core::getInstance()['Request'], $con->getRequest());
 		$this->assertSame(\Core\Core\Core::getInstance()['Response'], $con->getResponse());
@@ -53,21 +55,21 @@ class BaseControllerTest extends PHPUnit_Framework_TestCase
 	}
 }
 
-class MockController extends \Controller
+class MockController extends Controller
 {
 	public function getSession()
 	{
-		return $this->session();
+		return $this->get('Session');
 	}
 
 	public function getRequest()
 	{
-		return $this->request();
+		return $this->get('Request');
 	}
 
 	public function getResponse()
 	{
-		return $this->response();
+		return $this->get('Response');
 	}
 
     public function renderIt($view, $data = [])

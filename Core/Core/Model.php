@@ -7,7 +7,7 @@ namespace Core\Core;
 * 
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-abstract class BaseModel
+abstract class Model
 {
     /**
     * Get database object.

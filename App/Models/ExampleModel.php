@@ -1,10 +1,11 @@
 <?php
 namespace Models;
 
+use \Core\Core\Model;
 /**
 * Example model class.
 */
-class ExampleModel extends \Model
+class ExampleModel extends Model
 {
 	public function getData()
 	{

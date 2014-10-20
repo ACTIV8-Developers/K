@@ -5,9 +5,6 @@
 | -------------------------------------------------------------------
 */
 return [
-	'Route'		=>'Core\Routing\Router',
-	'Controller'=>'Core\Core\BaseController',
+	'Controller'=>'Core\Core\Controller',
 	'Model'		=>'Core\Core\BaseModel',
-	'Util'		=>'Core\Util\Util',
-    'Message'   =>'Core\Util\Message'
 ];
