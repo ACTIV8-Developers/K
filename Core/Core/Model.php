@@ -3,11 +3,10 @@ namespace Core\Core;
 
 /**
 * Base model abstract class.
-* Used with alias "Model".
 * 
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-abstract class Model
+abstract class Model extends ContainerAware
 {
     /**
     * Get database object.

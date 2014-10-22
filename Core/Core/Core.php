@@ -57,11 +57,6 @@ class Core extends \Pimple\Container
 
         // Load application configuration.
         $this['config'] = require APP.'Config/Config.php';
-        
-        // Register class aliases autoloader if enabled.
-        if ($this['config']['aliases']) {
-            \Core\Util\AliasLoader::getInstance(require(APP.'Config/Aliases.php'))->register();
-        }
 
         // Create request class closure.
         $this['Request'] = function() {

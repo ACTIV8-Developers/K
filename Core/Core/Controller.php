@@ -85,7 +85,7 @@ abstract class Controller extends ContainerAware
     *
     * @param string
     */
-    protected function NotFound($message = 'Not Found', $view = null)
+    protected function notFound($message = 'Not Found', $view = null)
     {
         $this->app['Response']->setStatusCode(404);
         if ($view === null) {

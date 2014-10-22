@@ -16,7 +16,9 @@
     },
     "suggest": {
         "monolog/monolog": "Allows more advanced logging of the application flow",
-        "swiftmailer/swiftmailer": "Great mailer library"
+        "swiftmailer/swiftmailer": "Great mailer library",
+        "codeguy/upload": "Handle file uploads with extensible validation and storage strategies",
+        "gregwar/image": "Image handling"
     },
     "autoload": {
         "psr-4": {

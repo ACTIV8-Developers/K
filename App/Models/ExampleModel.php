@@ -2,6 +2,7 @@
 namespace Models;
 
 use \Core\Core\Model;
+
 /**
 * Example model class.
 */

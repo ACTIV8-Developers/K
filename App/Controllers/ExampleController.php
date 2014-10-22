@@ -1,7 +1,6 @@
 <?php
 namespace Controllers;
 
-
 use \Core\Http\Request;
 use \Core\Core\Controller;
 

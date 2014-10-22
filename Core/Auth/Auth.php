@@ -37,7 +37,7 @@ class Auth
 	 */
 	public function __construct(array $params = [], \PDO $conn = null)
 	{
-		// Take parameters from passed array
+		// Take parameters from passed array.
         foreach ($params as $key => $val) {
             $this->$key = $val;
         }
