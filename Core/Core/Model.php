@@ -6,7 +6,7 @@ namespace Core\Core;
 * 
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-abstract class Model extends ContainerAware
+abstract class Model
 {
     /**
     * Get database object.
@@ -14,8 +14,8 @@ abstract class Model extends ContainerAware
     * @param string
     * @return object \Core\Database\Database
     */
-    protected function db($dbName = 'default')
+    protected function db($dbName)
     {
-        return Core::getInstance()['db'.$dbName ];
+        return Core::getInstance()['db.'.$dbName ];
     }
 }

@@ -99,7 +99,7 @@ class Core extends \Pimple\Container
                     break;
                 case 'database':
                     $name = $c['config']['session']['connName'];
-                    $conn = $this['db'.$name]->getConnection();
+                    $conn = $this['db.'.$name]->getConnection();
                     $handler = new \Core\Session\Handlers\DatabaseSessionHandler();
                     break;
                 case 'redis':
@@ -137,8 +137,11 @@ class Core extends \Pimple\Container
 
             // Execute routing.
             $this->routeRequest();
+        } catch (NotFoundException $e) {
+            $this->notFound();
         } catch (\Exception $e) {
-            
+            $this['Response']->setStatusCode(500);
+            $this['Response']->setBody($e->getMessage());
         }
 
         // Post routing/controller hook.
@@ -228,21 +231,21 @@ class Core extends \Pimple\Container
             }
         } else {
             // If page not found display 404 error.
-            if (isset($this->hooks['not.found'])) {
-                call_user_func($this->hooks['not.found'], $this);
-            } else {
-                $this->defaultNotFound();
-            }
+            $this->notFound();
         }
     }
 
     /**
     * Default handler for 404 error.
     */
-    protected function defaultNotFound()
+    protected function notFound()
     {
-        $this['Response']->setStatusCode(404);
-        $this['Response']->setBody('<h1>404 Not Found</h1>The page that you have requested could not be found.');
+        if (isset($this->hooks['not.found'])) {
+            call_user_func($this->hooks['not.found'], $this);
+        } else {
+            $this['Response']->setStatusCode(404);
+            $this['Response']->setBody('<h1>404 Not Found</h1>The page that you have requested could not be found.');
+        }
     }
 
     /**

@@ -1,64 +1,13 @@
 <?php 
 namespace Core\Database;
 
-use \Core\Database\Connections\PDOConnection as PDOConn;
-
 /**
 * Basic database class used for common CRUD operations.
 *
 * @author Milos Kajnaco <miloskajnaco@gmail.com>
 */
-class Database
+class Database extends AbstractDatabase
 {
-    /**
-     * Database connection.
-     *
-     * @var object \PDO
-     */
-    protected $connection = null;
-
-	/**
-	* Class constructor.
-	*
-    * @var object \PDO
-	*/
-    public function __construct(\PDO $PDOConn)
-    {
-        $this->connection = $PDOConn;
-    }
-
-    /**
-     * Set connection variable.
-     *
-     * @var object \PDO
-     */
-    public function setConnection(\PDO $PDOConn)
-    {
-        $this->connection = $PDOConn;
-    }
-
-    /**
-     * Get connection variable.
-     *
-     * @return object \PDO
-     */
-    public function getConnection()
-    {
-        return $this->connection;
-    }
-
-    /**
-    * Sets PDO attribute.
-    *
-    * @param int
-    * @param mixed (attribute value)
-    * @return bool
-    */
-    public function setAttribute($attr, $value)
-    {
-    	$this->connection->setAttribute($attr, $value);
-    }
-
     /**
     * Begin database transaction.
     */

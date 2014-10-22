@@ -8,7 +8,6 @@ namespace Core\Database\Connections;
 */
 abstract class PDOConnection
 {
-
     /**
      * @var \PDO::ATTR_DEFAULT_FETCH_MODE
      */

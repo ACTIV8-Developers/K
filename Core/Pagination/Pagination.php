@@ -4,8 +4,8 @@ namespace Core\Libraries\Pagination;
 /**
 * Pagination class.
 *
-* @author <miloskajnaco@gmail.com>
 * @author <ndelevic@ymail.com>
+* @author <miloskajnaco@gmail.com>
 */
 class Pagination
 {
@@ -63,7 +63,7 @@ class Pagination
             }
         }
 
-        if ($this->extraParams!='') {
+        if ($this->extraParams !== '') {
             $this->extraParams = '/'.$this->extraParams;
         }
     }
@@ -79,16 +79,17 @@ class Pagination
         $num_pages = ceil($this->totalRows / $this->perPage);
 
         // If there is only one page make no links
-        if ($num_pages == 1 || $this->totalRows==0) {
+        if ($num_pages === 1 || $this->totalRows === 0) {
             return '';
         }
+
         $display_offset = (int) ($this->numLinks/2);//precalculate display offset according to numLinks
         $r.='<div class="" id="pagination"><ul class="pagination">';//set opening tags
         $r.='<li class="'.$this->liClass.'" id="1"><a href="'.$this->baseUrl.'/0/'.$this->perPage.$this->extraParams.'">&laquo</a></li>';//set go to first tag
 
         $start = 0;
         $end = $num_pages;
-        if (!($num_pages<=$this->numLinks)) {//if total pages is less than numLinks display all pages at once
+        if (!($num_pages <= $this->numLinks)) {//if total pages is less than numLinks display all pages at once
             $cur_link_number = ($this->curOffset/$this->perPage);
             if (($cur_link_number)<=$display_offset) {//if current link in first set of links
                 $start = 0;
@@ -97,14 +98,14 @@ class Pagination
                 $start = $num_pages-$this->numLinks;
                 $end = $num_pages;
             } else {//if current link in middle set of links
-                $start=$cur_link_number-$display_offset;
-                $end=$cur_link_number+$display_offset+1;
+                $start = $cur_link_number - $display_offset;
+                $end = $cur_link_number + $display_offset + 1;
             }
         }
 
         //create links according to parameters
-        for ($i=$start;$i<$end;$i++) {//create links tags
-            $offset = $i*$this->perPage;//set offset to pass to jquery function
+        for ($i = $start;$i < $end;++$i) {//create links tags
+            $offset = $i * $this->perPage;//set offset to pass to jquery function
             if ($offset != $this->curOffset) $class = ''; else $class=' active';//set current link active
             //add link to result variable
             $r.='<li class="'.$this->liClass.$class.'" id="'.($i+1).'">

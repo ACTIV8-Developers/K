@@ -82,20 +82,10 @@ abstract class Controller extends ContainerAware
 
     /**
     * Display page with not found code.
-    *
-    * @param string
     */
-    protected function notFound($message = 'Not Found', $view = null)
+    protected function notFound()
     {
-        $this->app['Response']->setStatusCode(404);
-        if ($view === null) {
-            $this->app['Response']->setBody($message);
-        } else {
-            ob_start();
-            include APPVIEW.$view.'.php';
-            $this->app['Response']->setBody(ob_get_contents());
-            ob_end_clean();
-        }
+        throw new NotFoundException();
     }
 
     /**
@@ -108,17 +98,6 @@ abstract class Controller extends ContainerAware
     protected function language($lang, $file = 'default')
     {
         return APP.'Languages/'.$lang.'/'.$file.'.php';
-    }
-
-    /**
-    * Get database object.
-    *
-    * @param string
-    * @return object \Core\Database\Database
-    */
-    protected function db($dbName = 'default')
-    {
-        return $this->app['db'.$dbName ];
     }
 
     /**
