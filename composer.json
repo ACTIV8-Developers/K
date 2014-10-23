@@ -23,7 +23,6 @@
     "minimum-stability" : "dev",
     "autoload": {
         "psr-4": {
-            "Core\\": "Core/",
             "Controllers\\": "App/Controllers/",
             "Models\\": "App/Models/"
         }
