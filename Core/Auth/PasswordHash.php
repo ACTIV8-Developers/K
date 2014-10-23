@@ -1,5 +1,5 @@
 <?php
-namespace Core\Libraries\Auth;
+namespace Core\Auth;
 
 /**
  *

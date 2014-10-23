@@ -14,7 +14,7 @@ abstract class Model
     * @param string
     * @return object \Core\Database\Database
     */
-    protected function db($dbName)
+    protected function db($dbName = 'default')
     {
         return Core::getInstance()['db.'.$dbName ];
     }

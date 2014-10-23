@@ -75,7 +75,7 @@ class Core extends \Pimple\Container
 
         // For each needed database create database class closure.
         foreach ($this['config.database'] as $name => $dbConfig) {
-            $this['db'.$name] = function($c) use ($dbConfig) {
+            $this['db.'.$name] = function($c) use ($dbConfig) {
                 $db = null;
                 switch ($dbConfig['driver']) { // Choose connection and create it.
                     case 'mysql':               
@@ -85,7 +85,9 @@ class Core extends \Pimple\Container
                         throw new \InvalidArgumentException('Error! Unsupported database connection type.');
                 }
                 // Inject it into database class.
-                return new Database($db->connect());
+                $database = new Database();
+                $database->setConnection($db->connect());
+                return $database;
             };  
         }
 
@@ -142,6 +144,7 @@ class Core extends \Pimple\Container
         } catch (\Exception $e) {
             $this['Response']->setStatusCode(500);
             $this['Response']->setBody($e->getMessage());
+            throw $e;
         }
 
         // Post routing/controller hook.

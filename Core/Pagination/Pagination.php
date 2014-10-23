@@ -1,5 +1,5 @@
 <?php
-namespace Core\Libraries\Pagination;
+namespace Core\Pagination;
 
 /**
 * Pagination class.

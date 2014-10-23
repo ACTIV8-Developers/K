@@ -1,5 +1,5 @@
 <?php 
-namespace Core\Libraries\Auth;
+namespace Core\Auth;
 
 use \Core\Core\Core;
 
@@ -59,7 +59,7 @@ class Auth
 	*/
 	protected function getDbConnection()
 	{
-		return Core::getInstance()['dbdefault']->getConnection();
+		return Core::getInstance()['db.default']->getConnection();
 	}
 
 	/**
@@ -141,7 +141,7 @@ class Auth
 
 		if ($this->hasher->CheckPassword($password, $result['user_pass'])) {
 			// Clear previous session
-            Core::getInstance()['session']->regenerate();
+            Core::getInstance()['Session']->regenerate();
 			// Write new data to session
             $_SESSION['user']['id'] = $result['user_id'];
 			$_SESSION['user']['logged_'.$this->table] = true;
@@ -191,7 +191,7 @@ class Auth
 	public function isLogged()
 	{
         if (isset($_SESSION['user']['logged_'.$this->table])
-            && $_SESSION['user']['logged_'.$this->table]===true) {
+            && $_SESSION['user']['logged_'.$this->table] === true) {
         	return true;
         }
         return false;
