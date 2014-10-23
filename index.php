@@ -75,12 +75,6 @@ define('PUBLIC_DIR', 'public');
 define('PUBLIC_PATH', __DIR__.'/'.PUBLIC_DIR.'/');
 /*
 |--------------------------------------------------------------------------
-| Set default timezone.
-|--------------------------------------------------------------------------
-*/
-date_default_timezone_set('Europe/Belgrade');
-/*
-|--------------------------------------------------------------------------
 | Register the composer auto loader.
 |--------------------------------------------------------------------------
 | Composer provides a convenient, automatically generated class loader
@@ -88,27 +82,6 @@ date_default_timezone_set('Europe/Belgrade');
 | of classes is done automatically.
 */
 require __DIR__.'/vendor/autoload.php';
-/*
-|--------------------------------------------------------------------------
-| Set error reporting.
-|--------------------------------------------------------------------------
-| Two supported methods native PHP and Whoops error reporting.
-*/
-define('SHOW_ERRORS', true);
-define('USE_WHOOPS', true);
-
-if (SHOW_ERRORS) {
- 	ini_set("display_errors", 1);
-	error_reporting(E_ALL);
-    if (USE_WHOOPS) {
-        $whoops = new Whoops\Run();
-        $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
-        $whoops->register();
-    }
-} else {
-    ini_set('display_errors', 'Off');
-    error_reporting(0);
-}
 /*
 |--------------------------------------------------------------------------
 | Create main Core class.

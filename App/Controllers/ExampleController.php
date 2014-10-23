@@ -32,7 +32,7 @@ class ExampleController extends Controller
 	{
     	// Get data from model.
     	$data['content'] = $this->model->getData();
-
+    	
     	// Render view with data and write it to response body.
     	$this->render('ExampleView', $data);
 	}

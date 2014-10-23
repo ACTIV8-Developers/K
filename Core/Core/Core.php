@@ -58,6 +58,23 @@ class Core extends \Pimple\Container
         // Load application configuration.
         $this['config'] = require APP.'Config/Config.php';
 
+        // Set error reporting.
+        if ($this['config']['debug'] === true) {
+            ini_set("display_errors", 1);
+            error_reporting(E_ALL);
+            if ($this['config']['whoops'] === true) {
+                $whoops = new \Whoops\Run();
+                $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
+                $whoops->register();
+            }
+        } else {
+            ini_set('display_errors', 'Off');
+            error_reporting(0);
+        }
+
+        // Set default timezone.
+        date_default_timezone_set($this['config']['timezone']);
+
         // Create request class closure.
         $this['Request'] = function() {
             return new Request($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
@@ -143,8 +160,10 @@ class Core extends \Pimple\Container
             $this->notFound();
         } catch (\Exception $e) {
             $this['Response']->setStatusCode(500);
-            $this['Response']->setBody($e->getMessage());
-            throw $e;
+            if ($this['config']['debug'] === true) {
+                $this['Response']->setBody($this->printException($e));
+            }
+
         }
 
         // Post routing/controller hook.
@@ -249,6 +268,33 @@ class Core extends \Pimple\Container
             $this['Response']->setStatusCode(404);
             $this['Response']->setBody('<h1>404 Not Found</h1>The page that you have requested could not be found.');
         }
+    }
+
+    /**
+    * Print exception to string.
+    *
+    * @var object \Exception
+    * @return string
+    */
+    protected function printException($e)
+    {
+        $out = '';
+        $out .= '<h2>Error: '.$e->getMessage().'</h2>';
+        $out .= '<h3>#Line: '.$e->getLine().'</h3>';
+        $out .= '<h3>#File: '.$e->getFile().'</h3>';
+        $stack = $e->getTrace();
+
+        foreach ($stack as $s) {
+            $out .= '<ul>';
+            foreach ($s as $msg) {
+                if (is_string($msg)) {
+                    $out .= '<li>'.$msg.'</li>';
+                }
+            }
+            $out .= '</ul>';
+        }
+        
+        return $out;
     }
 
     /**
