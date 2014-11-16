@@ -1,7 +1,6 @@
 <?php
 namespace Controllers;
 
-use \Core\Http\Request;
 use \Core\Core\Controller;
 
 /**
@@ -19,6 +18,7 @@ class ExampleController extends Controller
 	*/
 	public function __construct()
 	{
+		//var_dump($this->get('Request'));
     	// Load model.
     	$this->model = $this->model('ExampleModel');
 	}
@@ -32,19 +32,18 @@ class ExampleController extends Controller
 	{
     	// Get data from model.
     	$data['content'] = $this->model->getData();
-    	
+
     	// Render view with data and write it to response body.
     	$this->render('ExampleView', $data);
 	}
 
 	/**
 	* Example method II.
-	*
-	* @param object \Core\Http\Request
 	*/
-	public function contactAction(Request $request)
+	public function contactAction()
 	{
         // Get request variables.
+        $post = $this->request->post();
         // Do something, call service, go to database, create form, send emails, etc...
 
     	// Get data from model.
