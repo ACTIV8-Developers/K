@@ -11,7 +11,7 @@
     "type": "project",
     "require":{
         "php": ">=5.4.0",
-        "k/core": "dev-master"
+        "kajna/core": "dev-master"
     },
     "suggest": {
         "predis/predis": "Redis client",

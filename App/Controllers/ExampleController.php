@@ -18,7 +18,6 @@ class ExampleController extends Controller
 	*/
 	public function __construct()
 	{
-		//var_dump($this->get('Request'));
     	// Load model.
     	$this->model = $this->model('ExampleModel');
 	}
@@ -42,7 +41,7 @@ class ExampleController extends Controller
 	*/
 	public function contactAction()
 	{
-        // Get request variables.
+        // Get post request variables.
         $post = $this->request->post();
         // Do something, call service, go to database, create form, send emails, etc...
 
