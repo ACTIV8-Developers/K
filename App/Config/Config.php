@@ -82,5 +82,14 @@ return [
 | Display benchmarking.
 |--------------------------------------------------------------------------
 */
-'benchmark' => true
+'benchmark' => true,
+/*
+|--------------------------------------------------------------------------
+| Service providers.
+|--------------------------------------------------------------------------
+*/
+'services' => [
+    '\Core\Auth\AuthServiceProvider',
+    '\Core\Redis\RedisServiceProvider'
+    ]
 ];

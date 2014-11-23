@@ -1,5 +1,5 @@
 {
-    "name": "k/app",
+    "name": "kajna/app",
     "description": "Simple and Lightweight but powerfull MVC framework",
     "authors": [
         {
@@ -12,13 +12,6 @@
     "require":{
         "php": ">=5.4.0",
         "kajna/core": "dev-master"
-    },
-    "suggest": {
-        "predis/predis": "Redis client",
-        "monolog/monolog": "Allows more advanced logging of the application flow",
-        "swiftmailer/swiftmailer": "Great mailer library",
-        "codeguy/upload": "Handle file uploads with extensible validation and storage strategies",
-        "gregwar/image": "Image handling"
     },
     "minimum-stability" : "dev",
     "autoload": {
