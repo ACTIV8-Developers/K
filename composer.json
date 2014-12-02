@@ -11,7 +11,7 @@
     "type": "project",
     "require":{
         "php": ">=5.4.0",
-        "kajna/core": "dev-master"
+        "kajna/core": "dev-master#74583cf5dbbb78df176fcb7c97f19037db1e283c"
     },
     "minimum-stability" : "dev",
     "autoload": {

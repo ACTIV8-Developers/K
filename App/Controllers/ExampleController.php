@@ -18,8 +18,12 @@ class ExampleController extends Controller
 	*/
 	public function __construct()
 	{
-    	// Load model.
-    	$this->model = $this->model('ExampleModel');
+    		// Load model.
+    		$this->model = new \Models\ExampleModel();
+		// Also model can be registered in container
+		$this->app['model'] = function() {
+			return new \Models\ExampleModel();
+		};
 	}
 
 	/**
@@ -29,26 +33,33 @@ class ExampleController extends Controller
 	*/
 	public function indexAction()
 	{
-    	// Get data from model.
-    	$data['content'] = $this->model->getData();
+    		// Get data from model.
+    		$data['content'] = $this->model->getData();
 
-    	// Render view with data and write it to response body.
-    	$this->render('ExampleView', $data);
+    		// Render view with data and write it to response body.
+    		$this->render('ExampleView', $data);
 	}
 
 	/**
 	* Example method II.
+	*
+	* @param object \Core\Http\Request
 	*/
 	public function contactAction()
 	{
-        // Get post request variables.
-        $post = $this->request->post();
-        // Do something, call service, go to database, create form, send emails, etc...
+        		// Get request variables.
+        		$post = $this->request->post->all();
+		$get = $this->request->get->all();
+		// Or shortcut version
+        		$post = $this->post();
+		$get = $this->get();
 
-    	// Get data from model.
-    	$data['content'] = 'Contact me at miloskajnaco@gmail.com';
+        		// Do something, call service, go to database, create form, send emails, etc...
+    		
+		// Get data from model.
+    		$data['content'] = 'Contact me at miloskajnaco@gmail.com';
 
-        // Render method will buffer view and write it to Response class for final output.
-    	$this->render('ExampleView', $data);
+        		// Render method will buffer view and write it to Response class for final 		// output.
+    		$this->render('ExampleView', $data);
 	}
 }
