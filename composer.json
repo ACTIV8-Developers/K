@@ -11,14 +11,7 @@
     "type": "project",
     "require":{
         "php": ">=5.4.0",
-        "kajna/core": "dev-master"
-    },
-    "suggest": {
-        "predis/predis": "Redis client",
-        "monolog/monolog": "Allows more advanced logging of the application flow",
-        "swiftmailer/swiftmailer": "Great mailer library",
-        "codeguy/upload": "Handle file uploads with extensible validation and storage strategies",
-        "gregwar/image": "Image handling"
+        "kajna/core": "dev-master#74583cf5dbbb78df176fcb7c97f19037db1e283c"
     },
     "minimum-stability" : "dev",
     "autoload": {
