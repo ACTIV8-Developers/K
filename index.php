@@ -84,6 +84,13 @@ define('PUBLIC_PATH', __DIR__.'/'.PUBLIC_DIR.'/');
 require __DIR__.'/vendor/autoload.php';
 /*
 |--------------------------------------------------------------------------
+| Register aliases auto loader.
+|--------------------------------------------------------------------------
+| Additional auto loader for prettier class names.
+*/
+\Core\Util\AliasLoader::getInstance(require(APP.'Config/Aliases.php'))->register();
+/*
+|--------------------------------------------------------------------------
 | Create main Core class.
 |--------------------------------------------------------------------------
 | Load core class and load all dependencies.
