@@ -2,7 +2,7 @@ K
 =
 [![Build Status](https://travis-ci.org/Kajna/K-Core.svg)](https://travis-ci.org/Kajna/K-Core)
 
-Simple solution for full featured MVC framework.
+Simple and lightweight yet powerfull MVC framework
 > *Everything should be made as simple as possible, but not simpler* 
 **Albert Einstein**
 
@@ -37,7 +37,7 @@ try_files $uri $uri/ /index.php?$args;
 This assumes that index.php is in the root folder of your project (www root).
 Documentation
 =
-Work in progress. Coming soon :)
+Documentation can be found [here](https://kframework.co/documentation)
 Author
 =
 Author of framework is Milos Kajnaco 
