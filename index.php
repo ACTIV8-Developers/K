@@ -25,7 +25,7 @@
 | THE SOFTWARE.
 |
 | @author Milos Kajnaco <miloskajnaco@gmail.com>
-| @link http://kframework.info/
+| @link http://kframework.co/
 | @version 1.3
 */
 /*
