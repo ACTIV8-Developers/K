@@ -22,6 +22,7 @@ return [
 	| however, it can be retrieved in other formats.
 	|
 	|	PDO::FETCH_ASSOC: Returns an array.
+	|	PDO::FETCH_NUM: Return indexed array.
 	|	PDO::FETCH_BOTH: Returns an array, indexed by both column-name, 
 	|	and 0-indexed.
 	|	PDO::FETCH_BOUND: Returns TRUE and assigns the values of the columns 
@@ -57,7 +58,7 @@ return [
 	| General settings
 	*/
 	'host'      => 'localhost',
-	'database'  => 'test_db',
+	'database'  => 'k_db',
 	'username'  => 'root',
 	'password'  => '',
 	'charset'   => 'utf8',

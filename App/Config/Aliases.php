@@ -1,7 +1,7 @@
 <?php
 /*
 | -------------------------------------------------------------------
-| Class aliases for easier use and cleaner code.
+| Class aliases for easier use and cleaner code
 | -------------------------------------------------------------------
 */
 return [

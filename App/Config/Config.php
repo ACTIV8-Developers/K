@@ -7,19 +7,19 @@
 return [
 /*
 |--------------------------------------------------------------------------
-| Debug mode
+| Debug mode (will display errors and exceptions)
 |--------------------------------------------------------------------------
 */
 'debug' => true,
 /*
 |--------------------------------------------------------------------------
-| Use whoops for debuging
+| Use whoops for error and exception handling
 |--------------------------------------------------------------------------
 */
 'whoops' => true,
 /*
 |--------------------------------------------------------------------------
-| Default timezone
+| Default timezone (delete if already set in PHP configuration)
 |--------------------------------------------------------------------------
 */
 'timezone' => 'Europe/Belgrade',
@@ -57,7 +57,7 @@ return [
     'matchUserAgent' => true,
     // Hashing algorithm used for creating security tokens.
     'hashAlgo' => 'md5',
-    // Session regeneration frequency (0 to turn off).
+    // Session regeneration frequency (number between 0 and 100, 0 to turn off).
     'updateFrequency' => 10
     ],
 /*
@@ -79,7 +79,7 @@ return [
 'key' => 'super_secret',
 /*
 |--------------------------------------------------------------------------
-| Display benchmarking.
+| Append benchmark results at end as HTML comment
 |--------------------------------------------------------------------------
 */
 'benchmark' => true,
