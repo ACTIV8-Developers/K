@@ -1,6 +1,8 @@
 {
     "name": "kajna/app",
-    "description": "Simple and Lightweight but powerfull PHP framework",
+    "description": "Simple and Lightweight yet powerful PHP framework",
+    "keywords": ["framework", "k", "PHP", "lightweight", "simple", "router"],
+    "homepage": "http://kframework.co",
     "authors": [
         {
         "name": "Milos Kajnaco",
