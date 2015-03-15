@@ -9,19 +9,11 @@ use Core\Core\Controller;
 class ExampleController extends Controller
 {
 	/**
-	 * @var object \Models\ExampleModel
-	 */
-	protected $model;
-
-	/**
 	 * Class constructor.
 	 */
 	public function __construct()
 	{
-		// Load model.
-		$this->model = new \Models\ExampleModel();
-
-		// Also model can be registered in container
+		// Registered object in container
 		$this->app['model'] = function() {
 			return new \Models\ExampleModel();
 		};
@@ -54,7 +46,7 @@ class ExampleController extends Controller
 
 		// Do something, call service, go to database, create form, send emails, etc...
     		
-		// Get data from model.
+		// Get data
 		$data['content'] = 'Contact me at milos@caenazzo.com';
 
 		// Render method will buffer view and write it to Response class for final output

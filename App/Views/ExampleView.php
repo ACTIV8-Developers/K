@@ -94,13 +94,15 @@
 
                 <p>This assumes that index.php is in the root folder of your project (www root).</p>
 
-                <h2>
-                Documentation</h2>
+                <h2>Documentation</h2>
 
-                <p><a href="">Click here</a></p>
+                <p><a href="http://kframework.co/documentation">Click here</a></p>
 
-                <h2>
-                Author</h2>
+                <h2>Api</h2>
+
+                <p><a href="http://kframework.co/api">Click here</a></p>
+
+                <h2>Author</h2>
 
                 <p>Author of framework is Milos Kajnaco 
                 <a href="mailto:milos@caenazzo.com">milos@caenazzo.com</a></p>
