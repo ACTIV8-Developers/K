@@ -89,7 +89,6 @@ return [
 |--------------------------------------------------------------------------
 */
 'services' => [
-    '\Core\Auth\AuthServiceProvider',
-    '\Core\Redis\RedisServiceProvider'
+    '\Core\Auth\AuthServiceProvider'
     ]
 ];
