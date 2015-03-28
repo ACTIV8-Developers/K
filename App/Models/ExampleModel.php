@@ -11,6 +11,6 @@ class ExampleModel extends Model
 	public function getData()
 	{
 		// Return mock value (usually there is a database call here)
-		return 'Simple and Lightweight yet powerfull MVC framework';
+		return 'Simple and lightweight yet powerfull PHP framework';
 	}
 }

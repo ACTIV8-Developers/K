@@ -1,6 +1,6 @@
 {
     "name": "kajna/app",
-    "description": "Simple and Lightweight but powerfull MVC framework",
+    "description": "Simple and lightweight but powerfull MVC framework",
     "authors": [
         {
         "name": "Milos Kajnaco",
@@ -11,7 +11,7 @@
     "type": "project",
     "require":{
         "php": ">=5.4.0",
-        "kajna/core": "dev-master#daab312a728521bdb514407f6f0feae6d0d448cb"
+        "kajna/core": "dev-master#9cca729b4f107ae8c1bb27ec77c5904ad9f71728"
     },
     "minimum-stability" : "dev",
     "autoload": {

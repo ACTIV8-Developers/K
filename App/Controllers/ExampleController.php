@@ -9,20 +9,12 @@ use Core\Core\Controller;
 class ExampleController extends Controller
 {
 	/**
-	 * @var object \Models\ExampleModel
-	 */
-	protected $model;
-
-	/**
 	 * Class constructor.
 	 */
 	public function __construct()
 	{
-		// Load model.
-		$this->model = new \Models\ExampleModel();
-
-		// Also model can be registered in container
-		$this->app['model'] = function() {
+		// Register model in container
+		$this->container['model'] = function() {
 			return new \Models\ExampleModel();
 		};
 	}
