@@ -13,8 +13,8 @@ class ExampleController extends Controller
 	 */
 	public function __construct()
 	{
-		// Register model in container
-		$this->container['model'] = function() {
+		// Registered object in container
+		$this->app['model'] = function() {
 			return new \Models\ExampleModel();
 		};
 	}
@@ -46,7 +46,7 @@ class ExampleController extends Controller
 
 		// Do something, call service, go to database, create form, send emails, etc...
     		
-		// Get data from model.
+		// Get data
 		$data['content'] = 'Contact me at milos@caenazzo.com';
 
 		// Render method will buffer view and write it to Response class for final output
