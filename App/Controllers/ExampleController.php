@@ -14,7 +14,7 @@ class ExampleController extends Controller
 	public function __construct()
 	{
 		// Registered object in container
-		$this->container['model'] = function() {
+		$this->app['model'] = function() {
 			return new \Models\ExampleModel();
 		};
 	}

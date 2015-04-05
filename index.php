@@ -27,83 +27,62 @@
 | @author Milos Kajnaco <milos@caenazzo.com>
 | @link http://kframework.co/
 */
-/*
-|--------------------------------------------------------------------------
-| Set application path
-|--------------------------------------------------------------------------
-*/
-define('APP', __DIR__.'/App');
-/*
-|--------------------------------------------------------------------------
-| Set name of directory and namespace where controllers are stored
-|--------------------------------------------------------------------------
-| This needs to match structure defined in composer.json file, usually
-| controllers are stored in App/Controllers.
-*/
-define('CONTROLERS', 'Controllers');
-/*
-|--------------------------------------------------------------------------
-| Set name of directory and namespace where models are stored
-|--------------------------------------------------------------------------
-| This needs to match structure defined in composer.json file.
-*/
-define('MODELS', 'Models');
-/*
-|--------------------------------------------------------------------------
-| Set path to directory where views are stored
-|--------------------------------------------------------------------------
-*/
-define('APPVIEW', APP.'/Views/');
-/*
-|--------------------------------------------------------------------------
-| Set path to file containing routes
-|--------------------------------------------------------------------------
-*/
-define('ROUTES', APP.'/routes.php');
-/*
-|--------------------------------------------------------------------------
-| Set name of the public/web directory
-|--------------------------------------------------------------------------
-*/
-define('PUBLIC_DIR', 'public');
-/*
-|--------------------------------------------------------------------------
-| Set path to the public/web directory
-|--------------------------------------------------------------------------
-*/
-define('PUBLIC_PATH', __DIR__.'/'.PUBLIC_DIR.'/');
+use Core\Core\Core;
+use Core\Core\Controller;
+use Core\Util\Util;
+use Core\Util\AliasLoader;
 /*
 |--------------------------------------------------------------------------
 | Register the composer auto loader
 |--------------------------------------------------------------------------
-| Composer provides a convenient, automatically generated class loader
-| for application. Require it into the script here so that the loading
-| of classes is done automatically.
 */
 require __DIR__.'/vendor/autoload.php';
 /*
 |--------------------------------------------------------------------------
-| Register aliases auto loader
+| Register aliases auto loader.
 |--------------------------------------------------------------------------
 | Additional auto loader for prettier class names.
 */
-Core\Util\AliasLoader::getInstance(require(APP.'/Config/Aliases.php'))->register();
+AliasLoader::getInstance(require(__DIR__.'/App/Config/Aliases.php'))->register();
 /*
 |--------------------------------------------------------------------------
-| Create main Core class
-|--------------------------------------------------------------------------
-| Load core class and load all dependencies.
-*/
-$app = Core\Core\Core::getInstance();
-/*
-|--------------------------------------------------------------------------
-| Include hooks.
+| Set path to directory where views are stored.
 |--------------------------------------------------------------------------
 */
-include APP.'/Hooks/Hooks.php';
+Controller::$viewPath = __DIR__. '/App/Views/';
 /*
 |--------------------------------------------------------------------------
-| Start request process lifecycle.
+| Set name of the public directory.
+|--------------------------------------------------------------------------
+*/
+Util::$publicPath = 'public';
+/*
+|--------------------------------------------------------------------------
+| Create main application class
+|--------------------------------------------------------------------------
+*/
+$app = Core::getInstance(__DIR__.'/App');
+/*
+|--------------------------------------------------------------------------
+| Add pre boot hook
+|--------------------------------------------------------------------------
+*/
+$app->setHook('before.boot', ['Hooks\PreBootHook', 'execute']);
+/*
+|--------------------------------------------------------------------------
+| Boot appplication
+|--------------------------------------------------------------------------
+*/
+$app->boot();
+/*
+|--------------------------------------------------------------------------
+| Start application routing process
 |-------------------------------------------------------------------------- 
 */
 $app->run();
+/*
+|--------------------------------------------------------------------------
+| Send application response
+|-------------------------------------------------------------------------- 
+*/
+$app->sendResponse();

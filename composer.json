@@ -1,12 +1,8 @@
 {
     "name": "kajna/app",
-<<<<<<< HEAD
-    "description": "Simple and lightweight but powerfull MVC framework",
-=======
     "description": "Simple and Lightweight yet powerful PHP framework",
     "keywords": ["framework", "k", "PHP", "lightweight", "simple", "router"],
     "homepage": "http://kframework.co",
->>>>>>> 6b7e4fe335b754d097306909c0ef95d31bcb54f8
     "authors": [
         {
         "name": "Milos Kajnaco",
@@ -17,15 +13,14 @@
     "type": "project",
     "require":{
         "php": ">=5.4.0",
-<<<<<<< HEAD
-        "kajna/core": "dev-master#9cca729b4f107ae8c1bb27ec77c5904ad9f71728"
-=======
-        "kajna/core": "dev-master#7cdf0cb08c048f34ab699e1c76f27c96205a3b4a"
->>>>>>> 6b7e4fe335b754d097306909c0ef95d31bcb54f8
+        "filp/whoops": "1.2.*@dev",
+        "kajna/core": "dev-master#1881171bcd0a843729bf05027e06a13f496ed323"
     },
     "minimum-stability" : "dev",
     "autoload": {
         "psr-4": {
+            "Middleware\\": "App/Middleware/",
+            "Hooks\\": "App/Hooks/",
             "Controllers\\": "App/Controllers/",
             "Models\\": "App/Models/"
         }
