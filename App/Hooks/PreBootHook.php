@@ -1,5 +1,5 @@
 <?php
-namespace Hooks;
+namespace App\Hooks;
 
 use Whoops\Run;
 use Whoops\Handler\PrettyPageHandler;

@@ -25,49 +25,53 @@
 | THE SOFTWARE.
 |
 | @author Milos Kajnaco <milos@caenazzo.com>
-| @link http://kframework.co/
+| @link http://kframework.co
 */
 use Core\Core\Core;
-use Core\Core\Controller;
-use Core\Util\Util;
 use Core\Util\AliasLoader;
 /*
 |--------------------------------------------------------------------------
 | Register the composer auto loader
 |--------------------------------------------------------------------------
 */
-require __DIR__.'/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 /*
 |--------------------------------------------------------------------------
 | Register aliases auto loader.
 |--------------------------------------------------------------------------
 | Additional auto loader for prettier class names.
 */
-AliasLoader::getInstance(require(__DIR__.'/App/Config/Aliases.php'))->register();
-/*
-|--------------------------------------------------------------------------
-| Set path to directory where views are stored.
-|--------------------------------------------------------------------------
-*/
-Controller::$viewPath = __DIR__. '/App/Views/';
-/*
-|--------------------------------------------------------------------------
-| Set name of the public directory.
-|--------------------------------------------------------------------------
-*/
-Util::$publicPath = 'public';
+AliasLoader::getInstance(require(__DIR__ . '/App/Config/Aliases.php'))->register();
 /*
 |--------------------------------------------------------------------------
 | Create main application class
 |--------------------------------------------------------------------------
 */
-$app = Core::getInstance(__DIR__.'/App');
+$app = Core::getInstance(__DIR__ . '/App');
 /*
 |--------------------------------------------------------------------------
-| Add pre boot hook
+| Set namespace prefix when calling controllers
 |--------------------------------------------------------------------------
 */
-$app->setHook('before.boot', ['Hooks\PreBootHook', 'execute']);
+$app->setNamespacePrefix('App\Controllers');
+/*
+|--------------------------------------------------------------------------
+| Hooks
+|--------------------------------------------------------------------------
+*/
+$app->setHook('before.boot', 'App\Hooks\PreBootHook');
+/*
+|--------------------------------------------------------------------------
+| Middleware
+|--------------------------------------------------------------------------
+*/
+$app->addMiddleware('App\Middleware\SessionMiddleware');
+/*
+|--------------------------------------------------------------------------
+| Services
+|--------------------------------------------------------------------------
+*/
+require __DIR__ . '/App/Config/Services.php';
 /*
 |--------------------------------------------------------------------------
 | Boot appplication
@@ -76,10 +80,10 @@ $app->setHook('before.boot', ['Hooks\PreBootHook', 'execute']);
 $app->boot();
 /*
 |--------------------------------------------------------------------------
-| Start application routing process
+| Execute application
 |-------------------------------------------------------------------------- 
 */
-$app->run();
+$app->execute();
 /*
 |--------------------------------------------------------------------------
 | Send application response

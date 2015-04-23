@@ -1,10 +1,12 @@
 <?php
-namespace Middleware;
+namespace App\Middleware;
 
-class SessionMiddleware
+use Core\Container\ContainerProvider;
+
+class SessionMiddleware extends ContainerProvider
 {
 	public function execute()
 	{
-	
+		$this->session->start();
 	}
 }

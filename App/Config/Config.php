@@ -7,31 +7,6 @@
 return [
 /*
 |--------------------------------------------------------------------------
-| Debug mode (will display errors and exceptions)
-|--------------------------------------------------------------------------
-*/
-'debug' => true,
-/*
-|--------------------------------------------------------------------------
-| Use whoops for error and exception handling
-|--------------------------------------------------------------------------
-*/
-'whoops' => true,
-/*
-|--------------------------------------------------------------------------
-| Default timezone (delete if already set in PHP configuration)
-|--------------------------------------------------------------------------
-*/
-'timezone' => 'Europe/Belgrade',
-/*
-|--------------------------------------------------------------------------
-| Start session
-|--------------------------------------------------------------------------
-| Automatic session start on every request.
-*/
-'sessionStart' => false,
-/*
-|--------------------------------------------------------------------------
 | Session handler
 |--------------------------------------------------------------------------
 | Currently supported redis, database, encrypted-file, file (native PHP sessions).
@@ -52,7 +27,7 @@ return [
     // Session table name (needed only if handler is database).
     'tableName' => 'sessions',
     // Session Lifetime.
-    'expiration' => 7200,
+    'expiration' => 0,
     // Match user agents on session requests.
     'matchUserAgent' => true,
     // Hashing algorithm used for creating security tokens.
@@ -76,27 +51,5 @@ return [
 |--------------------------------------------------------------------------
 | Encryption key is needed for use in some classes.
 */
-'key' => 'super_secret',
-/*
-|--------------------------------------------------------------------------
-| Append benchmark results at end as HTML comment
-|--------------------------------------------------------------------------
-*/
-'benchmark' => true,
-/*
-|--------------------------------------------------------------------------
-| Middlewares
-|--------------------------------------------------------------------------
-*/
-'middleware' => [
-    ['Middleware\SessionMiddleware', 'execute']
-],
-/*
-|--------------------------------------------------------------------------
-| Service providers.
-|--------------------------------------------------------------------------
-*/
-'services' => [
-    '\Core\Auth\AuthServiceProvider'
-    ]
+'key' => 'super_secret'
 ];

@@ -1,5 +1,5 @@
 <?php
-namespace Controllers;
+namespace App\Controllers;
 
 use Core\Core\Controller;
 
@@ -13,9 +13,9 @@ class ExampleController extends Controller
 	 */
 	public function __construct()
 	{
-		// Registered object in container
+		// Register object in container
 		$this->app['model'] = function() {
-			return new \Models\ExampleModel();
+			return new \App\Models\ExampleModel();
 		};
 	}
 

@@ -14,15 +14,12 @@
     "require":{
         "php": ">=5.4.0",
         "filp/whoops": "1.2.*@dev",
-        "kajna/core": "dev-master#1881171bcd0a843729bf05027e06a13f496ed323"
+        "kajna/core": "dev-master#08a417138dd6f5c7216cb2f3c59c0dd23d4e8089"
     },
     "minimum-stability" : "dev",
     "autoload": {
         "psr-4": {
-            "Middleware\\": "App/Middleware/",
-            "Hooks\\": "App/Hooks/",
-            "Controllers\\": "App/Controllers/",
-            "Models\\": "App/Models/"
+            "App\\": "App/"
         }
     }
 }
