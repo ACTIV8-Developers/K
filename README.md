@@ -11,9 +11,12 @@ Simple and lightweight yet powerfull PHP framework
 Getting started
 =
 ###Install
-K requires PHP **>=5.4** and [Composer](https://getcomposer.org/) to run.
+K requires PHP version **>=5.4** and it uses [Composer](https://getcomposer.org/) to manage it's dependencies. So, before using K, you will need to make sure you have Composer installed on your machine
 
-To install K download and extract files in working directory then run *composer update* command.
+To install K using composer run folowing command:
+```
+composer create-project kajna/k-framework --prefer-dist
+```
 
 ###Setup web server
 ####Apache
@@ -43,7 +46,7 @@ Documentation can be found [here](https://kframework.co/documentation)
 Author
 =
 Author of framework is Milos Kajnaco 
-miloskajnaco@gmail.com
+milosk@caenazzo.com
 Licence
 =
 The K Framework is released under the [MIT](http://opensource.org/licenses/MIT) public license.
