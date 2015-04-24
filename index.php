@@ -44,16 +44,10 @@ require __DIR__ . '/vendor/autoload.php';
 AliasLoader::getInstance(require(__DIR__ . '/App/Config/Aliases.php'))->register();
 /*
 |--------------------------------------------------------------------------
-| Create main application class
+| Create core application class instance
 |--------------------------------------------------------------------------
 */
-$app = Core::getInstance(__DIR__ . '/App');
-/*
-|--------------------------------------------------------------------------
-| Set namespace prefix when calling controllers
-|--------------------------------------------------------------------------
-*/
-$app->setNamespacePrefix('App\Controllers');
+$app = Core::getInstance(__DIR__ . '/App')->setNamespacePrefix('App\Controllers');
 /*
 |--------------------------------------------------------------------------
 | Hooks
@@ -71,7 +65,9 @@ $app->addMiddleware('App\Middleware\SessionMiddleware');
 | Services
 |--------------------------------------------------------------------------
 */
-require __DIR__ . '/App/Config/Services.php';
+$app->addService('Core\Auth\AuthServiceProvider')
+	->addService('Core\Session\SessionServiceProvider')
+	->addService('Core\Database\DatabaseServiceProvider');
 /*
 |--------------------------------------------------------------------------
 | Boot appplication
