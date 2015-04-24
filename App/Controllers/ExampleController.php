@@ -4,31 +4,25 @@ namespace App\Controllers;
 use Core\Core\Controller;
 
 /**
-* Example controller class.
-*/
+ * Example controller class.
+ */
 class ExampleController extends Controller
 {
-	/**
-	 * Class constructor.
-	 */
-	public function __construct()
-	{
-		// Register object in container
-		$this->app['model'] = function() {
-			return new \App\Models\ExampleModel();
-		};
-	}
-
 	/**
 	 * Example method I.
 	 */
 	public function indexAction()
 	{
+		// Register model object in container
+		$this->app['model'] = function($c) {
+			return (new \App\Models\ExampleModel())->setApp($c);
+		};
+
 		// Get data from model.
 		$data['content'] = $this->model->getData();
 
 		// Render view with data and write it to response body.
-		$this->render('ExampleView', $data);
+		$this->render('ExampleView', $data);	
 	}
 
 	/**
@@ -37,12 +31,12 @@ class ExampleController extends Controller
 	public function contactAction()
 	{
 		// Get request variables from Request object
-		$post = $this->request->post->all();
 		$get = $this->request->get->all();
-
+		$post = $this->request->post->all();
+		
 		// Or use shortcut versions
-		$post = $this->post();
 		$get = $this->get();
+		$post = $this->post();
 
 		// Do something, call service, go to database, create form, send emails, etc...
     		

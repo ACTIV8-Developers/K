@@ -53,7 +53,8 @@ $app = Core::getInstance(__DIR__ . '/App')->setNamespacePrefix('App\Controllers'
 | Hooks
 |--------------------------------------------------------------------------
 */
-$app->setHook('before.boot', 'App\Hooks\PreBootHook');
+$app->setHook('before.boot', 'App\Hooks\PreBootHook')
+	->setHook('internal.error', 'App\Hooks\InternalErrorHook');
 /*
 |--------------------------------------------------------------------------
 | Middleware

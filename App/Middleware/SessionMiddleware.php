@@ -1,9 +1,9 @@
 <?php
 namespace App\Middleware;
 
-use Core\Container\ContainerProvider;
+use Core\Container\ContainerAware;
 
-class SessionMiddleware extends ContainerProvider
+class SessionMiddleware extends ContainerAware
 {
 	public function execute()
 	{
