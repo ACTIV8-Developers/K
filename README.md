@@ -1,6 +1,6 @@
 K
 =
-[![Build Status](https://travis-ci.org/Kajna/K-Core.svg)](https://travis-ci.org/Kajna/K-Core)
+[![Build Status](https://travis-ci.org/Kajna/K-Core.svg)](https://travis-ci.org/Kajna/K-Core)  [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
 Simple and lightweight yet powerfull PHP framework
 > *Everything should be made as simple as possible, but not simpler* 
