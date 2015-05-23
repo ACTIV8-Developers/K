@@ -68,7 +68,12 @@
 
                 <p>K requires PHP <strong>&gt;=5.4</strong> and <a href="https://getcomposer.org/">Composer</a> dependency manager to run.</p>
 
-                <p>To install K <a href="https://github.com/Kajna/K/archive/master.zip" target="_blank"><strong>download</strong></a> and extract files in working directory then run composer <em>install</em> command.</p>
+                <p>So, before using K, you will need to make sure you have Composer installed on your machine</p>
+
+                <p>To install K using composer run folowing command:</p>
+
+                <pre><code>composer create-project kajna/k-framework --prefer-dist</code>
+                </pre>
 
                 <h3>Setup web server</h3>
 
@@ -100,7 +105,7 @@
 
                 <h2>Api</h2>
 
-                <p><a href="http://kframework.co/api">Click here</a></p>
+                <p><a href="http://kframework.co/api/index.html">Click here</a></p>
 
                 <h2>Author</h2>
 

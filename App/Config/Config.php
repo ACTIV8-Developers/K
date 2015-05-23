@@ -10,7 +10,7 @@ return [
 | Session handler
 |--------------------------------------------------------------------------
 | Currently supported redis, database, encrypted-file, file (native PHP sessions).
-| (Redis requires PredisClient installed, database requires active PDO)
+| (Database requires active PDO)
 */
 'sessionHandler' => 'file',
 /*
@@ -34,16 +34,6 @@ return [
     'hashAlgo' => 'md5',
     // Session regeneration frequency (number between 0 and 100, 0 to turn off).
     'updateFrequency' => 10
-    ],
-/*
-|--------------------------------------------------------------------------
-| Redis configuration.
-|--------------------------------------------------------------------------
-*/
-'redis' => [
-    'scheme' => 'tcp',
-    'host' => '127.0.0.1',
-    'port' => 6379
     ],
 /*
 |--------------------------------------------------------------------------

@@ -21,7 +21,7 @@ class ExampleController extends Controller
 		// Get data from model.
 		$data['content'] = $this->model->getData();
 
-		// Render view with data and write it to response body.
+		// Render method will buffer view and write it to Response class for final output
 		$this->render('ExampleView', $data);	
 	}
 
@@ -39,6 +39,7 @@ class ExampleController extends Controller
 		$post = $this->post();
 
 		// Do something, call service, go to database, create form, send emails, etc...
+    	###############################################################################
     		
 		// Get data
 		$data['content'] = 'Contact me at milos@caenazzo.com';
