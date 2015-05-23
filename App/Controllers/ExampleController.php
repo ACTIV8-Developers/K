@@ -41,7 +41,7 @@ class ExampleController extends Controller
 		// Do something, call service, go to database, create form, send emails, etc...
     	###############################################################################
     		
-		// Get data
+		// Store data for display
 		$data['content'] = 'Contact me at milos@caenazzo.com';
 
 		// Render method will buffer view and write it to Response class for final output
