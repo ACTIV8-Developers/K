@@ -58,7 +58,7 @@ return [
 	| General settings
 	*/
 	'host'      => 'localhost',
-	'database'  => 'k_db',
+	'database'  => 'database_name',
 	'username'  => 'root',
 	'password'  => '',
 	'charset'   => 'utf8',

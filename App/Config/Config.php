@@ -9,8 +9,6 @@ return [
 |--------------------------------------------------------------------------
 | Session handler
 |--------------------------------------------------------------------------
-| Currently supported redis, database, encrypted-file, file (native PHP sessions).
-| (Database requires active PDO)
 */
 'sessionHandler' => 'file',
 /*
