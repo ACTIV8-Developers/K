@@ -44,7 +44,7 @@ try_files $uri $uri/ /index.php?$args;
 This assumes that index.php is in the root folder of your project (www root).
 More info
 =
-More information can be found [here](https://kframework.co)
+More information can be found [here](http://kframework.co)
 Author
 =
 Author of framework is Milos Kajnaco 
