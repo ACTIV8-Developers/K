@@ -48,7 +48,7 @@ More information can be found [here](http://kframework.co)
 Author
 =
 Author of framework is Milos Kajnaco 
-milosk@caenazzo.com
+milos@caenazzo.com
 Licence
 =
 The K Framework is released under the [MIT](http://opensource.org/licenses/MIT) public license.
