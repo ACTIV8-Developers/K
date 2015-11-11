@@ -15,6 +15,6 @@ class InternalErrorHook extends ContainerAware
 	 */
 	public function execute()
 	{
-        $this->app['whoops']->handleException($this->app['exception']);
+        $this->container['whoops']->handleException($this->container['exception']);
 	}
 }

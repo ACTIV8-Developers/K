@@ -14,8 +14,8 @@ class ExampleController extends Controller
 	public function indexAction()
 	{
 		// Register model object in container
-		$this->app['model'] = function($c) {
-			return (new \App\Models\ExampleModel())->setApp($c);
+		$this->container['model'] = function($c) {
+			return (new \App\Models\ExampleModel())->setContainer($c);
 		};
 
 		// Get data from model.

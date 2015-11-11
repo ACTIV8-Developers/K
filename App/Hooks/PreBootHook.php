@@ -20,13 +20,13 @@ class PreBootHook extends ContainerAware
                 ini_set('display_errors', 1);
                 error_reporting(E_ALL);
 
-                $this->app['whoops'] = function() {
+                $this->container['whoops'] = function() {
                     $whoops = new Run();
                     $whoops->pushHandler(new PrettyPageHandler());
                     return $whoops;
                 };
 
-                $this->app['whoops']->register();
+                $this->container['whoops']->register();
 
                 break;
             case 'production':
