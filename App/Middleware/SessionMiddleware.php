@@ -2,6 +2,7 @@
 namespace App\Middleware;
 
 use Core\Container\ContainerAware;
+use Interop\Container\ContainerInterface;
 
 /**
  * Class SessionMiddleware
@@ -9,10 +10,24 @@ use Core\Container\ContainerAware;
 class SessionMiddleware extends ContainerAware
 {
 	/**
-	 * Start session
+	 * Registry constructor.
+	 *
+	 * @param ContainerInterface $container
 	 */
-	public function execute()
+	public function __construct(ContainerInterface $container)
 	{
-		$this->session->start();
+		$this->container = $container;
+	}
+
+	/**
+	 * Start session
+	 * @param callable $next
+	 */
+	public function __invoke($next)
+	{
+		$this->container->get('session')->start();
+
+		// Call next middleware
+		$next();
 	}
 }

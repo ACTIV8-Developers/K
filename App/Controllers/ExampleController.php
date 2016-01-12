@@ -2,9 +2,11 @@
 namespace App\Controllers;
 
 use Core\Core\Controller;
+use App\Models\ExampleModel;
 
 /**
  * Example controller class.
+ * @property ExampleModel $model
  */
 class ExampleController extends Controller
 {
@@ -13,15 +15,10 @@ class ExampleController extends Controller
 	 */
 	public function indexAction()
 	{
-		// Register model object in container
-		$this->container['model'] = function($c) {
-			return (new \App\Models\ExampleModel())->setContainer($c);
-		};
-
 		// Get data from model.
 		$data['content'] = $this->model->getData();
 
-		// Render method will buffer view and write it to Response class for final output
+		// Render method will buffer view with passed data and write it to Response class for final output
 		$this->render('ExampleView', $data);	
 	}
 
@@ -33,10 +30,6 @@ class ExampleController extends Controller
 		// Get request variables from Request object
 		$get = $this->request->get->all();
 		$post = $this->request->post->all();
-		
-		// Or use shortcut versions
-		$get = $this->get();
-		$post = $this->post();
 
 		// Do something, call service, go to database, create form, send emails, etc...
     	###############################################################################
@@ -44,7 +37,7 @@ class ExampleController extends Controller
 		// Store data for display
 		$data['content'] = 'Contact me at milos@caenazzo.com';
 
-		// Render method will buffer view and write it to Response class for final output
+		// Render method will buffer view with passed data and write it to Response class for final output
 		$this->render('ExampleView', $data);
 	}
 }

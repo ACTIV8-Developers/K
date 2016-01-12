@@ -1,8 +1,6 @@
 <?php
 namespace App\Hooks;
 
-use Whoops\Run;
-use Whoops\Handler\PrettyPageHandler;
 use Core\Container\ContainerAware;
 
 /**
@@ -12,9 +10,11 @@ class InternalErrorHook extends ContainerAware
 {
 	/**
 	 * Set whoops to handle application errors
+	 *
+	 * @param \Exception $e
 	 */
-	public function execute()
+	public function __invoke(\Exception $e)
 	{
-        $this->container['whoops']->handleException($this->container['exception']);
+        $this->container['whoops']->handleException($e);
 	}
 }

@@ -70,9 +70,9 @@
 
                 <p>So, before using K, you will need to make sure you have Composer installed on your machine</p>
 
-                <p>To install K using composer run folowing command:</p>
+                <p>To install K using composer run following command:</p>
 
-                <pre><code>composer create-project kajna/k-framework --prefer-dist</code>
+                <pre><code>composer create-project kajna/k-framework projectname --prefer-dist</code>
                 </pre>
 
                 <h3>Setup web server</h3>
