@@ -31,6 +31,9 @@ class ExampleController extends Controller
 		$get = $this->request->get->all();
 		$post = $this->request->post->all();
 
+		// Another way to get container content
+		$request = $this->container->get('request');
+
 		// Do something, call service, go to database, create form, send emails, etc...
     	###############################################################################
     		

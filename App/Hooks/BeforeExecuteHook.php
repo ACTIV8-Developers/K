@@ -8,12 +8,12 @@ use Core\Container\ContainerAware;
  */
 class BeforeExecuteHook extends ContainerAware
 {
-    /**
-     * Set application mode
-     */
+	/**
+	 * Set application mode
+	 */
 	public function __invoke()
 	{
-        // Set default timezone
-        date_default_timezone_set('Europe/Belgrade');
+		// Set default timezone
+		date_default_timezone_set('Europe/Belgrade');
 	}
 }

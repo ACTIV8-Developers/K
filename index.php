@@ -92,15 +92,15 @@ $app = Core::getInstance($container);
 | Hooks
 |--------------------------------------------------------------------------
 */
-$app->setHook('before.boot', (new App\Hooks\BeforeExecuteHook)->setContainer($container))
-	->setHook('internal.error', (new App\Hooks\InternalErrorHook)->setContainer($container));
+$app->setHook('before.boot', (new App\Hooks\BeforeExecuteHook())->setContainer($container))
+	->setHook('internal.error', (new App\Hooks\InternalErrorHook())->setContainer($container));
 /*
 |--------------------------------------------------------------------------
 | Middleware
 |--------------------------------------------------------------------------
 */
 $app->addMiddleware(new App\Middleware\SessionMiddleware($container))
-	->addMiddleware(new \App\Middleware\RegistryMiddleware($container));
+	->addMiddleware(new App\Middleware\RegistryMiddleware($container));
 /*
 |--------------------------------------------------------------------------
 | Execute application
