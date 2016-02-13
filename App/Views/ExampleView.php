@@ -16,9 +16,6 @@
                 width: 960px;
                 margin: 0 auto;
             }
-            .margina-top {
-                margin-top: 50px;
-            }
             .git {
                 position: absolute; 
                 top: -6px; 
@@ -101,11 +98,11 @@
 
                 <h2>Documentation</h2>
 
-                <p><a href="http://kframework.co/documentation">Click here</a></p>
+                <p><a href="http://k-phpframework.com/documentation">Click here</a></p>
 
                 <h2>Api</h2>
 
-                <p><a href="http://kframework.co/api/index.html">Click here</a></p>
+                <p><a href="http://k-phpframework.com/api/index.html">Click here</a></p>
 
                 <h2>Author</h2>
 

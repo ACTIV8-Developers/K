@@ -14,7 +14,7 @@
     "require":{
         "php": ">=5.4.0",
         "filp/whoops": "1.1.10",
-        "kajna/core": "dev-master#df3b69e783c3f84fcf65ab211e5b30fa61340e5f"
+        "kajna/core": "dev-master#59317de03a880ca18cd89d25bb0f79d85b948e8d"
     },
     "minimum-stability" : "dev",
     "autoload": {

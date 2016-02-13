@@ -50,6 +50,6 @@ class RegistryMiddleware extends ContainerAware
         };
 
         // Call next middleware
-        $next();
+        return $next();
     }
 }

@@ -92,8 +92,7 @@ $app = Core::getInstance($container);
 | Hooks
 |--------------------------------------------------------------------------
 */
-$app->setHook('before.boot', (new App\Hooks\BeforeExecuteHook())->setContainer($container))
-	->setHook('internal.error', (new App\Hooks\InternalErrorHook())->setContainer($container));
+$app->setHook('internal.error', (new App\Hooks\InternalErrorHook())->setContainer($container));
 /*
 |--------------------------------------------------------------------------
 | Middleware
@@ -107,9 +106,3 @@ $app->addMiddleware(new App\Middleware\SessionMiddleware($container))
 |-------------------------------------------------------------------------- 
 */
 $app->execute();
-/*
-|--------------------------------------------------------------------------
-| Send application response
-|-------------------------------------------------------------------------- 
-*/
-$app->sendResponse();

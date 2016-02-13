@@ -28,6 +28,6 @@ class SessionMiddleware extends ContainerAware
 		$this->container->get('session')->start();
 
 		// Call next middleware
-		$next();
+		return $next();
 	}
 }
