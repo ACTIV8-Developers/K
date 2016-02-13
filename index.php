@@ -77,6 +77,7 @@ switch (APP_MODE) {
 
 		break;
 	case 'production':
+	default:
 		ini_set('display_errors', 'Off');
 		error_reporting(0);
 		break;
