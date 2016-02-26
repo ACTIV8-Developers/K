@@ -2,7 +2,6 @@
 namespace App\Middleware;
 
 use App\Models\ExampleModel;
-use Core\Auth\AuthServiceProvider;
 use Core\Container\ContainerAware;
 use Core\Database\DatabaseServiceProvider;
 use Core\Session\SessionServiceProvider;
@@ -37,12 +36,6 @@ class RegistryMiddleware extends ContainerAware
         /** @var DatabaseServiceProvider $databaseServiceProvider */
         $databaseServiceProvider = (new DatabaseServiceProvider())->setContainer($this->container);
         $databaseServiceProvider();
-
-        // Register auth service
-        /** @var AuthServiceProvider $authServiceProvider */
-        $authServiceProvider = (new AuthServiceProvider())->setContainer($this->container);
-        $authServiceProvider();
-
 
         // Register model object in container
         $this->container['model'] = function($c) {

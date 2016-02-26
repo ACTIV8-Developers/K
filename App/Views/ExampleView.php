@@ -115,7 +115,6 @@
                 <p>The K Framework is released under the <a href="http://opensource.org/licenses/MIT">MIT</a> public license.</p>
             </article>
             <p class="text-right"><em>K-Core version in use: <?=\Core\Core\Core::VERSION;?></em></p>
-            </div>           
-        </div>       
+        </div>
     </body>
 </html>

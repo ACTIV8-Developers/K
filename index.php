@@ -28,7 +28,6 @@
 | @link http://k-phpframework.com
 */
 use Core\Core\Core;
-use Core\Util\AliasLoader;
 use Core\Container\Container;
 
 use Whoops\Run;
@@ -45,13 +44,6 @@ define('APP_MODE', 'debug');
 |--------------------------------------------------------------------------
 */
 require __DIR__ . '/vendor/autoload.php';
-/*
-|--------------------------------------------------------------------------
-| Register aliases auto loader.
-|--------------------------------------------------------------------------
-| Additional auto loader for prettier class names.
-*/
-AliasLoader::getInstance(require(__DIR__ . '/App/Config/Aliases.php'))->register();
 /*
 |--------------------------------------------------------------------------
 | Create core application class instance
