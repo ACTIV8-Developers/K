@@ -12,36 +12,7 @@ Simple and lightweight yet powerfull PHP framework
 
 Getting started
 =
-###Install
-K requires PHP version **>=5.4** and it uses [Composer](https://getcomposer.org/) to manage it's dependencies. So, before using K, you will need to make sure you have Composer installed on your machine
-
-To install K using composer run folowing command:
-```
-composer create-project kajna/k-framework --prefer-dist
-```
-
-###Setup web server
-####Apache
-
-K uses front end controller pattern so ensure the .htaccess and index.php files are in the same public-accessible directory. The .htaccess file should contain at least this code (K ships with example .htaccess file that can be used):
-```
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /index.php [QSA,L]
-```
-
-Additionally, make sure virtual host is configured with the AllowOverride option so that the .htaccess rewrite rules can be used:
-
-AllowOverride All
-
-####Nginx
-
-The nginx configuration file should contain at least this code in your location block:
-```
-try_files $uri $uri/ /index.php?$args;
-```
-
-This assumes that index.php is in the root folder of your project (www root).
+Good place to start is K's [user guide](http://k-phpframework.com/documentation) page.
 More info
 =
 More information can be found [here](http://k-phpframework.com/)
