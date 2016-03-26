@@ -12,7 +12,7 @@ Simple and lightweight yet powerful PHP framework
 
 Getting started
 =
-Good place to start is K's [user guide](http://k-phpframework.com/documentation) page.
+Good place to start is K's [user guide](http://k-phpframework.com/docs) page.
 More info
 =
 More information can be found [here](http://k-phpframework.com/)

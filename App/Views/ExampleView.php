@@ -18,7 +18,7 @@
             }
             .git {
                 position: absolute; 
-                top: -6px; 
+                top: 0px;
                 right: 0; 
                 border: 0;
             }
@@ -41,9 +41,48 @@
                 position: relative;
                 width: 100%;
             }
+            #menu_logo {
+                display: inline-block;
+                font-size: 28px;
+                font-weight: bold;
+                margin-left: 20px;
+                position: relative;
+                top: 5px;
+            }
+            #menu {
+                height: 50px;
+                background: #f8f8f8;
+                border-bottom: 1px solid #e7e7e7;
+            }
+            #menu ul {
+                padding: 0;
+                margin: 0;
+
+                display: inline-block;
+            }
+            #menu ul li {
+                display: inline-block;
+                padding: 15px 10px;
+            }
+            #menu ul li a,
+            #menu ul li a:active {
+                color: #333;
+            }
+            #menu ul li a:hover {
+                text-decoration: none;
+                color: #2B2B2B;
+            }
         </style>
     </head>
     <body>
+        <div id="menu">
+            <div id="menu_logo">K</div>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/docs">User guide</a></li>
+                <li><a href="/api/index.html">Documentation</a></li>
+            </ul>
+        </div>
         <div id="wrapper">
             <a target="blank" href="https://github.com/Kajna/K"><img class="git" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
             <header class="page-head">
@@ -79,8 +118,8 @@
                 <p>K uses front end controller pattern so ensure the .htaccess and index.php files are in the same public-accessible directory. The .htaccess file should contain at least this code (K ships with example .htaccess file that can be used):</p>
 
                 <pre><code>RewriteEngine On
-                RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteRule ^(.*)$ /index.php [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /index.php [QSA,L]
                 </code></pre>
 
                 <p>Additionally, make sure virtual host is configured with the AllowOverride option so that the .htaccess rewrite rules can be used:</p>
@@ -95,14 +134,6 @@
                 </code></pre>
 
                 <p>This assumes that index.php is in the root folder of your project (www root).</p>
-
-                <h2>Documentation</h2>
-
-                <p><a href="http://k-phpframework.com/documentation">Click here</a></p>
-
-                <h2>Api</h2>
-
-                <p><a href="http://k-phpframework.com/api/index.html">Click here</a></p>
 
                 <h2>Author</h2>
 
