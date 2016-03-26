@@ -1,10 +1,10 @@
 K
 =
 [![Build Status](https://travis-ci.org/Kajna/K-Core.svg)](https://travis-ci.org/Kajna/K-Core)
-[![Version](https://img.shields.io/badge/version-2.0.0-orange.svg)](https://packagist.org/packages/kajna/k-framework)
+[![Version](https://img.shields.io/badge/version-3.0.0-orange.svg)](https://packagist.org/packages/kajna/k-framework)
 [![DUB](https://img.shields.io/dub/l/vibe-d.svg)](http://opensource.org/licenses/MIT)
 
-Simple and lightweight yet powerfull PHP framework
+Simple and lightweight yet powerful PHP framework
 > *Everything should be made as simple as possible, but not simpler* 
 **Albert Einstein**
 
