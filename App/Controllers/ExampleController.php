@@ -11,12 +11,12 @@ use App\Models\ExampleModel;
 class ExampleController extends Controller
 {
 	/**
-	 * Example method I.
+	 * Example method
 	 */
 	public function indexAction()
 	{
 		// Get data from model.
-		$data['content'] = $this->model->getData();
+		$data = $this->model->getData();
 
 		// Render method will buffer view with passed data and write it to Response class for final output
 		return $this->render('ExampleView', $data);

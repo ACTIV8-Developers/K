@@ -89,10 +89,10 @@
                 <h1 class="page-title">Welcome to home of K</h1>
                 <blockquote>
                     <p>
-                        <em>Everything should be made as simple as possible, but not simpler</em> 
+                        <em><?=$quote;?></em>
                      </p>
                      <p class="text-right">
-                        <strong>Albert Einstein</strong>
+                        <strong><?=$author;?></strong>
                     </p>
                 </blockquote>
             </header>

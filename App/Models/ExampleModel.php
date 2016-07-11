@@ -11,6 +11,9 @@ class ExampleModel extends Model
 	public function getData()
 	{
 		// Return mock value (usually there is a database call here)
-		return 'Simple and lightweight yet power full PHP framework';
+		return [
+			'quote' => 'Everything should be made as simple as possible, but not simpler',
+			'author' => 'Albert Einstein'
+			];
 	}
 }
