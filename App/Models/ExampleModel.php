@@ -14,6 +14,6 @@ class ExampleModel extends Model
 		return [
 			'quote' => 'Everything should be made as simple as possible, but not simpler',
 			'author' => 'Albert Einstein'
-			];
+		];
 	}
 }

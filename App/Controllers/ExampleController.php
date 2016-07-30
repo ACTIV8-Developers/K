@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use Core\Core\Controller;
 use App\Models\ExampleModel;
+use Interop\Container\ContainerInterface;
 
 /**
  * Example controller class.
@@ -10,6 +11,16 @@ use App\Models\ExampleModel;
  */
 class ExampleController extends Controller
 {
+	/**
+	 * ExampleController constructor.
+	 *
+	 * @param ContainerInterface $container
+	 */
+	public function __construct(ContainerInterface $container)
+	{
+		$this->container = $container;
+	}
+
 	/**
 	 * Example method
 	 */

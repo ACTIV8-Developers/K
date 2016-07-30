@@ -2,6 +2,7 @@
 namespace App\Middleware;
 
 use App\Models\ExampleModel;
+use App\Controllers\ExampleController;
 use Core\Container\ContainerAware;
 use Core\Database\DatabaseServiceProvider;
 use Core\Session\SessionServiceProvider;
@@ -36,6 +37,11 @@ class RegistryMiddleware extends ContainerAware
         /** @var DatabaseServiceProvider $databaseServiceProvider */
         $databaseServiceProvider = (new DatabaseServiceProvider())->setContainer($this->container);
         $databaseServiceProvider();
+
+        // Register controller object in container
+        $this->container['App\Controllers\ExampleController'] = function($c) {
+            return new ExampleController($c);
+        };
 
         // Register model object in container
         $this->container['model'] = function($c) {

@@ -78,9 +78,9 @@
         <div id="menu">
             <div id="menu_logo">K</div>
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/docs">User guide</a></li>
-                <li><a href="/api/index.html">Documentation</a></li>
+                <li><a href="http://k-phpframework.com/">Home</a></li>
+                <li><a href="http://k-phpframework.com//docs">User guide</a></li>
+                <li><a href="http://k-phpframework.com//api/index.html">Documentation</a></li>
             </ul>
         </div>
         <div id="wrapper">
