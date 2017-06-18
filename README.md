@@ -8,18 +8,17 @@ Simple and lightweight yet powerful PHP framework
 > *Everything should be made as simple as possible, but not simpler* 
 **Albert Einstein**
 
-###This is template app repository, core files can be found [here](https://github.com/Kajna/K-Core)
+This is template app repository, core files can be found [here](https://github.com/Kajna/K-Core)
 
-Getting started
-=
+### Getting started
 Good place to start is K's [user guide](http://k-phpframework.com/docs) page.
-More info
-=
+
+### More info
 More information can be found [here](http://k-phpframework.com/)
-Author
-=
+
+### Author
 Author of framework is Milos Kajnaco 
 milos@caenazzo.com
-Licence
-=
+
+### Licence
 The K Framework is released under the [MIT](http://opensource.org/licenses/MIT) public license.
