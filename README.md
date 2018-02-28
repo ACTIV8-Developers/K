@@ -10,12 +10,6 @@ Simple and lightweight yet powerful PHP framework
 
 This is template app repository, core files can be found [here](https://github.com/Kajna/K-Core)
 
-### Getting started
-Good place to start is K's [user guide](http://k-phpframework.com/docs) page.
-
-### More info
-More information can be found [here](http://k-phpframework.com/)
-
 ### Author
 Author of framework is Milos Kajnaco 
 milos@caenazzo.com
