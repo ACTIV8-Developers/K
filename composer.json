@@ -2,7 +2,7 @@
     "name": "kajna/k-framework",
     "description": "Simple and Lightweight yet powerful PHP framework",
     "keywords": ["framework", "k", "PHP", "lightweight", "simple", "router"],
-    "homepage": "http://k-phpframework.com",
+    "homepage": "http://k.codetest.space.com",
     "authors": [
         {
         "name": "Milos Kajnaco",
@@ -14,7 +14,7 @@
     "require":{
         "php": ">=5.4.0",
         "filp/whoops": "1.1.10",
-        "kajna/core": "3.1.0"
+        "kajna/core": "3.1.1"
     },
     "minimum-stability" : "dev",
     "autoload": {

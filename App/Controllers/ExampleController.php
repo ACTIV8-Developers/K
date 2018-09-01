@@ -1,9 +1,9 @@
 <?php
 namespace App\Controllers;
 
+use Core\Container\Container;
 use Core\Core\Controller;
 use App\Models\ExampleModel;
-use Interop\Container\ContainerInterface;
 
 /**
  * Example controller class.
@@ -14,9 +14,9 @@ class ExampleController extends Controller
 	/**
 	 * ExampleController constructor.
 	 *
-	 * @param ContainerInterface $container
+	 * @param Container $container
 	 */
-	public function __construct(ContainerInterface $container)
+	public function __construct(Container $container)
 	{
 		$this->container = $container;
 	}
