@@ -7,4 +7,6 @@
 | (For controllers prefix App\Controllers\ is added and isn't needed here)
 */
 /** @var \Core\Routing\Router $route */
-$route->get('', 'ExampleController', 'indexAction');
+use App\Controllers\ExampleController;
+
+$route->get('', ExampleController::class, 'indexAction');

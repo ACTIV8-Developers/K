@@ -4,6 +4,7 @@ namespace App\Controllers;
 use Core\Container\Container;
 use Core\Core\Controller;
 use App\Models\ExampleModel;
+use Core\Http\Response;
 
 /**
  * Example controller class.
@@ -22,7 +23,7 @@ class ExampleController extends Controller
 	}
 
 	/**
-	 * Example method
+	 * Example method I
 	 */
 	public function indexAction()
 	{
@@ -32,4 +33,12 @@ class ExampleController extends Controller
 		// Render method will buffer view with passed data and write it to Response class for final output
 		return $this->render('ExampleView', $data);
 	}
+
+    /**
+     * Example method II.
+     */
+    public function testAction()
+    {
+        return (new Response())->setStatusCode(200)->setBody('<div>Hello World</div>');
+    }
 }

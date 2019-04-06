@@ -2,7 +2,7 @@
 namespace App\Middleware;
 
 use Core\Container\ContainerAware;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class SessionMiddleware

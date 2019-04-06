@@ -10,7 +10,7 @@ return [
 	|--------------------------------------------------------------------------
 	| Database driver
 	|--------------------------------------------------------------------------
-	| Current supported types are: mysql
+	| Current supported types are: mysql, mssql
 	*/
 	'driver' => 'mysql',
 	/*

@@ -59,14 +59,6 @@ switch (APP_MODE) {
 	case 'debug':
 		ini_set('display_errors', 1);
 		error_reporting(E_ALL);
-
-		$container['whoops'] = function() {
-			$whoops = new Run();
-			$whoops->pushHandler(new PrettyPageHandler());
-			return $whoops;
-		};
-		$container['whoops']->register();
-
 		break;
 	case 'production':
 	default:
@@ -80,6 +72,12 @@ switch (APP_MODE) {
 |--------------------------------------------------------------------------
 */
 $app = Core::getInstance($container);
+/*
+|--------------------------------------------------------------------------
+| Controllers base prefix
+|--------------------------------------------------------------------------
+*/
+\Core\Routing\Router::$CONTROLLERS_ROOT = '';
 /*
 |--------------------------------------------------------------------------
 | Hooks

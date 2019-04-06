@@ -6,7 +6,7 @@ use App\Controllers\ExampleController;
 use Core\Container\ContainerAware;
 use Core\Database\DatabaseServiceProvider;
 use Core\Session\SessionServiceProvider;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class RegistryMiddleware
