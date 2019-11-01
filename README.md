@@ -1,7 +1,6 @@
 K
 =
-[![Build Status](https://travis-ci.org/Kajna/K-Core.svg)](https://travis-ci.org/Kajna/K-Core)
-[![Version](https://img.shields.io/badge/version-3.2.0-orange.svg)](https://packagist.org/packages/kajna/k-framework)
+[![Version](https://img.shields.io/badge/version-3.2.0-blue.svg)](https://packagist.org/packages/kajna/k-framework)
 [![DUB](https://img.shields.io/dub/l/vibe-d.svg)](http://opensource.org/licenses/MIT)
 
 ## Introduction
@@ -12,7 +11,7 @@ K is simple mini framework, made with simplicity and performance in mind. This i
 
 ### Install
 
-K requires PHP **>=5.4** and [Composer](https://getcomposer.org/) dependency manager to run.
+K requires PHP **>=7.0** and [Composer](https://getcomposer.org/) dependency manager to run.
 
 So, before using K, you will need to make sure you have Composer installed on your machine
 
