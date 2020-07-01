@@ -1,5 +1,5 @@
 {
-    "name": "ACTIV8-Developers/k-php-framework",
+    "name": "activ8-developers/k-php-framework",
     "description": "Simple and Lightweight yet powerful PHP framework",
     "keywords": ["framework", "k", "PHP", "lightweight", "simple", "router"],
     "homepage": "https://github.com/ACTIV8-Developers/K",
@@ -13,7 +13,7 @@
     "type": "project",
     "require":{
         "php": ">=7.0.0",
-        "ACTIV8-Developers/core": "3.5.0"
+        "kajna/core": "3.5.0"
     },
     "minimum-stability" : "dev",
     "autoload": {
