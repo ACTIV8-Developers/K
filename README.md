@@ -5,7 +5,7 @@ K
 
 ## Introduction
 
-K is simple mini framework, made with simplicity and performance in mind. This is template app repository, if you want to explore how internals work or contribute core files can be found [here](https://github.com/Kajna/K-Core)
+K is simple mini framework, made with simplicity and performance in mind. This is template app repository, if you want to explore how internals work or contribute core files can be found [here](https://github.com/ACTIV8-Developers/K-Core)
 
 # Getting started
 
