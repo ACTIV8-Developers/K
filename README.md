@@ -1,6 +1,6 @@
 K
 =
-[![Version](https://img.shields.io/badge/version-3.2.0-blue.svg)](https://packagist.org/packages/kajna/k-framework)
+[![Version](https://img.shields.io/badge/version-3.5.0-blue.svg)](https://packagist.org/packages/kajna/k-framework)
 [![DUB](https://img.shields.io/dub/l/vibe-d.svg)](http://opensource.org/licenses/MIT)
 
 ## Introduction
@@ -299,10 +299,6 @@ $response->writeBody('');
 // Set output body.
 $response->setBody(''); 
 ```
-
-### Author
-Author of framework is Milos Kajnaco 
-milos@caenazzo.com
 
 ### Licence
 The K Framework is released under the [MIT](http://opensource.org/licenses/MIT) public license.
